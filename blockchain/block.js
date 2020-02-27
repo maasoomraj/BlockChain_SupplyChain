@@ -1,5 +1,5 @@
 const SHA256 = require('crypto-js/sha256');
-const MINE_RATE = 10000;
+const MINE_RATE = 120000;
 // We can vary mine rate to get how much time one block should take to mine
 
 class Block
@@ -68,7 +68,7 @@ class Block
         return SHA256(`${timestamp}${lastHash}${data}${difficulty}${nonce}`).toString() ;
     }
 
-    hashBlock(block)
+    static hashBlock(block)
     {
         return Block.hash(block.timestamp,block.lastHash,block.data,block.nonce,block.difficulty);
     }

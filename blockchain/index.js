@@ -26,7 +26,7 @@ class BlockChain
             const presentBlock = chain[i];
             const lastBlock = chain[i-1];
 
-            if(presentBlock.lastHash !== lastBlock.hash || presentBlock.hash !== presentBlock.hashBlock(presentBlock))
+            if(presentBlock.lastHash !== lastBlock.hash || presentBlock.hash !== Block.hashBlock(presentBlock))
                 return false;
         }
 
