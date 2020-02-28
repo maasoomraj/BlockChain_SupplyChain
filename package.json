@@ -7,8 +7,8 @@
     "test": "jest --watchAll",
     "dev-test": "nodemon dev-test",
     "start": "node express.js ",
-    "dev": "npm run start-redis && nodemon express.js",
-    "dev-peer": "cross-env GENERATE_PEER_PORT='true' nodemon express.js",
+    "dev": "npm run start-redis && nodemon index.js",
+    "dev-peer": "cross-env GENERATE_PEER_PORT='true' nodemon index.js",
     "start-redis": "redis-server --daemonize yes"
   },
   "keywords": [],

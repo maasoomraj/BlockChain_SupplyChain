@@ -37,28 +37,9 @@ describe('BlockChain',()=>{
 
     it('is Valid Chain',()=>{
         bc2.addBlock("1st Block");
-        bc2.addBlock("2nd Block");
-        bc2.addBlock("3rd Block");
-        bc2.addBlock("4th Block");
-        bc2.addBlock("5th Block");
-        bc2.addBlock("6th Block");
-        bc2.addBlock("7th Block");
-        bc2.addBlock("8th Block");
-        bc2.addBlock("9th Block");
-        bc2.addBlock("10th Block");
 
-        console.log(bc2.chain[0].toString());
-        console.log(bc2.chain[1].toString());
-        console.log(bc2.chain[2].toString());
-        console.log(bc2.chain[3].toString());
-        console.log(bc2.chain[4].toString());
-        console.log(bc2.chain[5].toString());
-        console.log(bc2.chain[6].toString());
-        console.log(bc2.chain[7].toString());
-        console.log(bc2.chain[8].toString());
-        console.log(bc2.chain[9].toString());
-        console.log(bc2.chain[10].toString());
-
+        // console.log(bc2.chain[0].toString());
+        // console.log(bc2.chain[1].toString());
 
         expect(bc.isValidChain(bc2.chain)).toBe(true);
     });
