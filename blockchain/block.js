@@ -72,6 +72,10 @@ class Block
     {
         return Block.hash(block.timestamp,block.lastHash,block.data,block.nonce,block.difficulty);
     }
+
+    static cryptoHash(data){
+        return SHA256(`${data}`).toString() ;
+    }
 }
 
 module.exports = Block;
