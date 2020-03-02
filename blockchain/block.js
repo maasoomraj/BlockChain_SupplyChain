@@ -74,7 +74,7 @@ class Block
     }
 
     static cryptoHash(data){
-        return SHA256(`${data}`).toString() ;
+        return SHA256(JSON.stringify(data)).toString() ;
     }
 }
 

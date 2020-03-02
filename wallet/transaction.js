@@ -25,6 +25,23 @@ class Transaction{
         };
     }
 
+    update({senderWallet, recipient , amount}){
+
+        if(amount > this.outputMap[senderWallet.publicKey]){
+            throw new Error('Amount is more than balance');
+        }
+
+        if(!this.outputMap[recipient]){
+            this.outputMap[recipient] = amount;
+        }else{
+            this.outputMap[recipient] += amount;
+        }
+
+        this.outputMap[senderWallet.publicKey] -= amount;
+
+        this.input = this.createInput({senderWallet : senderWallet, outputMap : this.outputMap});
+    }
+
     static validTransaction(transaction){
         const {input : {address , amount , signature}, outputMap } = transaction;
 

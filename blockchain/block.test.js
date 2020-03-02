@@ -16,4 +16,13 @@ describe('Block', () => {
     it('the lasthash is same as latblock hash', () => {
         expect(block.lastHash).toEqual(lastBlock.hash);
     });
+
+    describe('cryptoHash()',()=>{
+        it('generates new hash for object values changed',()=>{
+            const foo = {};
+            const originalHash = Block.cryptoHash(foo);
+            foo['a'] = 'a';
+            expect(Block.cryptoHash(foo)).not.toEqual(originalHash);
+        });
+    });
 });
