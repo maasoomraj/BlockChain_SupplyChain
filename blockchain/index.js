@@ -1,4 +1,7 @@
 const Block = require('./block');
+const Transaction = require('../wallet/transaction');
+const Wallet = require('../wallet/index');
+const {REWARD_INPUT , MINING_REWARD} = require('../util/index');
 
 class BlockChain
 {
@@ -7,7 +10,7 @@ class BlockChain
         this.chain = [Block.genesis()];
     }
 
-    addBlock(data)
+    addBlock({data})
     {
         const block = Block.mineBlock(this.chain[this.chain.length - 1], data);
         this.chain.push(block);
@@ -33,7 +36,7 @@ class BlockChain
         return true;
     }
 
-    replaceChain(newChain)
+    replaceChain(newChain, validateTransaction , onSuccess)
     {
         if(newChain.length <= this.chain.length)
         {
@@ -46,9 +49,62 @@ class BlockChain
             return;
         }
 
+        if(validateTransaction && !this.validTransactionData({ chain : newChain })){
+            console.log("Chain has invalid transaction data.")
+            return;
+        }
+
+        if(onSuccess){
+            onSuccess();
+        }
+
         console.log("Replacing New Chain");
         this.chain = newChain;
         return;
+    }
+
+    validTransactionData({ chain }){
+        for(let i=1; i<chain.length ; i++){
+            const block = chain[i];
+            const transactionSet = new Set();
+            let numberRewardTransaction = 0;
+
+            for(let transaction of block.data){
+                if(transaction.input.address === REWARD_INPUT.address){
+                    numberRewardTransaction+=1;
+
+                    if(numberRewardTransaction > 1){
+                        return false;
+                    }
+
+                    if(Object.values(transaction.outputMap)[0] !== MINING_REWARD){
+                        return false;
+                    }
+                }else{
+                    if(!Transaction.validTransaction(transaction)){
+                        return false;
+                    }
+
+                    const trueBalance = Wallet.calculateBalance({
+                        chain : this.chain,
+                        address : transaction.input.address
+                    });
+
+                    if(transaction.input.amount !== trueBalance){
+                        return false;
+                    }
+
+                    if(transactionSet.has(transaction)){
+                        return false;
+                    }else{
+                        transactionSet.add(transaction);
+                    }
+                }
+
+            }
+        }
+
+        return true;
     }
 }
 

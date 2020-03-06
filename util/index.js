@@ -10,4 +10,8 @@ const verifySignature = ({publicKey , data, signature})=>{
 
 const STARTING_BALANCE = 100;
 
-module.exports = { ec , verifySignature, STARTING_BALANCE};
+const REWARD_INPUT = { address : '**authorised-acoount**'};
+
+const MINING_REWARD = 5;
+
+module.exports = { ec , verifySignature, STARTING_BALANCE, REWARD_INPUT, MINING_REWARD};
