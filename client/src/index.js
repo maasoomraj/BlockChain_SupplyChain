@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
+import App from './components/App';
 
 render(
-    <div>Supply Chain Management !This is LIVE UPDATE!</div>,
+    <App />,
     document.getElementById('root')
 );
