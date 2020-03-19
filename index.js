@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const PubSub = require('./app/pubsub');
 const request = require('request');
+const path = require('path');
 const Blockchain = require('./blockchain/index');
 const TransactionPool = require('./wallet/transaction-pool');
 const Transaction = require('./wallet/transaction');
@@ -21,6 +22,8 @@ const app = express();
     const wallet = new Wallet();
     const pubsub = new PubSub({blockchain , transactionPool});
     const transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+
+app.use(express.static(path.join(__dirname,'client/dist')));
 
 const DEFAULT_PORT = 3001;
 const ROOT_NODE_ADDRESS = `http://192.168.43.29:${DEFAULT_PORT}`;
@@ -119,6 +122,10 @@ app.get('/api/wallet-info',(req, res)=>{
             address : address
         })
     });
+});
+
+app.get('*',(req,res)=> {
+    res.sendFile(path.join(__dirname,'client/dist/index.html'));
 });
 
 const syncChains = ()=>{
