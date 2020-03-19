@@ -4,22 +4,54 @@ const PubSub = require('./app/pubsub');
 const request = require('request');
 const Blockchain = require('./blockchain/index');
 const TransactionPool = require('./wallet/transaction-pool');
+const Transaction = require('./wallet/transaction');
 const Wallet = require('./wallet/index');
 const TransactionMiner = require('./app/transaction-miner');
+const {SENDER_INPUT} = require('./util/index');
 
 const app = express();
-const blockchain = new Blockchain();
-const transactionPool = new TransactionPool();
-const wallet = new Wallet();
-const pubsub = new PubSub({blockchain , transactionPool});
-const transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+// let blockchain ;
+// let transactionPool ;
+// let wallet ;
+// let pubsub ;
+// let transactionMiner ;
+
+    const blockchain = new Blockchain();
+    const transactionPool = new TransactionPool();
+    const wallet = new Wallet();
+    const pubsub = new PubSub({blockchain , transactionPool});
+    const transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
 
 const DEFAULT_PORT = 3001;
-const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
+const ROOT_NODE_ADDRESS = `http://192.168.43.29:${DEFAULT_PORT}`;
 
 app.use(bodyParser.json());
 
+// app.get('/api/createNode',(req,res)=>{
+//     blockchain = new Blockchain();
+//     transactionPool = new TransactionPool();
+//     wallet = new Wallet();
+//     pubsub = new PubSub({blockchain , transactionPool});
+//     transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+
+//     res.json(blockchain.chain);
+// });
+
 app.get('/api/blocks', (req,res) => {
+    res.json(blockchain.chain);
+});
+
+app.post('/api/senderTransaction', (req,res) => {
+    const {input} = req.body;
+    input.address = SENDER_INPUT.address;
+    input.from = wallet.publicKey;
+
+    // console.log(input.address);
+    
+    const transaction = Transaction.senderTransaction({input : input});
+    pubsub.broadcastTransaction(transaction);
+    transactionPool.setTransaction(transaction);
+
     res.json(blockchain.chain);
 });
 
@@ -61,7 +93,7 @@ app.post('/api/transact', (req, res)=>{
 
     transactionPool.setTransaction(transaction);
 
-    console.log(transactionPool);
+    // console.log(transactionPool);
 
     res.redirect('/api/transactionPoolMap');
 });
@@ -120,9 +152,9 @@ const PORT = PEER_PORT || DEFAULT_PORT ;
 app.listen(`${PORT}` , () => {
     console.log(`Listening at port ${PORT}`);
 
-    if(PORT !== DEFAULT_PORT){
+    // if(PORT !== DEFAULT_PORT){
         syncChains();
 
         syncTransactionPool();
-    }
+    // }
 });

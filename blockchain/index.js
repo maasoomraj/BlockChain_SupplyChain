@@ -1,7 +1,7 @@
 const Block = require('./block');
 const Transaction = require('../wallet/transaction');
 const Wallet = require('../wallet/index');
-const {REWARD_INPUT , MINING_REWARD} = require('../util/index');
+const {REWARD_INPUT , MINING_REWARD, SENDER_INPUT} = require('../util/index');
 
 class BlockChain
 {
@@ -68,20 +68,28 @@ class BlockChain
             const block = chain[i];
             const transactionSet = new Set();
             let numberRewardTransaction = 0;
+            let numberTransaction =0;
 
             for(let transaction of block.data){
-                if(transaction.input.address === REWARD_INPUT.address){
+                numberTransaction+=1;
+
+                if(transaction.input.address === SENDER_INPUT.address){
+                    // console.log("transaction-validTransactionData");
+                }else if(transaction.input.address === REWARD_INPUT.address){
                     numberRewardTransaction+=1;
 
                     if(numberRewardTransaction > 1){
+                        console.log("FALSE blockchain-index-validTransactionData 1");
                         return false;
                     }
 
                     if(Object.values(transaction.outputMap)[0] !== MINING_REWARD){
+                        console.log("FALSE blockchain-index-validTransactionData 2");
                         return false;
                     }
                 }else{
                     if(!Transaction.validTransaction(transaction)){
+                        console.log("FALSE blockchain-index-validTransactionData 3");
                         return false;
                     }
 
@@ -91,16 +99,26 @@ class BlockChain
                     });
 
                     if(transaction.input.amount !== trueBalance){
+                        console.log("");
+                        console.log(transaction);
+                        console.log("FALSE blockchain-index-validTransactionData 4");
                         return false;
                     }
 
                     if(transactionSet.has(transaction)){
+                        console.log("FALSE blockchain-index-validTransactionData 5");
                         return false;
                     }else{
                         transactionSet.add(transaction);
                     }
                 }
 
+            }
+
+            if(numberTransaction <= numberRewardTransaction){
+                console.log(transactionSet.size);
+                console.log("FALSE blockchain-index-validTransactionData 6");
+                return false;
             }
         }
 

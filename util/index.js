@@ -12,6 +12,8 @@ const STARTING_BALANCE = 100;
 
 const REWARD_INPUT = { address : '**authorised-acoount**'};
 
+const SENDER_INPUT = { address : '**authorised-sender-account**'};
+
 const MINING_REWARD = 5;
 
-module.exports = { ec , verifySignature, STARTING_BALANCE, REWARD_INPUT, MINING_REWARD};
+module.exports = { ec , verifySignature, STARTING_BALANCE, REWARD_INPUT, MINING_REWARD, SENDER_INPUT};
