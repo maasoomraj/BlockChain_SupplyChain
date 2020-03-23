@@ -28470,7 +28470,7 @@ var App = /*#__PURE__*/function (_Component) {
       var _this$state$walletInf = this.state.walletInfo,
           address = _this$state$walletInf.address,
           balance = _this$state$walletInf.balance;
-      return _react.default.createElement("div", null, _react.default.createElement("div", null, "hey jash"), _react.default.createElement("div", null, "Address: ", address), _react.default.createElement("div", null, "Balance: ", balance), _react.default.createElement("br", null), _react.default.createElement(_Blocks.default, null));
+      return _react.default.createElement("div", null, _react.default.createElement("div", null, "hey jash"), _react.default.createElement("div", null, "Address: ", address), _react.default.createElement("div", null, "Balance: ", balance), _react.default.createElement("br", null), _react.default.createElement(_Blocks.default, null, " "));
     }
   }]);
 
@@ -28519,7 +28519,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39819" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39549" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
