@@ -43,25 +43,15 @@ class Transaction{
     }
 
     static validTransaction(transaction){
+        // console.log(transaction.input.address);
+        // console.log(SENDER_INPUT);
+        
+        if(transaction.input.address === SENDER_INPUT.address){
+            console.log("transaction- validTransaction");
+            return true;
+        }
+
         const {input : {address , amount , signature}, outputMap } = transaction;
-
-        if(address === SENDER_INPUT.sender_address){
-            if(outputMap[SENDER_INPUT.receiver_address] !== SENDER_INPUT.reward){
-                console.log("\wallet -- transaction.js -- validTransaction  -> FALSE 1\n");
-                return false;
-            }
-
-            return true;
-        }
-
-        if(address === SENDER_INPUT.receiver_address){
-            if(outputMap[SENDER_INPUT.sender_address] !== SENDER_INPUT.reward){
-                console.log("\wallet -- transaction.js -- validTransaction  -> FALSE 2\n");
-                return false;
-            }
-
-            return true;
-        }
 
         // BELOW CODE EXPLANATION
         // outputMap[senderWallet.publicKey]+outputMap[recipient] = amount+senderWallet.balance-amount;
@@ -73,7 +63,6 @@ class Transaction{
             .reduce((total, outputAmount)=>total+outputAmount);
 
         if(amount !== outputTotal){
-            console.log("\wallet -- transaction.js -- validTransaction  -> FALSE 3\n");
             return false;
         }
 
@@ -82,7 +71,6 @@ class Transaction{
             data : outputMap,
             signature : signature
         })){
-            console.log("\wallet -- transaction.js -- validTransaction  -> FALSE 4\n");
             return false;
         }
 
@@ -93,6 +81,13 @@ class Transaction{
         return new this({
             input : REWARD_INPUT,
             outputMap : {[minerWallet.publicKey] : MINING_REWARD}
+        })
+    }
+
+    static senderTransaction({input}){
+        return new this({
+            input : input,
+            outputMap : {"hello" : MINING_REWARD}
         })
     }
 }
