@@ -43,6 +43,14 @@ class Transaction{
     }
 
     static validTransaction(transaction){
+        // console.log(transaction.input.address);
+        // console.log(SENDER_INPUT);
+        
+        if(transaction.input.address === SENDER_INPUT.address){
+            console.log("transaction- validTransaction");
+            return true;
+        }
+
         const {input : {address , amount , signature}, outputMap } = transaction;
 
         if(address === SENDER_INPUT.sender_address){
@@ -93,6 +101,13 @@ class Transaction{
         return new this({
             input : REWARD_INPUT,
             outputMap : {[minerWallet.publicKey] : MINING_REWARD}
+        })
+    }
+
+    static senderTransaction({input}){
+        return new this({
+            input : input,
+            outputMap : {"hello" : MINING_REWARD}
         })
     }
 }
