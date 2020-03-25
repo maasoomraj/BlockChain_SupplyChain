@@ -1,42 +1,61 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const PubSub = require('./app/pubsub');
-const Blockchain = require('./blockchain/index');
+const request = require('request');
 const path = require('path');
+const Blockchain = require('./blockchain/index');
 const TransactionPool = require('./wallet/transaction-pool');
 const Transaction = require('./wallet/transaction');
 const Wallet = require('./wallet/index');
 const TransactionMiner = require('./app/transaction-miner');
 const {SENDER_INPUT} = require('./util/index');
-const ip = require('ip');
-const Peer = require('./app/peer');
-const got = require('got');
 
 const app = express();
-const blockchain = new Blockchain();
-const transactionPool = new TransactionPool();
-const wallet = new Wallet();
-const peer = new Peer();
-const pubsub = new PubSub({blockchain , transactionPool, peer});
-const transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+// let blockchain ;
+// let transactionPool ;
+// let wallet ;
+// let pubsub ;
+// let transactionMiner ;
+
+    const blockchain = new Blockchain();
+    const transactionPool = new TransactionPool();
+    const wallet = new Wallet();
+    const pubsub = new PubSub({blockchain , transactionPool});
+    const transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+
 app.use(express.static(path.join(__dirname,'client/dist')));
 
 const DEFAULT_PORT = 3001;
-let myIp = ip.address();
-// const SERVER_IP_ADDRESS = '192.168.43.27';
-// const ROOT_NODE_ADDRESS = `http://${SERVER_IP_ADDRESS}:${DEFAULT_PORT}`;
-const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
-
-console.log("ROOT_NODE_ADDRESS - " + ROOT_NODE_ADDRESS);
+const ROOT_NODE_ADDRESS = `http://192.168.43.29:${DEFAULT_PORT}`;
 
 app.use(bodyParser.json());
+
+// app.get('/api/createNode',(req,res)=>{
+//     blockchain = new Blockchain();
+//     transactionPool = new TransactionPool();
+//     wallet = new Wallet();
+//     pubsub = new PubSub({blockchain , transactionPool});
+//     transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+
+//     res.json(blockchain.chain);
+// });
 
 app.get('/api/blocks', (req,res) => {
     res.json(blockchain.chain);
 });
 
-app.get('/api/peer', (req,res) => {
-    res.json(peer.peersList);
+app.post('/api/senderTransaction', (req,res) => {
+    const {input} = req.body;
+    input.address = SENDER_INPUT.address;
+    input.from = wallet.publicKey;
+
+    // console.log(input.address);
+    
+    const transaction = Transaction.senderTransaction({input : input});
+    pubsub.broadcastTransaction(transaction);
+    transactionPool.setTransaction(transaction);
+
+    res.json(blockchain.chain);
 });
 
 app.post('/api/mine', (req,res) => {
@@ -47,42 +66,6 @@ app.post('/api/mine', (req,res) => {
     pubsub.broadcastChain();
 
     res.redirect('/api/blocks');
-});
-
-app.post('/api/send', (req,res) => {
-    const {input} = req.body;
-    input.from = wallet.publicKey;
-    input.timestamp = Date.now();
-    input.address = SENDER_INPUT.sender_address;
-
-    const outputMap = {[SENDER_INPUT.receiver_address] : SENDER_INPUT.reward};
-
-    const transaction = new Transaction({input : input, outputMap : outputMap});
-
-    pubsub.broadcastTransaction(transaction);
-
-    transactionPool.setTransaction(transaction);
-
-    res.redirect('/api/transactionPoolMap');
-});
-
-app.post('/api/receive', (req,res) => {
-    const {input} = req.body;
-    input.to = wallet.publicKey;
-    input.timestamp = Date.now();
-    input.address = SENDER_INPUT.receiver_address;
-
-    // console.log("api-receieve " + input.address);
-
-    const outputMap = {[SENDER_INPUT.sender_address] : SENDER_INPUT.reward};
-
-    const transaction = new Transaction({input : input, outputMap : outputMap});
-
-    pubsub.broadcastTransaction(transaction);
-
-    transactionPool.setTransaction(transaction);
-
-    res.redirect('/api/transactionPoolMap');
 });
 
 app.post('/api/transact', (req, res)=>{
@@ -125,10 +108,6 @@ app.get('/api/transactionPoolMap',(req, res)=>{
 app.get('/api/mine-transactions', (req, res)=>{
     transactionMiner.mineTransactions();
 
-    pubsub.broadcastPeer(myIp);
-    peer.addPeer(myIp);
-    console.log("Ip " + myIp + " has been added to peersList.");
-
     res.redirect('/api/blocks');
 });
 
@@ -149,64 +128,26 @@ app.get('*',(req,res)=> {
     res.sendFile(path.join(__dirname,'client/dist/index.html'));
 });
 
-const syncChains = (async () => {
-    try {
-        const response = await got(`${ROOT_NODE_ADDRESS}/api/blocks`);
+const syncChains = ()=>{
+    request({ url : `${ROOT_NODE_ADDRESS}/api/blocks`}, (error, response, body)=>{
+        if(!error && response.statusCode === 200){
+            const rootchain = JSON.parse(body);
 
-        console.log("Syncing Chain ....");
-        const rootchain = JSON.parse(response.body);
-        blockchain.replaceChain(rootchain);
-        console.log("Chain Synced.");
+            blockchain.replaceChain(rootchain);
+        }
+    });
+};
 
-    } catch (error) {
-        // console.log(error.response.body);
-        console.log("ERROR : Couldn't sync chain...");
-    }
-});
+const syncTransactionPool = ()=>{
+    request({ url : `${ROOT_NODE_ADDRESS}/api/transactionPoolMap`}, (error, response, body)=>{
+        if(!error && response.statusCode === 200){
+            const rootTransactionPool = JSON.parse(body);
 
-const syncTransactionPool = (async () => {
-    try {
-        const response = await got(`${ROOT_NODE_ADDRESS}/api/transactionPoolMap`);
+            transactionPool.setMap(rootTransactionPool);
+        }
+    });
+};
 
-        console.log("Syncing TransactionPool ....");
-        const rootTransactionPool = JSON.parse(response.body);
-        transactionPool.setMap(rootTransactionPool);
-        console.log("TransactionPool Synced.");
-
-    } catch (error) {
-        console.log("ERROR : Couldn't sycn Transaction Pool...");
-        // console.log(error.response.body);
-    }
-});
-
-// REQUEST MODULE
-// const syncPeerList = ()=>{
-//     request({ url : `${ROOT_NODE_ADDRESS}/api/peer`}, (error, response, body)=>{
-//         if(!error && response.statusCode === 200){
-//             const rootPeersList = JSON.parse(body);
-//             console.log("rootPeersList - " + rootPeersList);
-
-//             peer.setPeerList(rootPeersList);
-//         }
-//     });
-// };
-
-const syncPeerList = (async () => {
-    try {
-        const response = await got(`${ROOT_NODE_ADDRESS}/api/peer`);
-
-        console.log("Syncing PeersList ....");
-        const rootPeersList = JSON.parse(response.body);
-        peer.setPeerList(rootPeersList);
-        console.log("PeersList Synced.");
-
-    } catch (error) {
-        // console.log(error.response.body);
-        console.log("Coudln't sync Peer List");
-    }
-});
-
-//JASH ADDED THIS -
 const walletFoo = new Wallet();
 const walletBar = new Wallet();
 
@@ -245,7 +186,6 @@ for (let i=0; i<3; i++) {
 
     transactionMiner.mineTransactions();
 }
-//JASH CODE ABOVE -
 
 let PEER_PORT;
 
@@ -257,20 +197,10 @@ if(process.env.GENERATE_PEER_PORT === 'true')
 const PORT = PEER_PORT || DEFAULT_PORT ;
 app.listen(`${PORT}` , () => {
     console.log(`Listening at port ${PORT}`);
-    if(PORT !== DEFAULT_PORT){
-        syncChains();
-        syncTransactionPool();
-    }
 
-    // if(myIp !== `${SERVER_IP_ADDRESS}`){
-    // // if(PORT !== DEFAULT_PORT){
-    //     // myIp = "123.12.12.12";
-    //     syncChains();
-    //     syncTransactionPool();
-    //     syncPeerList();
-    // }else{
-    //     pubsub.broadcastPeer(myIp);
-    //     peer.addPeer(myIp);
-    //     console.log("Ip " + myIp + " has been added to peersList.");
+    // if(PORT !== DEFAULT_PORT){
+        syncChains();
+
+        syncTransactionPool();
     // }
 });

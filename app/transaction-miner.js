@@ -1,5 +1,4 @@
 const Transaction = require('../wallet/transaction');
-const Blockchain = require('../blockchain/index');
 
 class TransactionMiner{
     constructor({blockchain , transactionPool, wallet, pubsub}){
@@ -16,11 +15,7 @@ class TransactionMiner{
             Transaction.rewardTransaction({ minerWallet : this.wallet})
         );
 
-        const chain_copy = new Blockchain();
-        chain_copy.chain = JSON.parse(JSON.stringify(this.blockchain.chain));
-        chain_copy.addBlock({ data : validTransactions});
-
-        this.blockchain.replaceChain(chain_copy.chain, true);
+        this.blockchain.addBlock({ data : validTransactions});
 
         this.pubsub.broadcastChain();
 

@@ -35,8 +35,6 @@
     "crypto-js": "^3.1.9-1",
     "elliptic": "^6.4.1",
     "express": "^4.16.3",
-    "got": "^10.7.0",
-    "ip": "^1.1.5",
     "parcel-bundler": "^1.12.4",
     "react": "^16.6.0",
     "react-bootstrap": "^1.0.0",

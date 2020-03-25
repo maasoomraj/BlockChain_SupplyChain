@@ -1,5 +1,5 @@
 const SHA256 = require('crypto-js/sha256');
-const MINE_RATE = 120000;
+const MINE_RATE = 600000;
 // We can vary mine rate to get how much time one block should take to mine
 
 class Block
@@ -27,7 +27,7 @@ class Block
 
     static genesis()
     {
-        return new this(1,"---","000000","NULL",2,0);
+        return new this(1,"---","000000","NULL",4,0);
     }
 
     static mineBlock (lastBlock , data)
