@@ -8,6 +8,7 @@
     "dev-test": "nodemon dev-test",
     "start": "node express.js ",
     "dev": "npm run start-redis && nodemon index.js",
+    "dev-client" : "nodemon index.js",
     "dev-peer": "cross-env GENERATE_PEER_PORT='true' nodemon index.js",
     "start-redis": "redis-server --daemonize yes"
   },
@@ -27,8 +28,10 @@
     "crypto-js": "^3.1.9-1",
     "elliptic": "^6.4.1",
     "express": "^4.16.3",
+    "got": "^10.6.0",
+    "ip": "^1.1.5",
     "redis": "^2.8.0",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "uuid": "^3.3.2"
   }
 }

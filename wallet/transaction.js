@@ -1,5 +1,5 @@
 const uuid = require('uuid/v1');
-const { verifySignature , REWARD_INPUT , MINING_REWARD} = require('../util/index');
+const { verifySignature , REWARD_INPUT , MINING_REWARD, SENDER_INPUT} = require('../util/index');
 
 class Transaction{
     constructor({senderWallet, recipient, amount, outputMap, input}){
@@ -45,6 +45,24 @@ class Transaction{
     static validTransaction(transaction){
         const {input : {address , amount , signature}, outputMap } = transaction;
 
+        if(address === SENDER_INPUT.sender_address){
+            if(outputMap[SENDER_INPUT.receiver_address] !== SENDER_INPUT.reward){
+                console.log("\wallet -- transaction.js -- validTransaction  -> FALSE 1\n");
+                return false;
+            }
+
+            return true;
+        }
+
+        if(address === SENDER_INPUT.receiver_address){
+            if(outputMap[SENDER_INPUT.sender_address] !== SENDER_INPUT.reward){
+                console.log("\wallet -- transaction.js -- validTransaction  -> FALSE 2\n");
+                return false;
+            }
+
+            return true;
+        }
+
         // BELOW CODE EXPLANATION
         // outputMap[senderWallet.publicKey]+outputMap[recipient] = amount+senderWallet.balance-amount;
         // total outputMap = senderWallet.balance;
@@ -55,6 +73,7 @@ class Transaction{
             .reduce((total, outputAmount)=>total+outputAmount);
 
         if(amount !== outputTotal){
+            console.log("\wallet -- transaction.js -- validTransaction  -> FALSE 3\n");
             return false;
         }
 
@@ -63,6 +82,7 @@ class Transaction{
             data : outputMap,
             signature : signature
         })){
+            console.log("\wallet -- transaction.js -- validTransaction  -> FALSE 4\n");
             return false;
         }
 
