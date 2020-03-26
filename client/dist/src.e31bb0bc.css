@@ -24,7 +24,6 @@ body {
 }
 
 .Block {
-    width : 1000px;
     border: 1px solid #fff;
     padding: 5%;
     margin: 2%;
@@ -32,6 +31,11 @@ body {
 
 .Transaction {
     padding: 5%;
+}
+
+a, a:hover {
+    color: #ee6666;
+    text-decoration: underline;
 }
 
 /*# sourceMappingURL=/src.e31bb0bc.css.map */
