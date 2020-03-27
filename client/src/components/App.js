@@ -20,9 +20,8 @@ class App extends Component {
                 <br />
                 <div>hey jash</div>
                 <br />
-                <div>
-                    <Link to='/blocks'>Blocks</Link>
-                </div>
+                <div><Link to='/blocks'>Blocks</Link></div>
+                <div><Link to='/conduct-transaction'>Conduct a Transaction</Link></div>
                 <br />
                 <div className='walletInfo '>
                     <div>Address: {address}</div>
