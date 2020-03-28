@@ -46,8 +46,17 @@ class Transaction{
         // console.log(transaction.input.address);
         // console.log(SENDER_INPUT);
         
-        if(transaction.input.address === SENDER_INPUT.address){
-            console.log("transaction- validTransaction");
+        if(transaction.input.address === SENDER_INPUT.sender_address){
+            if(transaction.outputMap[SENDER_INPUT.receiver_address] !== SENDER_INPUT.reward){
+                return false;
+            }
+            return true;
+        }
+
+        if(transaction.input.address === SENDER_INPUT.receiver_address){
+            if(transaction.outputMap[SENDER_INPUT.sender_address] !== SENDER_INPUT.reward){
+                return false;
+            }
             return true;
         }
 
@@ -81,13 +90,6 @@ class Transaction{
         return new this({
             input : REWARD_INPUT,
             outputMap : {[minerWallet.publicKey] : MINING_REWARD}
-        })
-    }
-
-    static senderTransaction({input}){
-        return new this({
-            input : input,
-            outputMap : {"hello" : MINING_REWARD}
         })
     }
 }

@@ -32303,14 +32303,20 @@ var App = /*#__PURE__*/function (_Component) {
           balance = _this$state$walletInf.balance;
       return _react.default.createElement("div", {
         className: "App"
-      }, _react.default.createElement("img", {
+      }, _react.default.createElement("div", {
+        className: "navbar"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/blocks"
+      }, "Blocks"), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/conduct-transaction"
+      }, "Conduct a Transaction"), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/send-transaction"
+      }, "Send"), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/receive-transaction"
+      }, "Receive")), _react.default.createElement("img", {
         className: "logo",
         src: _logo.default
-      }), _react.default.createElement("br", null), _react.default.createElement("div", null, "hey jash"), _react.default.createElement("br", null), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/blocks"
-      }, "Blocks")), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/conduct-transaction"
-      }, "Conduct a Transaction")), _react.default.createElement("br", null), _react.default.createElement("div", {
+      }), _react.default.createElement("br", null), _react.default.createElement("div", null, "Hey !!"), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "walletInfo "
       }, _react.default.createElement("div", null, "Address: ", address), _react.default.createElement("div", null, "Balance: ", balance)));
     }
@@ -32319,7 +32325,88 @@ var App = /*#__PURE__*/function (_Component) {
   return App;
 }(_react.Component);
 
-var _default = App;
+var _default = App; // import React, {Component} from 'react';
+// import {FormGroup, FormControl , Button } from 'react-bootstrap';
+// import { Link } from 'react-router-dom';
+// class receiveTransaction extends Component {
+//     state = {product:'', quantity:'', amount:0, from:''};
+//     updateProduct = event => {
+//         this.setState({product : event.target.value });
+//     }
+//     updateQuantity = event => {
+//         this.setState({quantity : event.target.value });
+//     }
+//     updateAmount = event => {
+//         this.setState({amount : Number(event.target.value) });
+//     }
+//     updateFrom = event => {
+//         this.setState({from : event.target.value });
+//     }
+//     conductReceiveTransaction = () => {
+//         const input = {
+//             product : this.state.product,
+//             quantity : this.state.quantity,
+//             amount : this.state.amount,
+//             from : this.state.from
+//             };
+//         // console.log(input);
+//         fetch('http://localhost:3001/api/receive' , {
+//              method : 'POST',
+//              headers : { 'Content-Type' : 'application/json'},
+//              body : JSON.stringify({input})
+//         }).then(response => response.json())
+//             .then(json => {
+//                 alert("Success.")
+//             });
+//     }
+//     render(){
+//         console.log('this.state', this.state);
+//         return(
+//             <div className='receiveTransaction'>
+//                 <Link to = '/'> Home </Link>
+//                 <br />
+//                 <h3>Receive Transaction -</h3>
+//                 <FormGroup>
+//                     <FormControl 
+//                         input='text'
+//                         placeholder='Product Number'
+//                         value={this.state.product} 
+//                         onChange={this.updateProduct}
+//                     /> 
+//                 </FormGroup>
+//                 <FormGroup>
+//                     <FormControl 
+//                         input='text'
+//                         placeholder='Quantity'
+//                         value={this.state.quantity} 
+//                         onChange={this.updateQuantity}
+//                     /> 
+//                 </FormGroup>
+//                 <FormGroup>
+//                     <FormControl 
+//                         input='number'
+//                         placeholder='Amount'
+//                         value={this.state.amount} 
+//                         onChange={this.updateAmount}
+//                     /> 
+//                 </FormGroup>
+//                 <FormGroup>
+//                     <FormControl 
+//                         input='text'
+//                         placeholder='To'
+//                         value={this.state.from} 
+//                         onChange={this.updateFrom}
+//                     /> 
+//                 </FormGroup>
+//                 <div>
+//                     <Button bsStyle="danger" onClick={this.conductReceiveTransaction}>Send</Button>
+//                 </div>
+//             </div>
+//         );
+//     }
+// };
+// export default receiveTransaction;
+
 exports.default = _default;
 },{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../assets/logo.png":"assets/logo.png"}],"../../node_modules/classnames/index.js":[function(require,module,exports) {
 var define;
@@ -46867,7 +46954,8 @@ var Blocks = /*#__PURE__*/function (_Component) {
     value: function render() {
       console.log('this.state', this.state);
       return _react.default.createElement("div", null, _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/"
+        to: "/",
+        className: "button"
       }, "Home")), _react.default.createElement("h3", null, " Blocks "), this.state.blocks.map(function (block) {
         return _react.default.createElement(_Block.default, {
           key: block.hash,
@@ -46972,7 +47060,8 @@ var ConductTransaction = /*#__PURE__*/function (_Component) {
       return _react.default.createElement("div", {
         className: "ConductTransaction"
       }, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/"
+        to: "/",
+        className: "button"
       }, " Home "), _react.default.createElement("h3", null, " Conduct a Transaction "), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
         input: "text",
         placeholder: "recipient",
@@ -47068,7 +47157,285 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.js":[function(require,module,exports) {
+},{"_css_loader":"../../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/sendTransaction.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactBootstrap = require("react-bootstrap");
+
+var _reactRouterDom = require("react-router-dom");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var sendTransaction = /*#__PURE__*/function (_Component) {
+  _inherits(sendTransaction, _Component);
+
+  function sendTransaction() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    var _temp;
+
+    _classCallCheck(this, sendTransaction);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(sendTransaction)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      product: '',
+      quantity: '',
+      amount: 0,
+      to: ''
+    }, _this.updateProduct = function (event) {
+      _this.setState({
+        product: event.target.value
+      });
+    }, _this.updateQuantity = function (event) {
+      _this.setState({
+        quantity: event.target.value
+      });
+    }, _this.updateAmount = function (event) {
+      _this.setState({
+        amount: Number(event.target.value)
+      });
+    }, _this.updateTo = function (event) {
+      _this.setState({
+        to: event.target.value
+      });
+    }, _this.conductSendTransaction = function () {
+      var input = {
+        product: _this.state.product,
+        quantity: _this.state.quantity,
+        amount: _this.state.amount,
+        to: _this.state.to
+      }; // console.log(input);
+
+      fetch('http://localhost:3001/api/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          input: input
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        alert("Success.");
+      });
+    }, _temp));
+  }
+
+  _createClass(sendTransaction, [{
+    key: "render",
+    value: function render() {
+      console.log('this.state', this.state);
+      return _react.default.createElement("div", {
+        className: "sendTransaction"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/",
+        className: "button"
+      }, " Home "), _react.default.createElement("br", null), _react.default.createElement("h3", null, "Send Transaction -"), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "text",
+        placeholder: "Product Number",
+        value: this.state.product,
+        onChange: this.updateProduct
+      })), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "text",
+        placeholder: "Quantity",
+        value: this.state.quantity,
+        onChange: this.updateQuantity
+      })), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "number",
+        placeholder: "Amount",
+        value: this.state.amount,
+        onChange: this.updateAmount
+      })), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "text",
+        placeholder: "To",
+        value: this.state.to,
+        onChange: this.updateTo
+      })), _react.default.createElement("div", null, _react.default.createElement(_reactBootstrap.Button, {
+        bsStyle: "danger",
+        onClick: this.conductSendTransaction
+      }, "Send")));
+    }
+  }]);
+
+  return sendTransaction;
+}(_react.Component);
+
+;
+var _default = sendTransaction;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/receiveTransaction.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactBootstrap = require("react-bootstrap");
+
+var _reactRouterDom = require("react-router-dom");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var receiveTransaction = /*#__PURE__*/function (_Component) {
+  _inherits(receiveTransaction, _Component);
+
+  function receiveTransaction() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    var _temp;
+
+    _classCallCheck(this, receiveTransaction);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(receiveTransaction)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      product: '',
+      quantity: '',
+      amount: 0,
+      from: ''
+    }, _this.updateRProduct = function (event) {
+      _this.setState({
+        product: event.target.value
+      });
+    }, _this.updateRQuantity = function (event) {
+      _this.setState({
+        quantity: event.target.value
+      });
+    }, _this.updateRAmount = function (event) {
+      _this.setState({
+        amount: Number(event.target.value)
+      });
+    }, _this.updateRFrom = function (event) {
+      _this.setState({
+        from: event.target.value
+      });
+    }, _this.conductReceiveTransaction = function () {
+      var input = {
+        product: _this.state.product,
+        quantity: _this.state.quantity,
+        amount: _this.state.amount,
+        from: _this.state.from
+      }; // console.log(input);
+
+      fetch('http://localhost:3001/api/receive', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          input: input
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        alert("Success.");
+      });
+    }, _temp));
+  }
+
+  _createClass(receiveTransaction, [{
+    key: "render",
+    value: function render() {
+      console.log('this.state', this.state);
+      return _react.default.createElement("div", {
+        className: "receiveTransaction"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/",
+        className: "button"
+      }, " Home "), _react.default.createElement("br", null), _react.default.createElement("h3", null, "Receive Transaction -"), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "text",
+        placeholder: "Product Number",
+        value: this.state.product,
+        onChange: this.updateRProduct
+      })), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "text",
+        placeholder: "Quantity",
+        value: this.state.quantity,
+        onChange: this.updateRQuantity
+      })), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "number",
+        placeholder: "Amount",
+        value: this.state.amount,
+        onChange: this.updateRAmount
+      })), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "text",
+        placeholder: "From",
+        value: this.state.from,
+        onChange: this.updateRFrom
+      })), _react.default.createElement("div", null, _react.default.createElement(_reactBootstrap.Button, {
+        bsStyle: "danger",
+        onClick: this.conductReceiveTransaction
+      }, "Send")));
+    }
+  }]);
+
+  return receiveTransaction;
+}(_react.Component);
+
+;
+var _default = receiveTransaction;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -47087,6 +47454,10 @@ var _ConductTransaction = _interopRequireDefault(require("./components/ConductTr
 
 require("./index.css");
 
+var _sendTransaction = _interopRequireDefault(require("./components/sendTransaction"));
+
+var _receiveTransaction = _interopRequireDefault(require("./components/receiveTransaction"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _reactDom.render)(_react.default.createElement(_reactRouterDom.Router, {
@@ -47101,8 +47472,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 }), _react.default.createElement(_reactRouterDom.Route, {
   path: "/conduct-transaction",
   component: _ConductTransaction.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  path: "/send-transaction",
+  component: _sendTransaction.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  path: "/receive-transaction",
+  component: _receiveTransaction.default
 }))), document.getElementById('root'));
-},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./history":"history.js","./components/App":"components/App.js","./components/Blocks":"components/Blocks.js","./components/ConductTransaction":"components/ConductTransaction.js","./index.css":"index.css"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./history":"history.js","./components/App":"components/App.js","./components/Blocks":"components/Blocks.js","./components/ConductTransaction":"components/ConductTransaction.js","./index.css":"index.css","./components/sendTransaction":"components/sendTransaction.js","./components/receiveTransaction":"components/receiveTransaction.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -47130,7 +47507,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46473" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33979" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

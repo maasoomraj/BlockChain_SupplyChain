@@ -16,7 +16,7 @@ class Blocks extends Component {
         return (
             <div>
                 <div>
-                    <Link to ='/'>Home</Link>
+                    <Link to ='/' className='button'>Home</Link>
                 </div>
                 <h3> Blocks </h3>
                 {

@@ -31,7 +31,7 @@ class ConductTransaction extends Component {
 
         return (
             <div className='ConductTransaction'>
-                <Link to = '/'> Home </Link>
+                <Link to = '/' className='button'> Home </Link>
                 <h3> Conduct a Transaction </h3>
                 <FormGroup>
                     <FormControl 
