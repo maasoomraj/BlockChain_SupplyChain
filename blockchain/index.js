@@ -40,17 +40,17 @@ class BlockChain
     {
         if(newChain.length <= this.chain.length)
         {
-            console.log("Chain is smaller. Thus can't be replaced");
+            console.log("\nBlockchain -- index -- replaceChain -> FAILS Smaller Chain, Can't replace chain.\n");
             return;
         }
         else if(!this.isValidChain(newChain))
         {
-            console.log("Chain is not a valid chain. Corrupt chain. Can't replace.")
+            console.log("\nBlockchain -- index -- replaceChain  -> FAILS isValidChain() method.\n")
             return;
         }
 
         if(validateTransaction && !this.validTransactionData({ chain : newChain })){
-            console.log("Chain has invalid transaction data.")
+            console.log("\nBlockchain -- index -- replaceChain  -> FAILS validTransactionData() method.\n")
             return;
         }
 
@@ -58,38 +58,75 @@ class BlockChain
             onSuccess();
         }
 
-        console.log("Replacing New Chain");
+        console.log("\nBlockchain -- index -- replaceChain  -> SUCCESSFUL Replacing New Chain\n");
         this.chain = newChain;
         return;
     }
 
     validTransactionData({ chain }){
+        let blockNumber = 0;
         for(let i=1; i<chain.length ; i++){
+            blockNumber+=1;
             const block = chain[i];
             const transactionSet = new Set();
             let numberRewardTransaction = 0;
-            let numberTransaction =0;
+            let numberTransactions = 0;
 
             for(let transaction of block.data){
-                numberTransaction+=1;
+                // console.log("\n"+transaction.input.address+"\n");
+                numberTransactions += 1;
+                if(transaction.input.address === SENDER_INPUT.sender_address){
+                    console.log("Validating Transaction Data of type `send` ...");
+                    if(!Transaction.validTransaction(transaction)){
+                        console.log("ERROR 1 : `send` transaction is not valid.");
+                        return false;
+                    }
+                }else if(transaction.input.address === SENDER_INPUT.receiver_address){
+                    console.log("Validating Transaction Data of type `receive` ...");
+                    if(!Transaction.validTransaction(transaction)){
+                        // console.log("\nBlockchain -- index -- validTransactionData  -> FALSE 2\n");
+                        console.log("ERROR 1 : `receive` transaction is not valid.");
 
-                if(transaction.input.address === SENDER_INPUT.address){
-                    // console.log("transaction-validTransactionData");
+                        return false;
+                    }
+
+                    if(!this.validReceiverData({chain : chain, blockNumber : blockNumber,receiver_transaction : transaction})){
+                        // console.log("\nBlockchain -- index -- validTransactionData  -> FALSE 3\n");
+                        console.log("ERROR 2 : `receive` transaction is not valid.");
+
+                        return false;
+                    }
+
+                    if(!this.onlyOneReceiverData({chain : chain, blockNumber : blockNumber,receiver_transaction : transaction})){
+                        // console.log("\nBlockchain -- index -- validTransactionData  -> FALSE 10\n");
+                        console.log("ERROR 3 : `receive` transaction is not valid.");
+
+                        return false;
+                    }
                 }else if(transaction.input.address === REWARD_INPUT.address){
+                    console.log("Validating Transaction Data of type `reward` ...");
                     numberRewardTransaction+=1;
 
                     if(numberRewardTransaction > 1){
-                        console.log("FALSE blockchain-index-validTransactionData 1");
+                        // console.log("\nBlockchain -- index -- validTransactionData  -> FALSE 4\n");
+                        console.log("ERROR 1 : `reward` transaction is not valid.");
+
                         return false;
                     }
 
                     if(Object.values(transaction.outputMap)[0] !== MINING_REWARD){
-                        console.log("FALSE blockchain-index-validTransactionData 2");
+                        // console.log("\nBlockchain -- index -- validTransactionData  -> FALSE 5\n");
+                        console.log("ERROR 2 : `reward` transaction is not valid.");
+
                         return false;
                     }
                 }else{
+                    console.log("Validating Transaction Data of type `transact` ...");
+
                     if(!Transaction.validTransaction(transaction)){
-                        console.log("FALSE blockchain-index-validTransactionData 3");
+                        // console.log("\nBlockchain -- index -- validTransactionData  -> FALSE 6\n");
+                        console.log("ERROR 1 : `transact` transaction is not valid.");
+
                         return false;
                     }
 
@@ -99,14 +136,16 @@ class BlockChain
                     });
 
                     if(transaction.input.amount !== trueBalance){
-                        console.log("");
-                        console.log(transaction);
-                        console.log("FALSE blockchain-index-validTransactionData 4");
+                        // console.log("\nBlockchain -- index -- validTransactionData  -> FALSE 7\n");
+                        console.log("ERROR 2 : `transact` transaction is not valid.");
+
                         return false;
                     }
 
                     if(transactionSet.has(transaction)){
-                        console.log("FALSE blockchain-index-validTransactionData 5");
+                        // console.log("\nBlockchain -- index -- validTransactionData  -> FALSE 8\n");
+                        console.log("ERROR 3 : `transact` transaction is not valid.");
+
                         return false;
                     }else{
                         transactionSet.add(transaction);
@@ -114,11 +153,59 @@ class BlockChain
                 }
 
             }
+            if(numberTransactions<=1){
+                // console.log("\nBlockchain -- index -- validTransactionData  -> FALSE 9\n");
+                console.log("ERROR : transaction is not valid.");
 
-            if(numberTransaction <= numberRewardTransaction){
-                console.log(transactionSet.size);
-                console.log("FALSE blockchain-index-validTransactionData 6");
                 return false;
+            }
+        }
+
+        return true;
+    }
+
+    validReceiverData({chain, blockNumber ,receiver_transaction}){
+        for(let i=blockNumber-1;i>0;i--){
+            const block = chain[i];
+
+            for(let transaction of block.data){
+                if(transaction.input.address === SENDER_INPUT.sender_address){
+                    if(transaction.input.from === receiver_transaction.input.from){
+                        if(transaction.input.product === receiver_transaction.input.product){
+                            if(transaction.input.amount === receiver_transaction.input.amount){
+                                if(transaction.input.to === receiver_transaction.input.to){
+                                    // console.log("\nBlockchain -- index -- validReceiverData  -> PASSED\n");
+
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    onlyOneReceiverData({chain, blockNumber ,receiver_transaction}){
+        for(let i=blockNumber-1;i>0;i--){
+            const block = chain[i];
+
+            for(let transaction of block.data){
+                if(transaction.input.address === SENDER_INPUT.receiver_address){
+                    if(transaction.input.from === receiver_transaction.input.from){
+                        if(transaction.input.product === receiver_transaction.input.product){
+                            if(transaction.input.amount === receiver_transaction.input.amount){
+                                if(transaction.input.to === receiver_transaction.input.to){
+                                    // console.log("\nBlockchain -- index -- onlyOneReceiverData  -> FAILS\n");
+
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

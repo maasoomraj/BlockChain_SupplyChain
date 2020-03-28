@@ -324,7 +324,7 @@ checkPropTypes.resetWarningCache = function () {
 
 module.exports = checkPropTypes;
 },{"./lib/ReactPropTypesSecret":"../../node_modules/prop-types/lib/ReactPropTypesSecret.js"}],"../../node_modules/react/cjs/react.development.js":[function(require,module,exports) {
-/** @license React v16.13.0
+/** @license React v16.13.1
  * react.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -342,7 +342,7 @@ if ("development" !== "production") {
 
     var checkPropTypes = require('prop-types/checkPropTypes');
 
-    var ReactVersion = '16.13.0'; // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+    var ReactVersion = '16.13.1'; // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
     // nor polyfill, then a plain number is used for performance.
 
     var hasSymbol = typeof Symbol === 'function' && Symbol.for;
@@ -28325,7 +28325,7 @@ function _inheritsLoose(subClass, superClass) {
   subClass.__proto__ = superClass;
 }
 },{}],"../../node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
-/** @license React v16.13.0
+/** @license React v16.12.0
  * react-is.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -28337,7 +28337,11 @@ function _inheritsLoose(subClass, superClass) {
 
 if ("development" !== "production") {
   (function () {
-    'use strict'; // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+    'use strict';
+
+    Object.defineProperty(exports, '__esModule', {
+      value: true
+    }); // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
     // nor polyfill, then a plain number is used for performance.
 
     var hasSymbol = typeof Symbol === 'function' && Symbol.for;
@@ -28357,15 +28361,69 @@ if ("development" !== "production") {
     var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for('react.suspense_list') : 0xead8;
     var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
     var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
-    var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for('react.block') : 0xead9;
     var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for('react.fundamental') : 0xead5;
     var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for('react.responder') : 0xead6;
     var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for('react.scope') : 0xead7;
 
     function isValidElementType(type) {
       return typeof type === 'string' || typeof type === 'function' || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
-      type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
+      type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE);
     }
+    /**
+     * Forked from fbjs/warning:
+     * https://github.com/facebook/fbjs/blob/e66ba20ad5be433eb54423f2b097d829324d9de6/packages/fbjs/src/__forks__/warning.js
+     *
+     * Only change is we use console.warn instead of console.error,
+     * and do nothing when 'console' is not supported.
+     * This really simplifies the code.
+     * ---
+     * Similar to invariant but only logs a warning if the condition is not met.
+     * This can be used to log issues in development environments in critical
+     * paths. Removing the logging code for production environments will keep the
+     * same logic and follow the same code paths.
+     */
+
+
+    var lowPriorityWarningWithoutStack = function () {};
+
+    {
+      var printWarning = function (format) {
+        for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+          args[_key - 1] = arguments[_key];
+        }
+
+        var argIndex = 0;
+        var message = 'Warning: ' + format.replace(/%s/g, function () {
+          return args[argIndex++];
+        });
+
+        if (typeof console !== 'undefined') {
+          console.warn(message);
+        }
+
+        try {
+          // --- Welcome to debugging React ---
+          // This error was thrown as a convenience so that you can use this stack
+          // to find the callsite that caused this warning to fire.
+          throw new Error(message);
+        } catch (x) {}
+      };
+
+      lowPriorityWarningWithoutStack = function (condition, format) {
+        if (format === undefined) {
+          throw new Error('`lowPriorityWarningWithoutStack(condition, format, ...args)` requires a warning ' + 'message argument');
+        }
+
+        if (!condition) {
+          for (var _len2 = arguments.length, args = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+            args[_key2 - 2] = arguments[_key2];
+          }
+
+          printWarning.apply(void 0, [format].concat(args));
+        }
+      };
+    }
+    var lowPriorityWarningWithoutStack$1 = lowPriorityWarningWithoutStack;
 
     function typeOf(object) {
       if (typeof object === 'object' && object !== null) {
@@ -28428,9 +28486,8 @@ if ("development" !== "production") {
     function isAsyncMode(object) {
       {
         if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-          hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
-
-          console['warn']('The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
+          hasWarnedAboutDeprecatedIsAsyncMode = true;
+          lowPriorityWarningWithoutStack$1(false, 'The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
         }
       }
       return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
@@ -28484,6 +28541,7 @@ if ("development" !== "production") {
       return typeOf(object) === REACT_SUSPENSE_TYPE;
     }
 
+    exports.typeOf = typeOf;
     exports.AsyncMode = AsyncMode;
     exports.ConcurrentMode = ConcurrentMode;
     exports.ContextConsumer = ContextConsumer;
@@ -28497,6 +28555,7 @@ if ("development" !== "production") {
     exports.Profiler = Profiler;
     exports.StrictMode = StrictMode;
     exports.Suspense = Suspense;
+    exports.isValidElementType = isValidElementType;
     exports.isAsyncMode = isAsyncMode;
     exports.isConcurrentMode = isConcurrentMode;
     exports.isContextConsumer = isContextConsumer;
@@ -28510,8 +28569,6 @@ if ("development" !== "production") {
     exports.isProfiler = isProfiler;
     exports.isStrictMode = isStrictMode;
     exports.isSuspense = isSuspense;
-    exports.isValidElementType = isValidElementType;
-    exports.typeOf = typeOf;
   })();
 }
 },{}],"../../node_modules/react-is/index.js":[function(require,module,exports) {
@@ -30404,7 +30461,9 @@ function createReactContext(defaultValue, calculateChangedBits) {
 
   var contextProp = '__create-react-context-' + (0, _gud.default)() + '__';
 
-  var Provider = /*#__PURE__*/function (_Component) {
+  var Provider =
+  /*#__PURE__*/
+  function (_Component) {
     (0, _inheritsLoose2.default)(Provider, _Component);
 
     function Provider() {
@@ -30456,7 +30515,9 @@ function createReactContext(defaultValue, calculateChangedBits) {
 
   Provider.childContextTypes = (_Provider$childContex = {}, _Provider$childContex[contextProp] = _propTypes.default.object.isRequired, _Provider$childContex);
 
-  var Consumer = /*#__PURE__*/function (_Component2) {
+  var Consumer =
+  /*#__PURE__*/
+  function (_Component2) {
     (0, _inheritsLoose2.default)(Consumer, _Component2);
 
     function Consumer() {
@@ -31138,14 +31199,18 @@ var createNamedContext = function createNamedContext(name) {
   return context;
 };
 
-var context = /*#__PURE__*/createNamedContext("Router");
+var context =
+/*#__PURE__*/
+createNamedContext("Router");
 /**
  * The public API for putting history on context.
  */
 
 exports.__RouterContext = context;
 
-var Router = /*#__PURE__*/function (_React$Component) {
+var Router =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(Router, _React$Component);
 
   Router.computeRootMatch = function computeRootMatch(pathname) {
@@ -31236,7 +31301,9 @@ if ("development" !== "production") {
  */
 
 
-var MemoryRouter = /*#__PURE__*/function (_React$Component) {
+var MemoryRouter =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(MemoryRouter, _React$Component);
 
   function MemoryRouter() {
@@ -31279,7 +31346,9 @@ if ("development" !== "production") {
   };
 }
 
-var Lifecycle = /*#__PURE__*/function (_React$Component) {
+var Lifecycle =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(Lifecycle, _React$Component);
 
   function Lifecycle() {
@@ -31525,7 +31594,9 @@ function evalChildrenDev(children, props, path) {
  */
 
 
-var Route = /*#__PURE__*/function (_React$Component) {
+var Route =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(Route, _React$Component);
 
   function Route() {
@@ -31634,7 +31705,9 @@ function noop() {}
  */
 
 
-var StaticRouter = /*#__PURE__*/function (_React$Component) {
+var StaticRouter =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(StaticRouter, _React$Component);
 
   function StaticRouter() {
@@ -31728,7 +31801,9 @@ if ("development" !== "production") {
  */
 
 
-var Switch = /*#__PURE__*/function (_React$Component) {
+var Switch =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(Switch, _React$Component);
 
   function Switch() {
@@ -31916,7 +31991,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * The public API for a <Router> that uses HTML5 history.
  */
-var BrowserRouter = /*#__PURE__*/function (_React$Component) {
+var BrowserRouter =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(BrowserRouter, _React$Component);
 
   function BrowserRouter() {
@@ -31963,7 +32040,9 @@ if ("development" !== "production") {
  */
 
 
-var HashRouter = /*#__PURE__*/function (_React$Component) {
+var HashRouter =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(HashRouter, _React$Component);
 
   function HashRouter() {
@@ -32261,7 +32340,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var App = /*#__PURE__*/function (_Component) {
+var App =
+/*#__PURE__*/
+function (_Component) {
   _inherits(App, _Component);
 
   function App() {
@@ -32832,7 +32913,9 @@ function uncontrollable(Component, controlledValues, methods) {
   var PROPS_TO_OMIT = controlledProps.map(Utils.defaultKey);
   !(canAcceptRef || !methods.length) ? "development" !== "production" ? (0, _invariant.default)(false, '[uncontrollable] stateless function components cannot pass through methods ' + 'because they have no associated instances. Check component: ' + displayName + ', ' + 'attempting to pass through methods: ' + methods.join(', ')) : (0, _invariant.default)(false) : void 0;
 
-  var UncontrolledComponent = /*#__PURE__*/function (_React$Component) {
+  var UncontrolledComponent =
+  /*#__PURE__*/
+  function (_React$Component) {
     (0, _inheritsLoose2.default)(UncontrolledComponent, _React$Component);
 
     function UncontrolledComponent() {
@@ -33710,7 +33793,9 @@ var EXITING = 'exiting';
 
 exports.EXITING = EXITING;
 
-var Transition = /*#__PURE__*/function (_React$Component) {
+var Transition =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(Transition, _React$Component);
 
   function Transition(props, context) {
@@ -34305,7 +34390,9 @@ var defaultProps = {
   getDimensionValue: getDimensionValue
 };
 
-var Collapse = /*#__PURE__*/function (_React$Component) {
+var Collapse =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(Collapse, _React$Component);
 
   function Collapse() {
@@ -36388,11 +36475,15 @@ var popper = 'popper';
 exports.popper = popper;
 var reference = 'reference';
 exports.reference = reference;
-var variationPlacements = /*#__PURE__*/basePlacements.reduce(function (acc, placement) {
+var variationPlacements =
+/*#__PURE__*/
+basePlacements.reduce(function (acc, placement) {
   return acc.concat([placement + "-" + start, placement + "-" + end]);
 }, []);
 exports.variationPlacements = variationPlacements;
-var placements = /*#__PURE__*/[].concat(basePlacements, [auto]).reduce(function (acc, placement) {
+var placements =
+/*#__PURE__*/
+[].concat(basePlacements, [auto]).reduce(function (acc, placement) {
   return acc.concat([placement, placement + "-" + start, placement + "-" + end]);
 }, []); // modifiers that need to read the DOM
 
@@ -38683,7 +38774,9 @@ function popperGenerator(generatorOptions) {
   };
 }
 
-var createPopper = /*#__PURE__*/popperGenerator();
+var createPopper =
+/*#__PURE__*/
+popperGenerator();
 exports.createPopper = createPopper;
 },{"./dom-utils/getCompositeRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js","./dom-utils/getLayoutRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js","./dom-utils/listScrollParents.js":"../../node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js","./dom-utils/getOffsetParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js","./dom-utils/getComputedStyle.js":"../../node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js","./utils/orderModifiers.js":"../../node_modules/@popperjs/core/lib/utils/orderModifiers.js","./utils/debounce.js":"../../node_modules/@popperjs/core/lib/utils/debounce.js","./utils/validateModifiers.js":"../../node_modules/@popperjs/core/lib/utils/validateModifiers.js","./utils/uniqueBy.js":"../../node_modules/@popperjs/core/lib/utils/uniqueBy.js","./utils/getBasePlacement.js":"../../node_modules/@popperjs/core/lib/utils/getBasePlacement.js","./utils/mergeByName.js":"../../node_modules/@popperjs/core/lib/utils/mergeByName.js","./dom-utils/instanceOf.js":"../../node_modules/@popperjs/core/lib/dom-utils/instanceOf.js","./enums.js":"../../node_modules/@popperjs/core/lib/enums.js","./types.js":"../../node_modules/@popperjs/core/lib/types.js"}],"../../node_modules/@popperjs/core/lib/popper-base.js":[function(require,module,exports) {
 "use strict";
@@ -42160,7 +42253,9 @@ function findIndexOf(arr, cb) {
  */
 
 
-var ModalManager = /*#__PURE__*/function () {
+var ModalManager =
+/*#__PURE__*/
+function () {
   function ModalManager(_temp) {
     var _ref = _temp === void 0 ? {} : _temp,
         _ref$hideSiblingNodes = _ref.hideSiblingNodes,
@@ -42420,7 +42515,9 @@ var manager;
  * React hierarchy (such as the default: document.body).
  */
 
-var Modal = /*#__PURE__*/function (_React$Component) {
+var Modal =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(Modal, _React$Component);
 
   function Modal() {
@@ -42913,7 +43010,9 @@ var Selector = {
   NAVBAR_TOGGLER: '.navbar-toggler'
 };
 
-var BootstrapModalManager = /*#__PURE__*/function (_ModalManager) {
+var BootstrapModalManager =
+/*#__PURE__*/
+function (_ModalManager) {
   (0, _inheritsLoose2.default)(BootstrapModalManager, _ModalManager);
 
   function BootstrapModalManager() {
@@ -43233,7 +43332,9 @@ function BackdropTransition(props) {
 /* eslint-enable no-use-before-define */
 
 
-var Modal = /*#__PURE__*/function (_React$Component) {
+var Modal =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(Modal, _React$Component);
 
   function Modal() {
@@ -44394,7 +44495,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var RefHolder = /*#__PURE__*/function (_React$Component) {
+var RefHolder =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(RefHolder, _React$Component);
 
   function RefHolder() {
@@ -44632,7 +44735,9 @@ function createButton(name, defaultValue, label) {
     label = name;
   }
 
-  return _temp = _class = /*#__PURE__*/function (_React$Component) {
+  return _temp = _class =
+  /*#__PURE__*/
+  function (_React$Component) {
     (0, _inheritsLoose2.default)(_class, _React$Component);
 
     function _class() {
@@ -45508,7 +45613,9 @@ var _TabPane = _interopRequireDefault(require("./TabPane"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable react/require-render-return, react/no-unused-prop-types */
-var Tab = /*#__PURE__*/function (_React$Component) {
+var Tab =
+/*#__PURE__*/
+function (_React$Component) {
   (0, _inheritsLoose2.default)(Tab, _React$Component);
 
   function Tab() {
@@ -46806,7 +46913,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Block = /*#__PURE__*/function (_Component) {
+var Block =
+/*#__PURE__*/
+function (_Component) {
   _inherits(Block, _Component);
 
   function Block() {
@@ -46915,7 +47024,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Blocks = /*#__PURE__*/function (_Component) {
+var Blocks =
+/*#__PURE__*/
+function (_Component) {
   _inherits(Blocks, _Component);
 
   function Blocks() {
@@ -47006,7 +47117,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var ConductTransaction = /*#__PURE__*/function (_Component) {
+var ConductTransaction =
+/*#__PURE__*/
+function (_Component) {
   _inherits(ConductTransaction, _Component);
 
   function ConductTransaction() {
@@ -47193,7 +47306,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var sendTransaction = /*#__PURE__*/function (_Component) {
+var sendTransaction =
+/*#__PURE__*/
+function (_Component) {
   _inherits(sendTransaction, _Component);
 
   function sendTransaction() {
@@ -47332,7 +47447,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var receiveTransaction = /*#__PURE__*/function (_Component) {
+var receiveTransaction =
+/*#__PURE__*/
+function (_Component) {
   _inherits(receiveTransaction, _Component);
 
   function receiveTransaction() {
@@ -47507,7 +47624,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33979" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43277" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
