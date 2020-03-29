@@ -169,9 +169,9 @@ app.get('/api/wallet-info',(req, res)=>{
 });
 
 // JASH CODE BELOW -
-app.get('*',(req,res)=> {
-    res.sendFile(path.join(__dirname,'client/dist/index.html'));
-});
+// app.get('*',(req,res)=> {
+//     res.sendFile(path.join(__dirname,'client/dist/index.html'));
+// });
 // JASH CODE ABOVE -
 
 const syncChains = (async () => {

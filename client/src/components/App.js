@@ -21,6 +21,8 @@ class App extends Component {
                     <Link to='/conduct-transaction'>Conduct a Transaction</Link>
                     <Link to='/send-transaction'>Send</Link>
                     <Link to='/receive-transaction'>Receive</Link>
+                    <Link to='/transaction-pool-map'>Transaction Pool Map</Link>
+                    <Link to='/mine-transactions'>Mine transactions</Link>
                 </div>
                 <img className='logo' src = {logo}></img>
                 <br />
