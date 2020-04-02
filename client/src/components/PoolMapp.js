@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Navigation from './Navigation';
 
 class PoolMap extends Component {
     constructor(props) {
@@ -21,7 +22,8 @@ class PoolMap extends Component {
     render() {
         const { maps } = this.state
         return(
-            <div>
+            <div className='body'>
+                <Navigation />
                 { JSON.stringify(maps) }
             </div>
         );

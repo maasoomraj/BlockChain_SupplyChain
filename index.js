@@ -117,7 +117,7 @@ app.post('/api/transact', (req, res)=>{
     res.redirect('/api/transactionPoolMap');
 });
 
-app.get('/api/trace',(req,res)=>{
+app.post('/api/trace',(req,res)=>{
     const {product} = req.body;
     console.log("Tracing for product "+product+" ...");
     

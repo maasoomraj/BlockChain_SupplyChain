@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Navigation from './Navigation';
 
 class Minedata extends Component {
     constructor(props) {
@@ -21,7 +22,8 @@ class Minedata extends Component {
     render() {
         const { mines } = this.state
         return(
-            <div>
+            <div className='body'>
+                <Navigation />
                 { JSON.stringify(mines) }
             </div>
         );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl,Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import Navigation from './Navigation';
 
 class ConductTransaction extends Component {
     state = { recipient: '', amount: 0};
@@ -30,32 +30,34 @@ class ConductTransaction extends Component {
     render() {
 
         return (
-            <div className='ConductTransaction'>
-                <Link to = '/' className='button'> Home </Link>
-                <h3> Conduct a Transaction </h3>
-                <FormGroup>
+            <div>
+                <Navigation />
+                <div className='ConductTransaction'>
+                    <h3> Conduct a Transaction </h3>
+                    <FormGroup>
+                        <FormControl 
+                            input = 'text'
+                            placeholder = 'recipient'
+                            value={this.state.recipient}
+                            onChange={this.updateRecipient}    
+                        />
+                    </FormGroup>
+                    <FormGroup>
                     <FormControl 
-                        input = 'text'
-                        placeholder = 'recipient'
-                        value={this.state.recipient}
-                        onChange={this.updateRecipient}    
-                    />
-                </FormGroup>
-                <FormGroup>
-                <FormControl 
-                        input = 'number'
-                        placeholder = 'amount'
-                        value={this.state.amount}
-                        onChange={this.updateAmount}    
-                    />
-                </FormGroup>
-                <div>
-                    <Button 
-                        bsstyle="danger"
-                        onClick={this.conductTransaction}
-                    >
-                        Submit
-                    </Button>
+                            input = 'number'
+                            placeholder = 'amount'
+                            value={this.state.amount}
+                            onChange={this.updateAmount}    
+                        />
+                    </FormGroup>
+                    <div>
+                        <Button 
+                            bsstyle="danger"
+                            onClick={this.conductTransaction}
+                        >
+                            Submit
+                        </Button>
+                    </div>
                 </div>
             </div>
         )

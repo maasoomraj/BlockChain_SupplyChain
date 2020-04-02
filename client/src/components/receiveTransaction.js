@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {FormGroup, FormControl , Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import Navigation from './Navigation';
 
 class receiveTransaction extends Component {
     state = {product:'', quantity:'', amount:0, from:''};
@@ -43,45 +43,47 @@ class receiveTransaction extends Component {
     render(){
         console.log('this.state', this.state);
         return(
-            <div className='receiveTransaction'>
-                <Link to = '/' className='button'> Home </Link>
-                <br />
-                <h3>Receive Transaction -</h3>
+            <div>
+                <Navigation />
+                <div className='receiveTransaction'>
+                    <br />
+                    <h3>Receive Transaction -</h3>
 
-                <FormGroup>
-                    <FormControl 
-                        input='text'
-                        placeholder='Product Number'
-                        value={this.state.product} 
-                        onChange={this.updateRProduct}
-                    /> 
-                </FormGroup>
-                <FormGroup>
-                    <FormControl 
-                        input='text'
-                        placeholder='Quantity'
-                        value={this.state.quantity} 
-                        onChange={this.updateRQuantity}
-                    /> 
-                </FormGroup>
-                <FormGroup>
-                    <FormControl 
-                        input='number'
-                        placeholder='Amount'
-                        value={this.state.amount} 
-                        onChange={this.updateRAmount}
-                    /> 
-                </FormGroup>
-                <FormGroup>
-                    <FormControl 
-                        input='text'
-                        placeholder='From'
-                        value={this.state.from} 
-                        onChange={this.updateRFrom}
-                    /> 
-                </FormGroup>
-                <div>
-                    <Button bsStyle="danger" onClick={this.conductReceiveTransaction}>Send</Button>
+                    <FormGroup>
+                        <FormControl 
+                            input='text'
+                            placeholder='Product Number'
+                            value={this.state.product} 
+                            onChange={this.updateRProduct}
+                        /> 
+                    </FormGroup>
+                    <FormGroup>
+                        <FormControl 
+                            input='text'
+                            placeholder='Quantity'
+                            value={this.state.quantity} 
+                            onChange={this.updateRQuantity}
+                        /> 
+                    </FormGroup>
+                    <FormGroup>
+                        <FormControl 
+                            input='number'
+                            placeholder='Amount'
+                            value={this.state.amount} 
+                            onChange={this.updateRAmount}
+                        /> 
+                    </FormGroup>
+                    <FormGroup>
+                        <FormControl 
+                            input='text'
+                            placeholder='From'
+                            value={this.state.from} 
+                            onChange={this.updateRFrom}
+                        /> 
+                    </FormGroup>
+                    <div>
+                        <Button bsStyle="danger" onClick={this.conductReceiveTransaction}>Send</Button>
+                    </div>
                 </div>
             </div>
         );
