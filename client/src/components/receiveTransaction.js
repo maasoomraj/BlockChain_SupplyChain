@@ -81,8 +81,8 @@ class receiveTransaction extends Component {
                             onChange={this.updateRFrom}
                         /> 
                     </FormGroup>
-                    <div>
-                        <Button bsStyle="danger" onClick={this.conductReceiveTransaction}>Send</Button>
+                    <div align='center'>
+                        <Button className='button' onClick={this.conductReceiveTransaction}>Receive</Button>
                     </div>
                 </div>
             </div>

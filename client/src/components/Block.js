@@ -40,7 +40,9 @@ class Block extends Component {
         return (    
             <div>
                 <div>Data : {dataDisplay}</div>
-                <Button bsstyle="danger" bssize="small" onClick={this.toggleTransaction}>Show more: </Button>
+                <div align='center'>
+                <Button className = 'button' onClick={this.toggleTransaction}>Show more: </Button>
+                </div>
             </div>
         );
     }

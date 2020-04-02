@@ -50,8 +50,8 @@ class ConductTransaction extends Component {
                             onChange={this.updateAmount}    
                         />
                     </FormGroup>
-                    <div>
-                        <Button 
+                    <div align='center'>
+                        <Button className='button'
                             bsstyle="danger"
                             onClick={this.conductTransaction}
                         >

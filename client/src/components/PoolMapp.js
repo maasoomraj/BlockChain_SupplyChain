@@ -22,9 +22,11 @@ class PoolMap extends Component {
     render() {
         const { maps } = this.state
         return(
-            <div className='body'>
+            <div>
                 <Navigation />
-                { JSON.stringify(maps) }
+                <div className='Block'>
+                    { JSON.stringify(maps) }
+                </div>
             </div>
         );
     }

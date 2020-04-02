@@ -47016,11 +47016,12 @@ function (_Component) {
         }, "Show less: "));
       }
 
-      return _react.default.createElement("div", null, _react.default.createElement("div", null, "Data : ", dataDisplay), _react.default.createElement(_reactBootstrap.Button, {
-        bsstyle: "danger",
-        bssize: "small",
+      return _react.default.createElement("div", null, _react.default.createElement("div", null, "Data : ", dataDisplay), _react.default.createElement("div", {
+        align: "center"
+      }, _react.default.createElement(_reactBootstrap.Button, {
+        className: "button",
         onClick: this.toggleTransaction
-      }, "Show more: "));
+      }, "Show more: ")));
     }
   }]);
 
@@ -47225,7 +47226,10 @@ function (_Component) {
         placeholder: "amount",
         value: this.state.amount,
         onChange: this.updateAmount
-      })), _react.default.createElement("div", null, _react.default.createElement(_reactBootstrap.Button, {
+      })), _react.default.createElement("div", {
+        align: "center"
+      }, _react.default.createElement(_reactBootstrap.Button, {
+        className: "button",
         bsstyle: "danger",
         onClick: this.conductTransaction
       }, "Submit"))));
@@ -47437,7 +47441,10 @@ function (_Component) {
         placeholder: "To",
         value: this.state.to,
         onChange: this.updateTo
-      })), _react.default.createElement("div", null, _react.default.createElement(_reactBootstrap.Button, {
+      })), _react.default.createElement("div", {
+        align: "center"
+      }, _react.default.createElement(_reactBootstrap.Button, {
+        className: "button",
         bsStyle: "danger",
         onClick: this.conductSendTransaction
       }, "Send"))));
@@ -47577,10 +47584,12 @@ function (_Component) {
         placeholder: "From",
         value: this.state.from,
         onChange: this.updateRFrom
-      })), _react.default.createElement("div", null, _react.default.createElement(_reactBootstrap.Button, {
-        bsStyle: "danger",
+      })), _react.default.createElement("div", {
+        align: "center"
+      }, _react.default.createElement(_reactBootstrap.Button, {
+        className: "button",
         onClick: this.conductReceiveTransaction
-      }, "Send"))));
+      }, "Receive"))));
     }
   }]);
 
@@ -49425,9 +49434,9 @@ function (_Component) {
     key: "render",
     value: function render() {
       var maps = this.state.maps;
-      return _react.default.createElement("div", {
-        className: "body"
-      }, _react.default.createElement(_Navigation.default, null), JSON.stringify(maps));
+      return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("div", {
+        className: "Block"
+      }, JSON.stringify(maps)));
     }
   }]);
 
@@ -49449,6 +49458,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _axios = _interopRequireDefault(require("axios"));
 
 var _Navigation = _interopRequireDefault(require("./Navigation"));
+
+var _Transaction = _interopRequireDefault(require("./Transaction"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49508,9 +49519,9 @@ function (_Component) {
     key: "render",
     value: function render() {
       var mines = this.state.mines;
-      return _react.default.createElement("div", {
-        className: "body"
-      }, _react.default.createElement(_Navigation.default, null), JSON.stringify(mines));
+      return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("div", {
+        className: "Block"
+      }, JSON.stringify(mines)));
     }
   }]);
 
@@ -49519,7 +49530,7 @@ function (_Component) {
 
 var _default = Minedata;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","./Navigation":"components/Navigation.js"}],"index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","./Navigation":"components/Navigation.js","./Transaction":"components/Transaction.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -49601,7 +49612,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34841" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33797" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

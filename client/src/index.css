@@ -1,11 +1,12 @@
 body {
-    background-color: #444;
+    background-color: #1a1a1d;
     color: #fff;
     text-align: center;
     font-size: 20 px;
     font-family: 'Baloo 2', cursive;
     padding-top: 5%;
     word-wrap: break-word;
+    align-items: center;
 }
 
 .logo {
@@ -23,18 +24,18 @@ body {
     width: 500 px ;
 }
 
-.Block , .sendTransaction, .receiveTransaction {
+.Block , .sendTransaction, .receiveTransaction, .ConductTransaction{
     border: 1px solid #fff;
     padding: 5%;
     margin: 2%;
 }
 
 .sendTransaction{
-    background: rgb(175, 184, 199);
+    background:  #4e4e50;
 }
 
 .receiveTransaction{
-    background: rgb(175, 199, 194);
+    background:  #4e4e50;
 }
 
 .Transaction {
@@ -42,7 +43,7 @@ body {
 }
 
 .ConductTransaction {
-    margin: 10%;
+    background: #4e4e50;
 }
 
 a, a:hover {
@@ -53,17 +54,18 @@ a, a:hover {
     display: block;
     width: 115px;
     height: 40px;
-    background: #ee6666;
-    padding: 10px;
+    background: #950740;
+    padding: 8px;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 10px;
     color: white;
     font-weight: bold;
+    font-size: medium;
 }
 
 .navbar {
     width: 100%;
-    background-color: rgb(97, 86, 74);
+    background-color: #950740;
     overflow: auto;
   }
 
@@ -76,7 +78,7 @@ a, a:hover {
   }
 
   .navbar a:hover {
-    background-color: #000;
+    background-color: #1a1a1d;
   }
 
   .navbar a.active {
@@ -84,9 +86,5 @@ a, a:hover {
   }
 
   .heading {
-    background-color: #444;
-  }
-
-  .heading a.active {
-    background-color: #444;
+    background-color: #6f2232;
   }

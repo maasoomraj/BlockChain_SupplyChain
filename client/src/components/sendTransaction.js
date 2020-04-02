@@ -81,8 +81,8 @@ class sendTransaction extends Component {
                             onChange={this.updateTo}
                         /> 
                     </FormGroup>
-                    <div>
-                        <Button bsStyle="danger" onClick={this.conductSendTransaction}>Send</Button>
+                    <div align='center'>
+                        <Button className = 'button' bsStyle="danger" onClick={this.conductSendTransaction}>Send</Button>
                     </div>
                 </div>
             </div>
