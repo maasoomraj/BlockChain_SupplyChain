@@ -11,7 +11,6 @@ import receiveTransaction from './components/receiveTransaction';
 import PoolMapp from './components/PoolMapp';
 import Mine from './components/Mine';
 
-
 render(
     <Router history={history}>
         <Switch>

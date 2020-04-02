@@ -32328,7 +32328,6 @@ function (_Component) {
         className: "navbar"
       }, _react.default.createElement(_reactRouterDom.Link, {
         to: "/",
-        disabled: "true",
         className: "heading"
       }, "SUPPLY CHAIN MANAGEMENT"), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
@@ -49602,7 +49601,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41635" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34841" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

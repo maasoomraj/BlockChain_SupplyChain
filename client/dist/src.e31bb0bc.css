@@ -87,4 +87,8 @@ a, a:hover {
     background-color: #444;
   }
 
+  .heading a.active {
+    background-color: #444;
+  }
+
 /*# sourceMappingURL=/src.e31bb0bc.css.map */

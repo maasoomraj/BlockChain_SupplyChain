@@ -5,7 +5,7 @@ class Navigation extends Component {
     render() {
         return (
             <div className='navbar'>
-                    <Link to ='/' disabled = 'true' className ="heading">SUPPLY CHAIN MANAGEMENT</Link>
+                    <Link to ='/' className ="heading">SUPPLY CHAIN MANAGEMENT</Link>
                     <Link to ='/'>Home</Link>
                     <Link to='/blocks'>Blocks</Link>
                     <Link to='/conduct-transaction'>Conduct a Transaction</Link>
