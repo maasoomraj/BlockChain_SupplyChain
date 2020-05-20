@@ -126,13 +126,35 @@ app.post('/api/trace',(req,res)=>{
     for(let i=1;i<blockchain.chain.length;i++){
         const block = blockchain.chain[i];
         for(let transaction of block.data){
-            if(transaction.input.address === SENDER_INPUT.sender_address){
+            if(transaction.input.address === SENDER_INPUT.sender_address ||
+                transaction.input.address === SENDER_INPUT.receiver_address){
+
                 if(transaction.input.product === product){
-                    traceArray.push(transaction.input.from);
-                }
-            }else if(transaction.input.address === SENDER_INPUT.receiver_address){
-                if(transaction.input.product === product){
-                    traceArray.push(transaction.input.to);
+
+                    let found = 0;
+                    for(let j=0;j<traceArray.length;j++){
+                        if(traceArray[j] == transaction.input.from){
+                            found = 1;
+                            break;
+                        }
+                    }
+
+                    if(found == 0){
+                        traceArray.push(transaction.input.from);
+                    }
+
+                    found = 0;
+                    for(let j=0;j<traceArray.length;j++){
+                        if(traceArray[j] == transaction.input.to){
+                            found = 1;
+                            break;
+                        }
+                    }
+
+                    if(found == 0){
+                        traceArray.push(transaction.input.to);
+                    }
+                    
                 }
             }
         }
