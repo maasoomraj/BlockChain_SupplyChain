@@ -47181,7 +47181,7 @@ function (_Component) {
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ConductTransaction)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
       recipient: '',
-      amount: 0
+      amount: ''
     }, _this.updateRecipient = function (event) {
       _this.setState({
         recipient: event.target.value
@@ -47218,12 +47218,12 @@ function (_Component) {
         className: "ConductTransaction"
       }, _react.default.createElement("h3", null, " Conduct a Transaction "), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
         input: "text",
-        placeholder: "recipient",
+        placeholder: "Recipient Address",
         value: this.state.recipient,
         onChange: this.updateRecipient
       })), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
         input: "number",
-        placeholder: "amount",
+        placeholder: "Amount",
         value: this.state.amount,
         onChange: this.updateAmount
       })), _react.default.createElement("div", {
@@ -47373,7 +47373,7 @@ function (_Component) {
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(sendTransaction)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
       product: '',
       quantity: '',
-      amount: 0,
+      amount: '',
       to: ''
     }, _this.updateProduct = function (event) {
       _this.setState({
@@ -47516,7 +47516,7 @@ function (_Component) {
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(receiveTransaction)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
       product: '',
       quantity: '',
-      amount: 0,
+      amount: '',
       from: ''
     }, _this.updateRProduct = function (event) {
       _this.setState({
@@ -49700,7 +49700,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39303" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41659" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

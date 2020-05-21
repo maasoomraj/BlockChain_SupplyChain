@@ -3,7 +3,7 @@ import { FormGroup, FormControl,Button } from 'react-bootstrap';
 import Navigation from './Navigation';
 
 class ConductTransaction extends Component {
-    state = { recipient: '', amount: 0};
+    state = { recipient: '', amount: ''};
 
     updateRecipient = event => {
         this.setState({ recipient : event.target.value});
@@ -37,7 +37,7 @@ class ConductTransaction extends Component {
                     <FormGroup>
                         <FormControl 
                             input = 'text'
-                            placeholder = 'recipient'
+                            placeholder = 'Recipient Address'
                             value={this.state.recipient}
                             onChange={this.updateRecipient}    
                         />
@@ -45,7 +45,7 @@ class ConductTransaction extends Component {
                     <FormGroup>
                     <FormControl 
                             input = 'number'
-                            placeholder = 'amount'
+                            placeholder = 'Amount'
                             value={this.state.amount}
                             onChange={this.updateAmount}    
                         />

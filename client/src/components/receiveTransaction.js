@@ -3,7 +3,7 @@ import {FormGroup, FormControl , Button } from 'react-bootstrap';
 import Navigation from './Navigation';
 
 class receiveTransaction extends Component {
-    state = {product:'', quantity:'', amount:0, from:''};
+    state = {product:'', quantity:'', amount:'', from:''};
 
     updateRProduct = event => {
         this.setState({product : event.target.value });
