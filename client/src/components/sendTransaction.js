@@ -82,7 +82,7 @@ class sendTransaction extends Component {
                         /> 
                     </FormGroup>
                     <div align='center'>
-                        <Button className = 'button' bsStyle="danger" onClick={this.conductSendTransaction}>Send</Button>
+                        <Button className = 'button' onClick={this.conductSendTransaction}>Send</Button>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,8 @@
 import React,{ Component } from 'react';
 import logo from '../assets/logo.png';
-import Navigation from '../components/Navigation';  
+import Navigation from '../components/Navigation';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 class App extends Component {
     state = { walletInfo: {} };
@@ -25,6 +27,12 @@ class App extends Component {
                 <div className='walletInfo '>
                     <div>Address: {address}</div>
                     <div>Balance: {balance}</div>
+                </div>
+
+                <div>
+                <Link to='/api/mine'>
+                <Button bsstyle="danger" bssize="small">Mine Transactions</Button>
+                </Link>
                 </div>
             </div>
         );

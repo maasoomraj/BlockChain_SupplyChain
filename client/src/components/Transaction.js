@@ -1,5 +1,4 @@
 import React from 'react';
-import Navigation from './Navigation';
 
 const Transaction = ({transaction})  => {
     const { input, outputMap } = transaction;
@@ -7,7 +6,6 @@ const Transaction = ({transaction})  => {
 
     return (
         <div>
-            <Navigation />
             <div className = 'Transaction'>
                 <div>From : "{input.address.substring(0,50)}" | Balance: {input.amount} </div>
                 {

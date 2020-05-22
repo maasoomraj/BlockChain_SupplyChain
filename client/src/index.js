@@ -9,7 +9,6 @@ import './index.css';
 import sendTransaction from './components/sendTransaction';
 import receiveTransaction from './components/receiveTransaction';
 import PoolMapp from './components/PoolMapp';
-import Mine from './components/Mine';
 import Trace from './components/Trace';
 
 render(
@@ -21,7 +20,6 @@ render(
             <Route path='/send-transaction' component={sendTransaction} />
             <Route path='/receive-transaction' component={receiveTransaction} />
             <Route path='/transaction-pool-map' component={PoolMapp} />
-            <Route path='/mine-transactions' component={Mine} />
             <Route path='/trace' component={Trace} />
         </Switch>
     </Router>,

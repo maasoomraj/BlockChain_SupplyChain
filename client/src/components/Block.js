@@ -13,12 +13,12 @@ class Block extends Component {
     get displayTransaction() {
         const { data } =  this.props.block;
 
-        const stringifiedData = JSON.stringify(data);
+        // const stringifiedData = JSON.stringify(data);
 
-        const dataDisplay = 
-            stringifiedData.length > 35 ?
-            '${stringifiedData.substring(0,35)...' :
-            stringifiedData;
+        // const dataDisplay = 
+        //     stringifiedData.length > 35 ?
+        //     stringifiedData.substring(0,35) :
+        //     stringifiedData;
 
         if (this.state.displayTransaction){
             return(
@@ -32,16 +32,16 @@ class Block extends Component {
                         ))
                     }
                     <br />
-                    <Button bsstyle="danger" bssize="small" onClick={this.toggleTransaction}>Show less: </Button>
+                    <Button bsstyle="danger" bssize="small" onClick={this.toggleTransaction}>Show less </Button>
                 </div>
             )
         }
 
         return (    
             <div>
-                <div>Data : {dataDisplay}</div>
+                {/* <div>Data : {dataDisplay}</div> */}
                 <div align='center'>
-                <Button className = 'button' onClick={this.toggleTransaction}>Show more: </Button>
+                <Button className = 'button' onClick={this.toggleTransaction}>Show more </Button>
                 </div>
             </div>
         );
@@ -51,7 +51,7 @@ class Block extends Component {
 
         const { timestamp, hash } =  this.props.block;
         
-        const hashDisplay = '${hash.substring(0,15)}...';
+        const hashDisplay = hash.substring(0,25);
 
         return (
             <div className='Block'>
