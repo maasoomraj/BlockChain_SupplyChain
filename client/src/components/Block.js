@@ -49,17 +49,19 @@ class Block extends Component {
 
     render () {
 
-        const { timestamp, hash } =  this.props.block;
-        
-        const hashDisplay = hash.substring(0,25);
+        const { timestamp, lastHash, hash } =  this.props.block;
 
         return (
-            <div className='Block'>
-                <div> Hash : {hashDisplay} </div>
-                <div> Timestamp: {new Date(timestamp).toLocaleDateString()}</div>
-                {this.displayTransaction}
+            <div>
+                { hash != '000000' &&
+                <div className='Block'>
+                    <div> Hash : {hash} </div>
+                    <div> LastHash : {lastHash} </div>
+                    <div> Timestamp: {new Date(timestamp).toLocaleDateString()}</div>
+                    {this.displayTransaction}
+                </div>
+                }
             </div>
-            
         );
     }
 };

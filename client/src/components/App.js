@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import logo from '../assets/logo.png';
 import Navigation from '../components/Navigation';
-import { Link } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 class App extends Component {
@@ -30,9 +30,12 @@ class App extends Component {
                 </div>
 
                 <div>
-                <Link to='/api/mine'>
-                <Button bsstyle="danger" bssize="small">Mine Transactions</Button>
+                <Link to='/api/mine-transactions'>
+                    <Link to='/blocks'>
+                        <Button bsstyle="danger" bssize="small">Mine Transactions</Button>
+                    </Link>
                 </Link>
+                
                 </div>
             </div>
         );

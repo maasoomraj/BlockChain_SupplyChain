@@ -7,9 +7,7 @@ class PoolMap extends Component {
         super(props)
 
         this.state = {
-            id: "hi",
-            outputMap: "hi",
-            input: "hi",
+            maps: []
         };
     }
 
@@ -22,12 +20,12 @@ class PoolMap extends Component {
     }
 
     render() {
-        const { id, outputMap,input } = this.state
+        const maps = this.state
         return(
             <div>
                 <Navigation />
                 <div className='Block'>
-                    {id}
+                    {JSON.stringify(maps)}
                 </div>
             </div>
         );

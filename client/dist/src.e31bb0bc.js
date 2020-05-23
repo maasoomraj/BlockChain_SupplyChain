@@ -46802,11 +46802,13 @@ function (_Component) {
       }), _react.default.createElement("br", null), _react.default.createElement("div", null, "Hey !!"), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "walletInfo "
       }, _react.default.createElement("div", null, "Address: ", address), _react.default.createElement("div", null, "Balance: ", balance)), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/api/mine"
+        to: "/api/mine-transactions"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/blocks"
       }, _react.default.createElement(_reactBootstrap.Button, {
         bsstyle: "danger",
         bssize: "small"
-      }, "Mine Transactions"))));
+      }, "Mine Transactions")))));
     }
   }]);
 
@@ -46910,12 +46912,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Transaction = function Transaction(_ref) {
   var transaction = _ref.transaction;
-  var input = transaction.input,
+  var id = transaction.id,
+      input = transaction.input,
       outputMap = transaction.outputMap;
   var recipients = Object.keys(outputMap);
   return _react.default.createElement("div", null, _react.default.createElement("div", {
     className: "Transaction"
-  }, _react.default.createElement("div", null, "From : \"", input.address.substring(0, 50), "\" | Balance: ", input.amount, " "), recipients.map(function (recipient) {
+  }, _react.default.createElement("div", null, " ID : \"", id, "\" "), _react.default.createElement("div", null, "From : \"", input.address.substring(0, 50), "\" | Balance: ", input.amount, " "), recipients.map(function (recipient) {
     return _react.default.createElement("div", {
       key: recipient
     }, "To: \"", recipient.substring(0, 50), "\" | Sent: ", outputMap[recipient]);
@@ -46994,11 +46997,11 @@ function (_Component) {
     value: function render() {
       var _this$props$block = this.props.block,
           timestamp = _this$props$block.timestamp,
+          lastHash = _this$props$block.lastHash,
           hash = _this$props$block.hash;
-      var hashDisplay = hash.substring(0, 25);
-      return _react.default.createElement("div", {
+      return _react.default.createElement("div", null, hash != '000000' && _react.default.createElement("div", {
         className: "Block"
-      }, _react.default.createElement("div", null, " Hash : ", hashDisplay, " "), _react.default.createElement("div", null, " Timestamp: ", new Date(timestamp).toLocaleDateString()), this.displayTransaction);
+      }, _react.default.createElement("div", null, " Hash : ", hash, " "), _react.default.createElement("div", null, " LastHash : ", lastHash, " "), _react.default.createElement("div", null, " Timestamp: ", new Date(timestamp).toLocaleDateString()), this.displayTransaction));
     }
   }, {
     key: "displayTransaction",
@@ -47116,12 +47119,12 @@ function (_Component) {
     key: "render",
     value: function render() {
       console.log('this.state', this.state);
-      return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("div", null, _react.default.createElement("h3", null, " Blocks "), this.state.blocks.map(function (block) {
+      return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("h3", null, " Blocks "), this.state.blocks.map(function (block) {
         return _react.default.createElement(_Block.default, {
           key: block.hash,
           block: block
         });
-      })));
+      }));
     }
   }]);
 
@@ -49418,9 +49421,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PoolMap).call(this, props));
     _this.state = {
-      id: "hi",
-      outputMap: "hi",
-      input: "hi"
+      maps: []
     };
     return _this;
   }
@@ -49441,13 +49442,10 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state = this.state,
-          id = _this$state.id,
-          outputMap = _this$state.outputMap,
-          input = _this$state.input;
+      var maps = this.state;
       return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("div", {
         className: "Block"
-      }, id));
+      }, JSON.stringify(maps)));
     }
   }]);
 
@@ -49465,6 +49463,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _reactBootstrap = require("react-bootstrap");
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -49499,38 +49499,60 @@ var Trace =
 function (_Component) {
   _inherits(Trace, _Component);
 
-  function Trace(props) {
+  function Trace() {
+    var _getPrototypeOf2;
+
     var _this;
+
+    var _temp;
 
     _classCallCheck(this, Trace);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Trace).call(this, props));
-    _this.state = {
-      traces: []
-    };
-    return _this;
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Trace)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      product: ''
+    }, _this.updateProduct = function (event) {
+      _this.setState({
+        product: event.target.value
+      });
+    }, _this.traceProduct = function () {
+      var product = _this.state.product;
+      fetch('http://localhost:3001/api/trace', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          product: product
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        alert(json.message || json.type);
+      });
+    }, _temp));
   }
 
   _createClass(Trace, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      _axios.default.get('http://localhost:3001/api/trace').then(function (response) {
-        console.log(response);
-
-        _this2.setState({
-          traces: response.data
-        });
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var traces = this.state.traces;
       return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("div", {
-        className: "Block"
-      }, JSON.stringify(traces)));
+        className: "ConductTransaction"
+      }, _react.default.createElement("h3", null, " Trace a Product "), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "text",
+        placeholder: "Product Name",
+        value: this.state.product,
+        onChange: this.updateProduct
+      })), _react.default.createElement("div", {
+        align: "center"
+      }, _react.default.createElement(_reactBootstrap.Button, {
+        className: "button",
+        bsstyle: "danger",
+        onClick: this.traceProduct
+      }, "Trace"))));
     }
   }]);
 
@@ -49539,7 +49561,7 @@ function (_Component) {
 
 var _default = Trace;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","./Navigation":"components/Navigation.js"}],"index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","axios":"../../node_modules/axios/index.js","./Navigation":"components/Navigation.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -49621,7 +49643,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44023" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33781" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

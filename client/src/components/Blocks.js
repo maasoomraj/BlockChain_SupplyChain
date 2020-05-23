@@ -17,16 +17,14 @@ class Blocks extends Component {
         return (
             <div>
                 <Navigation />
-                <div>
-                    <h3> Blocks </h3>
-                    {
-                        this.state.blocks.map(block => {
-                            return (
-                                <Block key={block.hash} block={block} />
-                                )
-                        })
-                    }
-                </div>
+                <h3> Blocks </h3>
+                {
+                    this.state.blocks.map(block => {
+                        return (
+                            <Block key={block.hash} block={block} />
+                            )
+                    })
+                }
             </div>
         );
     }
