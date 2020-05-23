@@ -11,28 +11,115 @@ const {SENDER_INPUT} = require('./util/index');
 const ip = require('ip');
 const Peer = require('./app/peer');
 const got = require('got');
+const fs = require('fs');
 
 const app = express();
-const blockchain = new Blockchain();
-const transactionPool = new TransactionPool();
-const wallet = new Wallet();
-const peer = new Peer();
-const pubsub = new PubSub({blockchain , transactionPool, peer});
-const transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+
+let isLoggedIn = false;
+let blockchain,transactionPool,wallet,peer,pubsub,transactionMiner;
+
+blockchain = new Blockchain();
+transactionPool = new TransactionPool();
+peer = new Peer();
+pubsub = new PubSub({blockchain , transactionPool, peer});
 
 //JASH CODE BELOW -
 app.use(express.static(path.join(__dirname,'client/dist')));
 //JASH CODE ABOVE -
 
 const DEFAULT_PORT = 3001;
-let myIp = ip.address();
-// const SERVER_IP_ADDRESS = '192.168.43.27';
-// const ROOT_NODE_ADDRESS = `http://${SERVER_IP_ADDRESS}:${DEFAULT_PORT}`;
 const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
 
 console.log("ROOT_NODE_ADDRESS - " + ROOT_NODE_ADDRESS);
 
 app.use(bodyParser.json());
+
+app.get('/createUser',(req,res) => {
+
+    if(isLoggedIn == false){
+
+        if(PORT !== DEFAULT_PORT){
+            syncChains();
+            syncTransactionPool();
+            syncPeerList();
+        }
+
+        wallet = new Wallet();
+        transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+    
+        console.log("Created User Successfully !");
+    
+        isLoggedIn = true;
+
+        var details = JSON.stringify(wallet);
+        fs.writeFileSync(path.join(__dirname, '../', 'MyWallet.json'), details);
+
+        res.redirect('/api/wallet-info');
+
+    }else{
+        res.json({
+            loggedIn : "already true"
+        });
+    }
+
+});
+
+app.get('/logout',(req,res) => {
+
+    if(isLoggedIn == true){
+
+        isLoggedIn = false;
+
+        console.log("Logout successful !");
+
+        res.json({
+            loggedIn : false
+        });
+    }else{
+        res.json({
+            loggedIn : "already false"
+        });
+    }
+});
+
+app.get('/login',(req,res) => {
+
+    if(isLoggedIn == true){
+        res.json({
+            loggedIn : "already true"
+        });
+    }else{
+        let MyWallet;
+        fs.readFile(path.join(__dirname, '../', 'MyWallet.json'), (err, data) => {
+            if(err){
+                throw err;
+            }
+
+            if(PORT !== DEFAULT_PORT){
+                syncChains();
+                syncTransactionPool();
+                syncPeerList();
+            }
+
+            MyWallet = JSON.parse(data);
+            wallet = MyWallet;
+            transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+
+            wallet.balance = Wallet.calculateBalance({
+                chain : blockchain.chain,
+                address : wallet.publicKey
+            })
+
+            isLoggedIn = true;
+
+            console.log("Login Successful !");
+
+            res.redirect('/api/wallet-info');
+
+        });
+        
+    }
+});
 
 app.get('/api/blocks', (req,res) => {
     res.json(blockchain.chain);
@@ -254,44 +341,44 @@ const syncPeerList = (async () => {
 });
 
 // JASH CODE BELOW -
-const walletFoo = new Wallet();
-const walletBar = new Wallet();
+// const walletFoo = new Wallet();
+// const walletBar = new Wallet();
 
-const generateWalletTransaction = ({ wallet,recipient,amount }) => {
-    const transaction = wallet.createTransaction({
-        recipient,amount,chain: blockchain.chain
-    });
+// const generateWalletTransaction = ({ wallet,recipient,amount }) => {
+//     const transaction = wallet.createTransaction({
+//         recipient,amount,chain: blockchain.chain
+//     });
 
-    transactionPool.setTransaction(transaction);
+//     transactionPool.setTransaction(transaction);
 
-};
+// };
 
-const walletAction = () => generateWalletTransaction({
-    wallet, recipient: walletFoo.publicKey, amount:5
-});
+// const walletAction = () => generateWalletTransaction({
+//     wallet, recipient: walletFoo.publicKey, amount:5
+// });
 
-const walletFooAction = () => generateWalletTransaction({
-    wallet: walletFoo , recipient: walletBar.publicKey, amount:10
-});
+// const walletFooAction = () => generateWalletTransaction({
+//     wallet: walletFoo , recipient: walletBar.publicKey, amount:10
+// });
 
-const walletBarAction = () => generateWalletTransaction({
-    wallet: walletBar ,  recipient: wallet.publicKey, amount:15
-});
+// const walletBarAction = () => generateWalletTransaction({
+//     wallet: walletBar ,  recipient: wallet.publicKey, amount:15
+// });
 
-for (let i=0; i<3; i++) {
-    if (i%3 === 0) {
-        walletAction();
-        walletFooAction();
-    } else if (i%3 === 1) {
-        walletAction();
-        walletBarAction();
-    } else {
-        walletFooAction();
-        walletBarAction();
-    }
+// for (let i=0; i<3; i++) {
+//     if (i%3 === 0) {
+//         walletAction();
+//         walletFooAction();
+//     } else if (i%3 === 1) {
+//         walletAction();
+//         walletBarAction();
+//     } else {
+//         walletFooAction();
+//         walletBarAction();
+//     }
 
-    transactionMiner.mineTransactions();
-}
+//     transactionMiner.mineTransactions();
+// }
 // JASH CODE ABOVE -
 
 let PEER_PORT;
@@ -304,10 +391,10 @@ if(process.env.GENERATE_PEER_PORT === 'true')
 const PORT = PEER_PORT || DEFAULT_PORT ;
 app.listen(`${PORT}` , () => {
     console.log(`Listening at port ${PORT}`);
-    if(PORT !== DEFAULT_PORT){
-        syncChains();
-        syncTransactionPool();
-    }
+    // if(PORT !== DEFAULT_PORT){
+    //     syncChains();
+    //     syncTransactionPool();
+    // }
 
     // if(myIp !== `${SERVER_IP_ADDRESS}`){
     // // if(PORT !== DEFAULT_PORT){
