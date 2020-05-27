@@ -10,6 +10,7 @@ import sendTransaction from './components/sendTransaction';
 import receiveTransaction from './components/receiveTransaction';
 import PoolMapp from './components/PoolMapp';
 import Trace from './components/Trace';
+import Home from './components/Home';
 
 render(
     <Router history={history}>
@@ -21,6 +22,7 @@ render(
             <Route path='/receive-transaction' component={receiveTransaction} />
             <Route path='/transaction-pool-map' component={PoolMapp} />
             <Route path='/trace' component={Trace} />
+            <Route path='/Home' component={Home} />
         </Switch>
     </Router>,
     document.getElementById('root')

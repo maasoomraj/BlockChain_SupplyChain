@@ -12,6 +12,7 @@ class Navigation extends Component {
                     <Link to='/receive-transaction'>Receive</Link>
                     <Link to='/transaction-pool-map'>Transaction Pool Map</Link>
                     <Link to='/trace'>Trace</Link>
+                    <Link to='/logout'>Logout</Link>
                 </div>
         );
     }

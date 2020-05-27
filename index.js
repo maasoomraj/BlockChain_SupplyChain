@@ -54,12 +54,10 @@ app.get('/createUser',(req,res) => {
         var details = JSON.stringify(wallet);
         fs.writeFileSync(path.join(__dirname, '../', 'MyWallet.json'), details);
 
-        res.redirect('/api/wallet-info');
+        res.redirect('/');
 
     }else{
-        res.json({
-            loggedIn : "already true"
-        });
+        res.redirect('/');
     }
 
 });
@@ -72,13 +70,9 @@ app.get('/logout',(req,res) => {
 
         console.log("Logout successful !");
 
-        res.json({
-            loggedIn : false
-        });
+        res.redirect('/Home');
     }else{
-        res.json({
-            loggedIn : "already false"
-        });
+        res.redirect('/Home');
     }
 });
 
@@ -114,12 +108,14 @@ app.get('/login',(req,res) => {
 
             console.log("Login Successful !");
 
-            res.redirect('/api/wallet-info');
+            res.redirect('/');
 
         });
         
     }
 });
+
+// export { isLoggedIn };
 
 app.get('/api/blocks', (req,res) => {
     res.json(blockchain.chain);

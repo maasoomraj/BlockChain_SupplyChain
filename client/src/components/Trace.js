@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl,Button } from 'react-bootstrap';
-import axios from 'axios';
 import Navigation from './Navigation';
 
 class Trace extends Component {

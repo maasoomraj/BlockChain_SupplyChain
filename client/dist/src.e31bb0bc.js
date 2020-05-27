@@ -32330,8 +32330,6 @@ function (_Component) {
         to: "/",
         className: "heading"
       }, "SUPPLY CHAIN MANAGEMENT"), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/"
-      }, "Home"), _react.default.createElement(_reactRouterDom.Link, {
         to: "/blocks"
       }, "Blocks"), _react.default.createElement(_reactRouterDom.Link, {
         to: "/conduct-transaction"
@@ -32343,7 +32341,9 @@ function (_Component) {
         to: "/transaction-pool-map"
       }, "Transaction Pool Map"), _react.default.createElement(_reactRouterDom.Link, {
         to: "/trace"
-      }, "Trace"));
+      }, "Trace"), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/logout"
+      }, "Logout"));
     }
   }]);
 
@@ -46803,100 +46803,17 @@ function (_Component) {
         className: "walletInfo "
       }, _react.default.createElement("div", null, "Address: ", address), _react.default.createElement("div", null, "Balance: ", balance)), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/api/mine-transactions"
-      }, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/blocks"
       }, _react.default.createElement(_reactBootstrap.Button, {
         bsstyle: "danger",
         bssize: "small"
-      }, "Mine Transactions")))));
+      }, "Mine Transactions"))));
     }
   }]);
 
   return App;
 }(_react.Component);
 
-var _default = App; // import React, {Component} from 'react';
-// import {FormGroup, FormControl , Button } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
-// class receiveTransaction extends Component {
-//     state = {product:'', quantity:'', amount:0, from:''};
-//     updateProduct = event => {
-//         this.setState({product : event.target.value });
-//     }
-//     updateQuantity = event => {
-//         this.setState({quantity : event.target.value });
-//     }
-//     updateAmount = event => {
-//         this.setState({amount : Number(event.target.value) });
-//     }
-//     updateFrom = event => {
-//         this.setState({from : event.target.value });
-//     }
-//     conductReceiveTransaction = () => {
-//         const input = {
-//             product : this.state.product,
-//             quantity : this.state.quantity,
-//             amount : this.state.amount,
-//             from : this.state.from
-//             };
-//         // console.log(input);
-//         fetch('http://localhost:3001/api/receive' , {
-//              method : 'POST',
-//              headers : { 'Content-Type' : 'application/json'},
-//              body : JSON.stringify({input})
-//         }).then(response => response.json())
-//             .then(json => {
-//                 alert("Success.")
-//             });
-//     }
-//     render(){
-//         console.log('this.state', this.state);
-//         return(
-//             <div className='receiveTransaction'>
-//                 <Link to = '/'> Home </Link>
-//                 <br />
-//                 <h3>Receive Transaction -</h3>
-//                 <FormGroup>
-//                     <FormControl 
-//                         input='text'
-//                         placeholder='Product Number'
-//                         value={this.state.product} 
-//                         onChange={this.updateProduct}
-//                     /> 
-//                 </FormGroup>
-//                 <FormGroup>
-//                     <FormControl 
-//                         input='text'
-//                         placeholder='Quantity'
-//                         value={this.state.quantity} 
-//                         onChange={this.updateQuantity}
-//                     /> 
-//                 </FormGroup>
-//                 <FormGroup>
-//                     <FormControl 
-//                         input='number'
-//                         placeholder='Amount'
-//                         value={this.state.amount} 
-//                         onChange={this.updateAmount}
-//                     /> 
-//                 </FormGroup>
-//                 <FormGroup>
-//                     <FormControl 
-//                         input='text'
-//                         placeholder='To'
-//                         value={this.state.from} 
-//                         onChange={this.updateFrom}
-//                     /> 
-//                 </FormGroup>
-//                 <div>
-//                     <Button bsStyle="danger" onClick={this.conductReceiveTransaction}>Send</Button>
-//                 </div>
-//             </div>
-//         );
-//     }
-// };
-// export default receiveTransaction;
-
+var _default = App;
 exports.default = _default;
 },{"react":"../../node_modules/react/index.js","../assets/logo.png":"assets/logo.png","../components/Navigation":"components/Navigation.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js"}],"components/Transaction.js":[function(require,module,exports) {
 "use strict";
@@ -49466,8 +49383,6 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactBootstrap = require("react-bootstrap");
 
-var _axios = _interopRequireDefault(require("axios"));
-
 var _Navigation = _interopRequireDefault(require("./Navigation"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -49561,7 +49476,75 @@ function (_Component) {
 
 var _default = Trace;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","axios":"../../node_modules/axios/index.js","./Navigation":"components/Navigation.js"}],"index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","./Navigation":"components/Navigation.js"}],"components/Home.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Home =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Home, _Component);
+
+  function Home() {
+    _classCallCheck(this, Home);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Home).apply(this, arguments));
+  }
+
+  _createClass(Home, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "navbar"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        className: "heading"
+      }, "SUPPLY CHAIN MANAGEMENT"), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/login"
+      }, "Login"), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/createUser"
+      }, "Create User")), _react.default.createElement("div", {
+        className: "home"
+      }, "WELCOME TO SUPPLYCHAIN MANAGEMENT"));
+    }
+  }]);
+
+  return Home;
+}(_react.Component);
+
+;
+var _default = Home;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -49587,6 +49570,8 @@ var _receiveTransaction = _interopRequireDefault(require("./components/receiveTr
 var _PoolMapp = _interopRequireDefault(require("./components/PoolMapp"));
 
 var _Trace = _interopRequireDefault(require("./components/Trace"));
+
+var _Home = _interopRequireDefault(require("./components/Home"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49614,8 +49599,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 }), _react.default.createElement(_reactRouterDom.Route, {
   path: "/trace",
   component: _Trace.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  path: "/Home",
+  component: _Home.default
 }))), document.getElementById('root'));
-},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./history":"history.js","./components/App":"components/App.js","./components/Blocks":"components/Blocks.js","./components/ConductTransaction":"components/ConductTransaction.js","./index.css":"index.css","./components/sendTransaction":"components/sendTransaction.js","./components/receiveTransaction":"components/receiveTransaction.js","./components/PoolMapp":"components/PoolMapp.js","./components/Trace":"components/Trace.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./history":"history.js","./components/App":"components/App.js","./components/Blocks":"components/Blocks.js","./components/ConductTransaction":"components/ConductTransaction.js","./index.css":"index.css","./components/sendTransaction":"components/sendTransaction.js","./components/receiveTransaction":"components/receiveTransaction.js","./components/PoolMapp":"components/PoolMapp.js","./components/Trace":"components/Trace.js","./components/Home":"components/Home.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -49643,7 +49631,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33781" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41069" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

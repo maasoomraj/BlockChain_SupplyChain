@@ -16,6 +16,8 @@ class Blocks extends Component {
         console.log('this.state', this.state);
         return (
             <div>
+                {/* { isLoggedIn == true && */}
+                {/* <div> */}
                 <Navigation />
                 <h3> Blocks </h3>
                 {
@@ -25,6 +27,7 @@ class Blocks extends Component {
                             )
                     })
                 }
+                {/* </div> } */}
             </div>
         );
     }
