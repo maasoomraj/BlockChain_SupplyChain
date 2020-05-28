@@ -54,10 +54,10 @@ app.get('/createUser',(req,res) => {
         var details = JSON.stringify(wallet);
         fs.writeFileSync(path.join(__dirname, '../', 'MyWallet.json'), details);
 
-        res.redirect('/');
+        res.redirect('/Home');
 
     }else{
-        res.redirect('/');
+        res.redirect('/Home');
     }
 
 });
@@ -70,18 +70,16 @@ app.get('/logout',(req,res) => {
 
         console.log("Logout successful !");
 
-        res.redirect('/Home');
+        res.redirect('/');
     }else{
-        res.redirect('/Home');
+        res.redirect('/');
     }
 });
 
 app.get('/login',(req,res) => {
 
     if(isLoggedIn == true){
-        res.json({
-            loggedIn : "already true"
-        });
+        res.redirect('/Home');
     }else{
         let MyWallet;
         fs.readFile(path.join(__dirname, '../', 'MyWallet.json'), (err, data) => {
@@ -108,7 +106,7 @@ app.get('/login',(req,res) => {
 
             console.log("Login Successful !");
 
-            res.redirect('/');
+            res.redirect('/Home');
 
         });
         
