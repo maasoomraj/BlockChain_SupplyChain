@@ -1,35 +1,43 @@
 import React, {Component} from 'react';
 import Block from './Block';
 import Navigation from './Navigation';
-
+import { Redirect } from 'react-router-dom';
 
 class Blocks extends Component {
-    state = { blocks: [] };
+    constructor(props) {
+        super(props)
+
+    this.state = { chain: [],isLoggedIn: true, };
+    }
 
     componentDidMount() {
         fetch('http://localhost:3001/api/blocks')
         .then(response => response.json())
-        .then(json => this.setState({ blocks: json}));
+        .then(json => this.setState({ chain: json.chain,isLoggedIn: json.isLoggedIn}));
     }
 
     render() {
-        console.log('this.state', this.state);
+        const { chain,isLoggedIn } = this.state;
+        if (isLoggedIn===false) {
+            return(
+                <Redirect to='/'></Redirect>
+            );
+    } 
+    else {
         return (
             <div>
-                {/* { isLoggedIn == true && */}
-                {/* <div> */}
                 <Navigation />
                 <h3> Blocks </h3>
                 {
-                    this.state.blocks.map(block => {
+                    chain.map(block => {
                         return (
                             <Block key={block.hash} block={block} />
                             )
                     })
                 }
-                {/* </div> } */}
             </div>
         );
+    }
     }
 }
 

@@ -1,34 +1,40 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Navigation from './Navigation';
+import { Redirect } from 'react-router-dom';
 
 class PoolMap extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            maps: []
+            transactionPool: [],
+            isLoggedIn: true,
         };
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3001/api/transactionpoolmap')
-        .then(response => {
-            console.log(response)
-            this.setState({maps:response.data})
-        })
+        fetch('http://localhost:3001/api/transactionpoolmap')
+        .then(response => response.json())
+        .then(json => this.setState({ transactionPool: json.transactionPool,isLoggedIn: json.isLoggedIn}));
     }
 
     render() {
-        const maps = this.state
-        return(
-            <div>
-                <Navigation />
-                <div className='Block'>
-                    {JSON.stringify(maps)}
+        const { transactionPool,isLoggedIn } = this.state;
+        if (isLoggedIn===false) {
+            return(
+                <Redirect to='/'></Redirect>
+            );
+        } 
+        else {
+            return(
+                <div>
+                    <Navigation />
+                    <div className='Block'>
+                        {JSON.stringify(transactionPool)}
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 
