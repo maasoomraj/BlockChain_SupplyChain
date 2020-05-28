@@ -54,10 +54,10 @@ app.get('/createUser',(req,res) => {
         var details = JSON.stringify(wallet);
         fs.writeFileSync(path.join(__dirname, '../', 'MyWallet.json'), details);
 
-        res.redirect('/Home');
+        res.redirect('/');
 
     }else{
-        res.redirect('/Home');
+        res.redirect('/');
     }
 
 });
@@ -70,16 +70,18 @@ app.get('/logout',(req,res) => {
 
         console.log("Logout successful !");
 
-        res.redirect('/');
+        res.redirect('/Home');
     }else{
-        res.redirect('/');
+        res.redirect('/Home');
     }
 });
 
 app.get('/login',(req,res) => {
 
     if(isLoggedIn == true){
-        res.redirect('/Home');
+        res.json({
+            loggedIn : "already true"
+        });
     }else{
         let MyWallet;
         fs.readFile(path.join(__dirname, '../', 'MyWallet.json'), (err, data) => {
@@ -106,7 +108,7 @@ app.get('/login',(req,res) => {
 
             console.log("Login Successful !");
 
-            res.redirect('/Home');
+            res.redirect('/');
 
         });
         
@@ -116,11 +118,17 @@ app.get('/login',(req,res) => {
 // export { isLoggedIn };
 
 app.get('/api/blocks', (req,res) => {
-    res.json(blockchain.chain);
+    res.json({
+        chain : blockchain.chain,
+        isLoggedIn : isLoggedIn
+    });
 });
 
 app.get('/api/peer', (req,res) => {
-    res.json(peer.peersList);
+    res.json({
+        peer : peer.peersList,
+        isLoggedIn : isLoggedIn
+    });
 });
 
 app.post('/api/mine', (req,res) => {
@@ -240,11 +248,17 @@ app.post('/api/trace',(req,res)=>{
             }
         }
     }
-    res.json(traceArray);
+    res.json({
+        traceArray : traceArray,
+        isLoggedIn : isLoggedIn
+    });
 });
 
 app.get('/api/transactionPoolMap',(req, res)=>{
-    res.json(transactionPool.transactionMap);
+    res.json({
+        transactionPool : transactionPool.transactionMap,
+        isLoggedIn : isLoggedIn
+    });
 });
 
 app.get('/api/mine-transactions', (req, res)=>{
@@ -267,7 +281,8 @@ app.get('/api/wallet-info',(req, res)=>{
         balance : Wallet.calculateBalance({
             chain : blockchain.chain,
             address : address
-        })
+        }),
+        isLoggedIn : isLoggedIn
     });
 });
 
