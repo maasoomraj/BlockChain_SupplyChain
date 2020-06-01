@@ -48500,7 +48500,9 @@ function (_Component) {
     }
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Trace)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
-      product: ''
+      product: '',
+      traceArray: [],
+      isLoggedIn: true
     }, _this.updateProduct = function (event) {
       _this.setState({
         product: event.target.value
@@ -48518,7 +48520,9 @@ function (_Component) {
       }).then(function (response) {
         return response.json();
       }).then(function (json) {
-        alert(json.message || json.type);
+        return _this.setState({
+          traceArray: json.traceArray
+        });
       });
     }, _temp));
   }
@@ -48526,6 +48530,9 @@ function (_Component) {
   _createClass(Trace, [{
     key: "render",
     value: function render() {
+      var _this$state = this.state,
+          traceArray = _this$state.traceArray,
+          isLoggedIn = _this$state.isLoggedIn;
       return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("div", {
         className: "ConductTransaction"
       }, _react.default.createElement("h3", null, " Trace a Product "), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
@@ -48539,7 +48546,7 @@ function (_Component) {
         className: "button",
         bsstyle: "danger",
         onClick: this.traceProduct
-      }, "Trace"))));
+      }, "Trace"))), _react.default.createElement("div", null, traceArray.length > 0 && _react.default.createElement("div", null, "The Product is found at address: ", _react.default.createElement("br", null), JSON.stringify(traceArray))));
     }
   }]);
 
@@ -49026,7 +49033,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43689" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42831" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

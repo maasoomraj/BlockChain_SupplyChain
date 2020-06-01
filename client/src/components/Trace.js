@@ -3,7 +3,7 @@ import { FormGroup, FormControl,Button } from 'react-bootstrap';
 import Navigation from './Navigation';
 
 class Trace extends Component {
-    state = { product: '' };
+    state = { product: '' , traceArray : [], isLoggedIn : true};
 
     updateProduct = event =>{
         this.setState({ product : event.target.value});
@@ -17,12 +17,11 @@ class Trace extends Component {
             headers: { 'Content-Type' : 'application/json' },
             body: JSON.stringify({product})
     }).then(response => response.json())
-        .then(json => {
-            alert(json.message || json.type);
-        }); 
+        .then(json => this.setState({ traceArray: json.traceArray})); 
     }
 
     render() {
+        const {traceArray,isLoggedIn} = this.state;
         return(
             <div>
                 <Navigation />
@@ -39,12 +38,19 @@ class Trace extends Component {
                     <div align='center'>
                         <Button className='button'
                             bsstyle="danger"
-                            onClick={this.traceProduct}
-                        >
+                            onClick={this.traceProduct}>
                             Trace
                         </Button>
                     </div>
                 </div>
+                <div>
+                { traceArray.length>0 && 
+                <div>
+                    The Product is found at address: <br></br>
+                    {JSON.stringify(traceArray)} 
+                </div>
+    }
+    </div>
             </div>
         );
     }
