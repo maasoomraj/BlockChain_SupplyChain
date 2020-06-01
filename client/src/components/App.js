@@ -8,8 +8,8 @@ class App extends Component {
             <div>
                 <div className='navbar'>
                         <Link className ="heading">SUPPLY CHAIN MANAGEMENT</Link>
-                        <Link to='/login' >Login</Link>
-                        <Link to='/createUser'>Create User</Link>
+                        <Link to='/Log-in' >Login</Link>
+                        <Link to='/Create-User'>Create User</Link>
                 </div>
                 <div className="home">
                     WELCOME TO SUPPLYCHAIN MANAGEMENT

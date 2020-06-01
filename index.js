@@ -54,10 +54,6 @@ app.get('/createUser',(req,res) => {
         var details = JSON.stringify(wallet);
         fs.writeFileSync(path.join(__dirname, '../', 'MyWallet.json'), details);
 
-        res.redirect('/Home');
-
-    }else{
-        res.redirect('/Home');
     }
 
 });
@@ -69,10 +65,6 @@ app.get('/logout',(req,res) => {
         isLoggedIn = false;
 
         console.log("Logout successful !");
-
-        res.redirect('/');
-    }else{
-        res.redirect('/');
     }
 });
 
@@ -106,14 +98,10 @@ app.get('/login',(req,res) => {
 
             console.log("Login Successful !");
 
-            res.redirect('/Home');
-
         });
         
     }
 });
-
-// export { isLoggedIn };
 
 app.get('/api/blocks', (req,res) => {
     res.json({
@@ -199,8 +187,6 @@ app.post('/api/transact', (req, res)=>{
 
     transactionPool.setTransaction(transaction);
 
-    // console.log(transactionPool);
-
     res.redirect('/api/transactionPoolMap');
 });
 
@@ -267,7 +253,7 @@ app.get('/api/mine-transactions', (req, res)=>{
     // peer.addPeer(myIp);
     // console.log("Ip " + myIp + " has been added to peersList.");
 
-    res.redirect('/api/blocks');
+    res.redirect('/blocks');
 });
 
 app.get('/api/wallet-info',(req, res)=>{

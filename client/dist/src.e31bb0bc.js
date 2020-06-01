@@ -30352,24 +30352,8 @@ function createMemoryHistory(props) {
   };
   return history;
 }
-},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","resolve-pathname":"../../node_modules/resolve-pathname/esm/resolve-pathname.js","value-equal":"../../node_modules/value-equal/esm/value-equal.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"../../node_modules/@babel/runtime/helpers/inheritsLoose.js":[function(require,module,exports) {
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-  subClass.__proto__ = superClass;
-}
-
-module.exports = _inheritsLoose;
-},{}],"../../node_modules/gud/index.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","resolve-pathname":"../../node_modules/resolve-pathname/esm/resolve-pathname.js","value-equal":"../../node_modules/value-equal/esm/value-equal.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"../../node_modules/mini-create-react-context/dist/esm/index.js":[function(require,module,exports) {
 var global = arguments[3];
-'use strict';
-
-var key = '__global_unique_id__';
-
-module.exports = function () {
-  return global[key] = (global[key] || 0) + 1;
-};
-},{}],"../../node_modules/mini-create-react-context/dist/esm/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30379,11 +30363,9 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/inheritsLoose"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _gud = _interopRequireDefault(require("gud"));
 
 var _tinyWarning = _interopRequireDefault(require("tiny-warning"));
 
@@ -30394,6 +30376,12 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var MAX_SIGNED_31_BIT_INT = 1073741823;
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : {};
+
+function getUniqueId() {
+  var key = '__global_unique_id__';
+  return commonjsGlobal[key] = (commonjsGlobal[key] || 0) + 1;
+}
 
 function objectIs(x, y) {
   if (x === y) {
@@ -30433,7 +30421,7 @@ function onlyChild(children) {
 function createReactContext(defaultValue, calculateChangedBits) {
   var _Provider$childContex, _Consumer$contextType;
 
-  var contextProp = '__create-react-context-' + (0, _gud.default)() + '__';
+  var contextProp = '__create-react-context-' + getUniqueId() + '__';
 
   var Provider =
   /*#__PURE__*/
@@ -30562,7 +30550,7 @@ function createReactContext(defaultValue, calculateChangedBits) {
 var index = _react.default.createContext || createReactContext;
 var _default = index;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","@babel/runtime/helpers/inheritsLoose":"../../node_modules/@babel/runtime/helpers/inheritsLoose.js","prop-types":"../../node_modules/prop-types/index.js","gud":"../../node_modules/gud/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js"}],"../../node_modules/react-router/node_modules/isarray/index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","prop-types":"../../node_modules/prop-types/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js"}],"../../node_modules/react-router/node_modules/isarray/index.js":[function(require,module,exports) {
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
@@ -31138,7 +31126,7 @@ exports.useLocation = useLocation;
 exports.useParams = useParams;
 exports.useRouteMatch = useRouteMatch;
 exports.withRouter = withRouter;
-exports.__RouterContext = exports.Switch = exports.StaticRouter = exports.Router = exports.Route = exports.MemoryRouter = void 0;
+exports.__RouterContext = exports.__HistoryContext = exports.Switch = exports.StaticRouter = exports.Router = exports.Route = exports.MemoryRouter = void 0;
 
 var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/inheritsLoose"));
 
@@ -31173,9 +31161,21 @@ var createNamedContext = function createNamedContext(name) {
   return context;
 };
 
+var historyContext =
+/*#__PURE__*/
+createNamedContext("Router-History"); // TODO: Replace with React.createContext once we can assume React 16+
+
+exports.__HistoryContext = historyContext;
+
+var createNamedContext$1 = function createNamedContext(name) {
+  var context = (0, _miniCreateReactContext.default)();
+  context.displayName = name;
+  return context;
+};
+
 var context =
 /*#__PURE__*/
-createNamedContext("Router");
+createNamedContext$1("Router");
 /**
  * The public API for putting history on context.
  */
@@ -31244,14 +31244,16 @@ function (_React$Component) {
 
   _proto.render = function render() {
     return _react.default.createElement(context.Provider, {
-      children: this.props.children || null,
       value: {
         history: this.props.history,
         location: this.state.location,
         match: Router.computeRootMatch(this.state.location.pathname),
         staticContext: this.props.staticContext
       }
-    });
+    }, _react.default.createElement(historyContext.Provider, {
+      children: this.props.children || null,
+      value: this.props.history
+    }));
   };
 
   return Router;
@@ -31868,7 +31870,7 @@ function useHistory() {
     !(typeof useContext === "function") ? "development" !== "production" ? (0, _tinyInvariant.default)(false, "You must use React >= 16.8 in order to use useHistory()") : (0, _tinyInvariant.default)(false) : void 0;
   }
 
-  return useContext(context).history;
+  return useContext(historyContext);
 }
 
 function useLocation() {
@@ -31893,7 +31895,9 @@ function useRouteMatch(path) {
     !(typeof useContext === "function") ? "development" !== "production" ? (0, _tinyInvariant.default)(false, "You must use React >= 16.8 in order to use useRouteMatch()") : (0, _tinyInvariant.default)(false) : void 0;
   }
 
-  return path ? matchPath(useLocation().pathname, path) : useContext(context).match;
+  var location = useLocation();
+  var match = useContext(context).match;
+  return path ? matchPath(location.pathname, path) : match;
 }
 
 if ("development" !== "production") {
@@ -31923,26 +31927,93 @@ if ("development" !== "production") {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _exportNames = {
-  BrowserRouter: true,
-  HashRouter: true,
-  Link: true,
-  NavLink: true
-};
+Object.defineProperty(exports, "MemoryRouter", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.MemoryRouter;
+  }
+});
+Object.defineProperty(exports, "Prompt", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.Prompt;
+  }
+});
+Object.defineProperty(exports, "Redirect", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.Redirect;
+  }
+});
+Object.defineProperty(exports, "Route", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.Route;
+  }
+});
+Object.defineProperty(exports, "Router", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.Router;
+  }
+});
+Object.defineProperty(exports, "StaticRouter", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.StaticRouter;
+  }
+});
+Object.defineProperty(exports, "Switch", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.Switch;
+  }
+});
+Object.defineProperty(exports, "generatePath", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.generatePath;
+  }
+});
+Object.defineProperty(exports, "matchPath", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.matchPath;
+  }
+});
+Object.defineProperty(exports, "useHistory", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.useHistory;
+  }
+});
+Object.defineProperty(exports, "useLocation", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.useLocation;
+  }
+});
+Object.defineProperty(exports, "useParams", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.useParams;
+  }
+});
+Object.defineProperty(exports, "useRouteMatch", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.useRouteMatch;
+  }
+});
+Object.defineProperty(exports, "withRouter", {
+  enumerable: true,
+  get: function () {
+    return _reactRouter.withRouter;
+  }
+});
 exports.NavLink = exports.Link = exports.HashRouter = exports.BrowserRouter = void 0;
 
 var _reactRouter = require("react-router");
-
-Object.keys(_reactRouter).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function () {
-      return _reactRouter[key];
-    }
-  });
-});
 
 var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/inheritsLoose"));
 
@@ -32111,6 +32182,8 @@ var LinkAnchor = forwardRef(function (_ref, forwardedRef) {
   } else {
     props.ref = innerRef;
   }
+  /* eslint-disable-next-line jsx-a11y/anchor-has-content */
+
 
   return _react.default.createElement("a", props);
 });
@@ -32206,11 +32279,12 @@ var NavLink = forwardRef$1(function (_ref, forwardedRef) {
       exact = _ref.exact,
       isActiveProp = _ref.isActive,
       locationProp = _ref.location,
+      sensitive = _ref.sensitive,
       strict = _ref.strict,
       styleProp = _ref.style,
       to = _ref.to,
       innerRef = _ref.innerRef,
-      rest = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["aria-current", "activeClassName", "activeStyle", "className", "exact", "isActive", "location", "strict", "style", "to", "innerRef"]);
+      rest = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["aria-current", "activeClassName", "activeStyle", "className", "exact", "isActive", "location", "sensitive", "strict", "style", "to", "innerRef"]);
   return _react.default.createElement(_reactRouter.__RouterContext.Consumer, null, function (context) {
     !context ? "development" !== "production" ? (0, _tinyInvariant.default)(false, "You should not use <NavLink> outside a <Router>") : (0, _tinyInvariant.default)(false) : void 0;
     var currentLocation = locationProp || context.location;
@@ -32221,6 +32295,7 @@ var NavLink = forwardRef$1(function (_ref, forwardedRef) {
     var match = escapedPath ? (0, _reactRouter.matchPath)(currentLocation.pathname, {
       path: escapedPath,
       exact: exact,
+      sensitive: sensitive,
       strict: strict
     }) : null;
     var isActive = !!(isActiveProp ? isActiveProp(match, currentLocation) : match);
@@ -32257,6 +32332,7 @@ if ("development" !== "production") {
     exact: _propTypes.default.bool,
     isActive: _propTypes.default.func,
     location: _propTypes.default.object,
+    sensitive: _propTypes.default.bool,
     strict: _propTypes.default.bool,
     style: _propTypes.default.object
   });
@@ -32327,9 +32403,9 @@ function (_Component) {
       }, _react.default.createElement(_reactRouterDom.Link, {
         className: "heading"
       }, "SUPPLY CHAIN MANAGEMENT"), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/login"
+        to: "/Log-in"
       }, "Login"), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/createUser"
+        to: "/Create-User"
       }, "Create User")), _react.default.createElement("div", {
         className: "home"
       }, "WELCOME TO SUPPLYCHAIN MANAGEMENT"));
@@ -33016,9 +33092,12 @@ function ThemeProvider(_ref) {
   var copiedPrefixes = (0, _react.useMemo)(function () {
     return (0, _extends2.default)({}, prefixes);
   }, [prefixes]);
-  return _react.default.createElement(Provider, {
-    value: copiedPrefixes
-  }, children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Provider, {
+      value: copiedPrefixes
+    }, children)
+  );
 }
 
 function useBootstrapPrefix(prefix, defaultPrefix) {
@@ -33041,9 +33120,12 @@ function createBootstrapComponent(Component, opts) {
     props[forwardRefAs] = ref; // eslint-disable-next-line react/prop-types
 
     var bsPrefix = useBootstrapPrefix(props.bsPrefix, prefix);
-    return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-      bsPrefix: bsPrefix
-    }));
+    return (
+      /*#__PURE__*/
+      _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+        bsPrefix: bsPrefix
+      }))
+    );
   }, {
     displayName: "Bootstrap(" + (Component.displayName || Component.name) + ")"
   });
@@ -33117,7 +33199,7 @@ function useAccordionToggle(eventKey, onClick) {
   var contextEventKey = (0, _react.useContext)(_AccordionContext.default);
   var onSelect = (0, _react.useContext)(_SelectableContext.default);
   return function (e) {
-    /* 
+    /*
       Compare the event key in context with the given event key.
       If they are the same, then collapse the component.
     */
@@ -33135,10 +33217,18 @@ var AccordionToggle = _react.default.forwardRef(function (_ref, ref) {
       onClick = _ref.onClick,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["as", "children", "eventKey", "onClick"]);
   var accordionOnClick = useAccordionToggle(eventKey, onClick);
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref,
-    onClick: accordionOnClick
-  }, props), children);
+
+  if (Component === 'button') {
+    props.type = 'button';
+  }
+
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref,
+      onClick: accordionOnClick
+    }, props), children)
+  );
 });
 
 var _default = AccordionToggle;
@@ -33402,7 +33492,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.parseDuration = parseDuration;
-exports.emulateTransitionEnd = emulateTransitionEnd;
 exports.default = exports.TRANSITION_SUPPORTED = void 0;
 
 var _canUseDOM = _interopRequireDefault(require("./canUseDOM"));
@@ -33449,13 +33538,13 @@ function emulateTransitionEnd(element, duration, padding) {
 }
 
 function transitionEnd(element, handler, duration) {
-  if (!TRANSITION_SUPPORTED) {
-    return emulateTransitionEnd(element, 0, 0);
-  }
-
   if (duration == null) duration = parseDuration(element) || 0;
-  emulateTransitionEnd(element, duration);
-  return (0, _listen.default)(element, 'transitionend', handler);
+  var removeEmulate = emulateTransitionEnd(element, duration);
+  var remove = (0, _listen.default)(element, 'transitionend', handler);
+  return function () {
+    removeEmulate();
+    remove();
+  };
 }
 
 var _default = transitionEnd;
@@ -33693,7 +33782,7 @@ function (_React$Component) {
     }
 
     return null;
-  }; // getSnapshotBeforeUpdate(prevProps) {
+  } // getSnapshotBeforeUpdate(prevProps) {
   //   let nextStatus = null
   //   if (prevProps !== this.props) {
   //     const { status } = this.state
@@ -33709,7 +33798,7 @@ function (_React$Component) {
   //   }
   //   return { nextStatus }
   // }
-
+  ;
 
   var _proto = Transition.prototype;
 
@@ -33769,12 +33858,10 @@ function (_React$Component) {
       // nextStatus will always be ENTERING or EXITING.
       this.cancelNextCallback();
 
-      var node = _reactDom.default.findDOMNode(this);
-
       if (nextStatus === ENTERING) {
-        this.performEnter(node, mounting);
+        this.performEnter(mounting);
       } else {
-        this.performExit(node);
+        this.performExit();
       }
     } else if (this.props.unmountOnExit && this.state.status === EXITED) {
       this.setState({
@@ -33783,11 +33870,16 @@ function (_React$Component) {
     }
   };
 
-  _proto.performEnter = function performEnter(node, mounting) {
+  _proto.performEnter = function performEnter(mounting) {
     var _this2 = this;
 
     var enter = this.props.enter;
     var appearing = this.context ? this.context.isMounting : mounting;
+
+    var _ref2 = this.props.nodeRef ? [appearing] : [_reactDom.default.findDOMNode(this), appearing],
+        maybeNode = _ref2[0],
+        maybeAppearing = _ref2[1];
+
     var timeouts = this.getTimeouts();
     var enterTimeout = appearing ? timeouts.appear : timeouts.enter; // no enter animation skip right to ENTERED
     // if we are mounting and running this it means appear _must_ be set
@@ -33796,53 +33888,54 @@ function (_React$Component) {
       this.safeSetState({
         status: ENTERED
       }, function () {
-        _this2.props.onEntered(node);
+        _this2.props.onEntered(maybeNode);
       });
       return;
     }
 
-    this.props.onEnter(node, appearing);
+    this.props.onEnter(maybeNode, maybeAppearing);
     this.safeSetState({
       status: ENTERING
     }, function () {
-      _this2.props.onEntering(node, appearing);
+      _this2.props.onEntering(maybeNode, maybeAppearing);
 
-      _this2.onTransitionEnd(node, enterTimeout, function () {
+      _this2.onTransitionEnd(enterTimeout, function () {
         _this2.safeSetState({
           status: ENTERED
         }, function () {
-          _this2.props.onEntered(node, appearing);
+          _this2.props.onEntered(maybeNode, maybeAppearing);
         });
       });
     });
   };
 
-  _proto.performExit = function performExit(node) {
+  _proto.performExit = function performExit() {
     var _this3 = this;
 
     var exit = this.props.exit;
-    var timeouts = this.getTimeouts(); // no exit animation skip right to EXITED
+    var timeouts = this.getTimeouts();
+    var maybeNode = this.props.nodeRef ? undefined : _reactDom.default.findDOMNode(this); // no exit animation skip right to EXITED
 
     if (!exit || _config.default.disabled) {
       this.safeSetState({
         status: EXITED
       }, function () {
-        _this3.props.onExited(node);
+        _this3.props.onExited(maybeNode);
       });
       return;
     }
 
-    this.props.onExit(node);
+    this.props.onExit(maybeNode);
     this.safeSetState({
       status: EXITING
     }, function () {
-      _this3.props.onExiting(node);
+      _this3.props.onExiting(maybeNode);
 
-      _this3.onTransitionEnd(node, timeouts.exit, function () {
+      _this3.onTransitionEnd(timeouts.exit, function () {
         _this3.safeSetState({
           status: EXITED
         }, function () {
-          _this3.props.onExited(node);
+          _this3.props.onExited(maybeNode);
         });
       });
     });
@@ -33883,8 +33976,9 @@ function (_React$Component) {
     return this.nextCallback;
   };
 
-  _proto.onTransitionEnd = function onTransitionEnd(node, timeout, handler) {
+  _proto.onTransitionEnd = function onTransitionEnd(timeout, handler) {
     this.setNextCallback(handler);
+    var node = this.props.nodeRef ? this.props.nodeRef.current : _reactDom.default.findDOMNode(this);
     var doesNotHaveTimeoutOrListener = timeout == null && !this.props.addEndListener;
 
     if (!node || doesNotHaveTimeoutOrListener) {
@@ -33893,7 +33987,11 @@ function (_React$Component) {
     }
 
     if (this.props.addEndListener) {
-      this.props.addEndListener(node, this.nextCallback);
+      var _ref3 = this.props.nodeRef ? [this.nextCallback] : [node, this.nextCallback],
+          maybeNode = _ref3[0],
+          maybeNextCallback = _ref3[1];
+
+      this.props.addEndListener(maybeNode, maybeNextCallback);
     }
 
     if (timeout != null) {
@@ -33910,36 +34008,28 @@ function (_React$Component) {
 
     var _this$props = this.props,
         children = _this$props.children,
-        childProps = (0, _objectWithoutPropertiesLoose2.default)(_this$props, ["children"]); // filter props for Transtition
-
-    delete childProps.in;
-    delete childProps.mountOnEnter;
-    delete childProps.unmountOnExit;
-    delete childProps.appear;
-    delete childProps.enter;
-    delete childProps.exit;
-    delete childProps.timeout;
-    delete childProps.addEndListener;
-    delete childProps.onEnter;
-    delete childProps.onEntering;
-    delete childProps.onEntered;
-    delete childProps.onExit;
-    delete childProps.onExiting;
-    delete childProps.onExited;
-
-    if (typeof children === 'function') {
+        _in = _this$props.in,
+        _mountOnEnter = _this$props.mountOnEnter,
+        _unmountOnExit = _this$props.unmountOnExit,
+        _appear = _this$props.appear,
+        _enter = _this$props.enter,
+        _exit = _this$props.exit,
+        _timeout = _this$props.timeout,
+        _addEndListener = _this$props.addEndListener,
+        _onEnter = _this$props.onEnter,
+        _onEntering = _this$props.onEntering,
+        _onEntered = _this$props.onEntered,
+        _onExit = _this$props.onExit,
+        _onExiting = _this$props.onExiting,
+        _onExited = _this$props.onExited,
+        _nodeRef = _this$props.nodeRef,
+        childProps = (0, _objectWithoutPropertiesLoose2.default)(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
+    return (
+      /*#__PURE__*/
       // allows for nested Transitions
-      return _react.default.createElement(_TransitionGroupContext.default.Provider, {
-        value: null
-      }, children(status, childProps));
-    }
-
-    var child = _react.default.Children.only(children);
-
-    return (// allows for nested Transitions
       _react.default.createElement(_TransitionGroupContext.default.Provider, {
         value: null
-      }, _react.default.cloneElement(child, childProps))
+      }, typeof children === 'function' ? children(status, childProps) : _react.default.cloneElement(_react.default.Children.only(children), childProps))
     );
   };
 
@@ -33948,6 +34038,21 @@ function (_React$Component) {
 
 Transition.contextType = _TransitionGroupContext.default;
 Transition.propTypes = "development" !== "production" ? {
+  /**
+   * A React reference to DOM element that need to transition:
+   * https://stackoverflow.com/a/51127130/4671932
+   *
+   *   - When `nodeRef` prop is used, `node` is not passed to callback functions
+   *      (e.g. `onEnter`) because user already has direct access to the node.
+   *   - When changing `key` prop of `Transition` in a `TransitionGroup` a new
+   *     `nodeRef` need to be provided to `Transition` with changed `key` prop
+   *     (see
+   *     [test/CSSTransition-test.js](https://github.com/reactjs/react-transition-group/blob/13435f897b3ab71f6e19d724f145596f5910581c/test/CSSTransition-test.js#L362-L437)).
+   */
+  nodeRef: _propTypes.default.shape({
+    current: typeof Element === 'undefined' ? _propTypes.default.any : _propTypes.default.instanceOf(Element)
+  }),
+
   /**
    * A `function` child can be used instead of a React element. This function is
    * called with the current transition status (`'entering'`, `'entered'`,
@@ -33984,10 +34089,9 @@ Transition.propTypes = "development" !== "production" ? {
   unmountOnExit: _propTypes.default.bool,
 
   /**
-   * Normally a component is not transitioned if it is shown when the
-   * `<Transition>` component mounts. If you want to transition on the first
-   * mount set `appear` to `true`, and the component will transition in as soon
-   * as the `<Transition>` mounts.
+   * By default the child component does not perform the enter transition when
+   * it first mounts, regardless of the value of `in`. If you want this
+   * behavior, set both `appear` and `in` to `true`.
    *
    * > **Note**: there are no special appear states like `appearing`/`appeared`, this prop
    * > only adds an additional enter transition. However, in the
@@ -34047,7 +34151,9 @@ Transition.propTypes = "development" !== "production" ? {
   /**
    * Add a custom transition end trigger. Called with the transitioning
    * DOM node and a `done` callback. Allows for more fine grained transition end
-   * logic. **Note:** Timeouts are still used as a fallback if provided.
+   * logic. Timeouts are still used as a fallback if provided.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
    *
    * ```jsx
    * addEndListener={(node, done) => {
@@ -34062,6 +34168,8 @@ Transition.propTypes = "development" !== "production" ? {
    * Callback fired before the "entering" status is applied. An extra parameter
    * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
    *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
    * @type Function(node: HtmlElement, isAppearing: bool) -> void
    */
   onEnter: _propTypes.default.func,
@@ -34069,6 +34177,8 @@ Transition.propTypes = "development" !== "production" ? {
   /**
    * Callback fired after the "entering" status is applied. An extra parameter
    * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
    *
    * @type Function(node: HtmlElement, isAppearing: bool)
    */
@@ -34078,12 +34188,16 @@ Transition.propTypes = "development" !== "production" ? {
    * Callback fired after the "entered" status is applied. An extra parameter
    * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
    *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
    * @type Function(node: HtmlElement, isAppearing: bool) -> void
    */
   onEntered: _propTypes.default.func,
 
   /**
    * Callback fired before the "exiting" status is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
    *
    * @type Function(node: HtmlElement) -> void
    */
@@ -34092,6 +34206,8 @@ Transition.propTypes = "development" !== "production" ? {
   /**
    * Callback fired after the "exiting" status is applied.
    *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
    * @type Function(node: HtmlElement) -> void
    */
   onExiting: _propTypes.default.func,
@@ -34099,11 +34215,12 @@ Transition.propTypes = "development" !== "production" ? {
   /**
    * Callback fired after the "exited" status is applied.
    *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
    * @type Function(node: HtmlElement) -> void
    */
-  onExited: _propTypes.default.func // Name the function so it is clearer in the documentation
-
-} : {};
+  onExited: _propTypes.default.func
+} : {}; // Name the function so it is clearer in the documentation
 
 function noop() {}
 
@@ -34121,11 +34238,11 @@ Transition.defaultProps = {
   onExiting: noop,
   onExited: noop
 };
-Transition.UNMOUNTED = 0;
-Transition.EXITED = 1;
-Transition.ENTERING = 2;
-Transition.ENTERED = 3;
-Transition.EXITING = 4;
+Transition.UNMOUNTED = UNMOUNTED;
+Transition.EXITED = EXITED;
+Transition.ENTERING = ENTERING;
+Transition.ENTERED = ENTERED;
+Transition.EXITING = EXITING;
 var _default = Transition;
 exports.default = _default;
 },{"@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","prop-types":"../../node_modules/prop-types/index.js","react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","./config":"../../node_modules/react-transition-group/esm/config.js","./utils/PropTypes":"../../node_modules/react-transition-group/esm/utils/PropTypes.js","./TransitionGroupContext":"../../node_modules/react-transition-group/esm/TransitionGroupContext.js"}],"../../node_modules/react-bootstrap/esm/createChainedFunction.js":[function(require,module,exports) {
@@ -34318,20 +34435,23 @@ function (_React$Component) {
     var handleEntered = (0, _createChainedFunction.default)(this.handleEntered, onEntered);
     var handleExit = (0, _createChainedFunction.default)(this.handleExit, onExit);
     var handleExiting = (0, _createChainedFunction.default)(this.handleExiting, onExiting);
-    return _react.default.createElement(_Transition.default, (0, _extends2.default)({
-      addEndListener: _transitionEnd.default
-    }, props, {
-      "aria-expanded": props.role ? props.in : null,
-      onEnter: handleEnter,
-      onEntering: handleEntering,
-      onEntered: handleEntered,
-      onExit: handleExit,
-      onExiting: handleExiting
-    }), function (state, innerProps) {
-      return _react.default.cloneElement(children, (0, _extends2.default)({}, innerProps, {
-        className: (0, _classnames.default)(className, children.props.className, collapseStyles[state], _this2.getDimension() === 'width' && 'width')
-      }));
-    });
+    return (
+      /*#__PURE__*/
+      _react.default.createElement(_Transition.default, (0, _extends2.default)({
+        addEndListener: _transitionEnd.default
+      }, props, {
+        "aria-expanded": props.role ? props.in : null,
+        onEnter: handleEnter,
+        onEntering: handleEntering,
+        onEntered: handleEntered,
+        onExit: handleExit,
+        onExiting: handleExiting
+      }), function (state, innerProps) {
+        return _react.default.cloneElement(children, (0, _extends2.default)({}, innerProps, {
+          className: (0, _classnames.default)(className, children.props.className, collapseStyles[state], _this2.getDimension() === 'width' && 'width')
+        }));
+      })
+    );
   };
 
   return Collapse;
@@ -34369,10 +34489,15 @@ var AccordionCollapse = _react.default.forwardRef(function (_ref, ref) {
       eventKey = _ref.eventKey,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["children", "eventKey"]);
   var contextEventKey = (0, _react.useContext)(_AccordionContext.default);
-  return _react.default.createElement(_Collapse.default, (0, _extends2.default)({
-    ref: ref,
-    in: contextEventKey === eventKey
-  }, props), _react.default.createElement("div", null, _react.default.Children.only(children)));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Collapse.default, (0, _extends2.default)({
+      ref: ref,
+      in: contextEventKey === eventKey
+    }, props),
+    /*#__PURE__*/
+    _react.default.createElement("div", null, _react.default.Children.only(children)))
+  );
 });
 
 AccordionCollapse.displayName = 'AccordionCollapse';
@@ -34422,15 +34547,22 @@ var Accordion = _react.default.forwardRef(function (props, ref) {
       controlledProps = (0, _objectWithoutPropertiesLoose2.default)(_useUncontrolled, ["as", "activeKey", "bsPrefix", "children", "className", "onSelect"]);
 
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'accordion');
-  return _react.default.createElement(_AccordionContext.default.Provider, {
-    value: activeKey
-  }, _react.default.createElement(_SelectableContext.default.Provider, {
-    value: onSelect
-  }, _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, controlledProps, {
-    className: (0, _classnames.default)(className, bsPrefix)
-  }), children)));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_AccordionContext.default.Provider, {
+      value: activeKey
+    },
+    /*#__PURE__*/
+    _react.default.createElement(_SelectableContext.default.Provider, {
+      value: onSelect
+    },
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, controlledProps, {
+      className: (0, _classnames.default)(className, bsPrefix)
+    }), children)))
+  );
 });
 
 Accordion.Toggle = _AccordionToggle.default;
@@ -34542,10 +34674,13 @@ function createWithBsPrefix(prefix, _temp) {
         Tag = _ref2$as === void 0 ? Component : _ref2$as,
         props = (0, _objectWithoutPropertiesLoose2.default)(_ref2, ["className", "bsPrefix", "as"]);
     var resolvedPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, prefix);
-    return _react.default.createElement(Tag, (0, _extends2.default)({
-      ref: ref,
-      className: (0, _classnames.default)(className, resolvedPrefix)
-    }, props));
+    return (
+      /*#__PURE__*/
+      _react.default.createElement(Tag, (0, _extends2.default)({
+        ref: ref,
+        className: (0, _classnames.default)(className, resolvedPrefix)
+      }, props))
+    );
   });
 
   BsComponent.defaultProps = defaultProps;
@@ -34570,10 +34705,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _default = function _default(className) {
   return _react.default.forwardRef(function (p, ref) {
-    return _react.default.createElement("div", (0, _extends2.default)({}, p, {
-      ref: ref,
-      className: (0, _classnames.default)(p.className, className)
-    }));
+    return (
+      /*#__PURE__*/
+      _react.default.createElement("div", (0, _extends2.default)({}, p, {
+        ref: ref,
+        className: (0, _classnames.default)(p.className, className)
+      }))
+    );
   });
 };
 
@@ -34625,16 +34763,19 @@ var Fade = _react.default.forwardRef(function (_ref, ref) {
     (0, _triggerBrowserReflow.default)(node);
     if (props.onEnter) props.onEnter(node);
   }, [props]);
-  return _react.default.createElement(_Transition.default, (0, _extends2.default)({
-    ref: ref,
-    addEndListener: _transitionEnd.default
-  }, props, {
-    onEnter: handleEnter
-  }), function (status, innerProps) {
-    return _react.default.cloneElement(children, (0, _extends2.default)({}, innerProps, {
-      className: (0, _classnames.default)('fade', className, children.props.className, fadeStyles[status])
-    }));
-  });
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Transition.default, (0, _extends2.default)({
+      ref: ref,
+      addEndListener: _transitionEnd.default
+    }, props, {
+      onEnter: handleEnter
+    }), function (status, innerProps) {
+      return _react.default.cloneElement(children, (0, _extends2.default)({}, innerProps, {
+        className: (0, _classnames.default)('fade', className, children.props.className, fadeStyles[status])
+      }));
+    })
+  );
 });
 
 Fade.defaultProps = defaultProps;
@@ -34674,16 +34815,23 @@ var CloseButton = _react.default.forwardRef(function (_ref, ref) {
       onClick = _ref.onClick,
       className = _ref.className,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["label", "onClick", "className"]);
-  return _react.default.createElement("button", (0, _extends2.default)({
-    ref: ref,
-    type: "button",
-    className: (0, _classnames.default)('close', className),
-    onClick: onClick
-  }, props), _react.default.createElement("span", {
-    "aria-hidden": "true"
-  }, "\xD7"), _react.default.createElement("span", {
-    className: "sr-only"
-  }, label));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("button", (0, _extends2.default)({
+      ref: ref,
+      type: "button",
+      className: (0, _classnames.default)('close', className),
+      onClick: onClick
+    }, props),
+    /*#__PURE__*/
+    _react.default.createElement("span", {
+      "aria-hidden": "true"
+    }, "\xD7"),
+    /*#__PURE__*/
+    _react.default.createElement("span", {
+      className: "sr-only"
+    }, label))
+  );
 });
 
 CloseButton.displayName = 'CloseButton';
@@ -34765,12 +34913,15 @@ var SafeAnchor = _react.default.forwardRef(function (_ref, ref) {
     props['aria-disabled'] = true;
   }
 
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    onClick: handleClick,
-    onKeyDown: (0, _createChainedFunction.default)(handleKeyDown, onKeyDown)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      onClick: handleClick,
+      onKeyDown: (0, _createChainedFunction.default)(handleKeyDown, onKeyDown)
+    }))
+  );
 });
 
 SafeAnchor.displayName = 'SafeAnchor';
@@ -34837,22 +34988,29 @@ var Alert = _react.default.forwardRef(function (uncontrolledProps, ref) {
     onClose(false, e);
   });
 
-  var alert = _react.default.createElement("div", (0, _extends2.default)({
+  var alert =
+  /*#__PURE__*/
+  _react.default.createElement("div", (0, _extends2.default)({
     role: "alert"
   }, Transition ? props : undefined, {
     ref: ref,
     className: (0, _classnames.default)(className, prefix, variant && prefix + "-" + variant, dismissible && prefix + "-dismissible")
-  }), dismissible && _react.default.createElement(_CloseButton.default, {
+  }), dismissible &&
+  /*#__PURE__*/
+  _react.default.createElement(_CloseButton.default, {
     onClick: handleClose,
     label: closeLabel
   }), children);
 
   if (!Transition) return show ? alert : null;
-  return _react.default.createElement(Transition, (0, _extends2.default)({
-    unmountOnExit: true
-  }, props, {
-    in: show
-  }), alert);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Transition, (0, _extends2.default)({
+      unmountOnExit: true
+    }, props, {
+      in: show
+    }), alert)
+  );
 });
 
 var DivStyledAsH4 = (0, _divWithClassName.default)('h4');
@@ -34900,11 +35058,14 @@ var Badge = _react.default.forwardRef(function (_ref, ref) {
       Component = _ref$as === void 0 ? 'span' : _ref$as,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "variant", "pill", "className", "as"]);
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'badge');
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, prefix, pill && prefix + "-pill", variant && prefix + "-" + variant)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, prefix, pill && prefix + "-pill", variant && prefix + "-" + variant)
+    }))
+  );
 });
 
 Badge.displayName = 'Badge';
@@ -34953,18 +35114,23 @@ var BreadcrumbItem = _react.default.forwardRef(function (_ref, ref) {
       target = _ref.target,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "active", "children", "className", "as", "linkAs", "linkProps", "href", "title", "target"]);
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'breadcrumb-item');
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(prefix, className, {
-      active: active
-    }),
-    "aria-current": active ? 'page' : undefined
-  }), active ? children : _react.default.createElement(LinkComponent, (0, _extends2.default)({}, linkProps, {
-    href: href,
-    title: title,
-    target: target
-  }), children));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(prefix, className, {
+        active: active
+      }),
+      "aria-current": active ? 'page' : undefined
+    }), active ? children :
+    /*#__PURE__*/
+    _react.default.createElement(LinkComponent, (0, _extends2.default)({}, linkProps, {
+      href: href,
+      title: title,
+      target: target
+    }), children))
+  );
 });
 
 BreadcrumbItem.displayName = 'BreadcrumbItem';
@@ -35008,13 +35174,18 @@ var Breadcrumb = _react.default.forwardRef(function (_ref, ref) {
       Component = _ref$as === void 0 ? 'nav' : _ref$as,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "listProps", "children", "label", "as"]);
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'breadcrumb');
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    "aria-label": label,
-    className: className,
-    ref: ref
-  }, props), _react.default.createElement("ol", (0, _extends2.default)({}, listProps, {
-    className: (0, _classnames.default)(prefix, listProps.className)
-  }), children));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      "aria-label": label,
+      className: className,
+      ref: ref
+    }, props),
+    /*#__PURE__*/
+    _react.default.createElement("ol", (0, _extends2.default)({}, listProps, {
+      className: (0, _classnames.default)(prefix, listProps.className)
+    }), children))
+  );
 });
 
 Breadcrumb.displayName = 'Breadcrumb';
@@ -35065,11 +35236,14 @@ var Button = _react.default.forwardRef(function (_ref, ref) {
   var classes = (0, _classnames.default)(className, prefix, active && 'active', prefix + "-" + variant, block && prefix + "-block", size && prefix + "-" + size);
 
   if (props.href) {
-    return _react.default.createElement(_SafeAnchor.default, (0, _extends2.default)({}, props, {
-      as: as,
-      ref: ref,
-      className: (0, _classnames.default)(classes, props.disabled && 'disabled')
-    }));
+    return (
+      /*#__PURE__*/
+      _react.default.createElement(_SafeAnchor.default, (0, _extends2.default)({}, props, {
+        as: as,
+        ref: ref,
+        className: (0, _classnames.default)(classes, props.disabled && 'disabled')
+      }))
+    );
   }
 
   if (ref) {
@@ -35081,9 +35255,12 @@ var Button = _react.default.forwardRef(function (_ref, ref) {
   }
 
   var Component = as || 'button';
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    className: classes
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      className: classes
+    }))
+  );
 });
 
 Button.displayName = 'Button';
@@ -35128,10 +35305,13 @@ var ButtonGroup = _react.default.forwardRef(function (props, ref) {
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'btn-group');
   var baseClass = prefix;
   if (vertical) baseClass = prefix + "-vertical";
-  return _react.default.createElement(Component, (0, _extends2.default)({}, rest, {
-    ref: ref,
-    className: (0, _classnames.default)(className, baseClass, size && prefix + "-" + size, toggle && prefix + "-toggle")
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, rest, {
+      ref: ref,
+      className: (0, _classnames.default)(className, baseClass, size && prefix + "-" + size, toggle && prefix + "-toggle")
+    }))
+  );
 });
 
 ButtonGroup.displayName = 'ButtonGroup';
@@ -35167,10 +35347,13 @@ var ButtonToolbar = _react.default.forwardRef(function (_ref, ref) {
       className = _ref.className,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className"]);
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'btn-toolbar');
-  return _react.default.createElement("div", (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(className, prefix)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(className, prefix)
+    }))
+  );
 });
 
 ButtonToolbar.displayName = 'ButtonToolbar';
@@ -35225,10 +35408,13 @@ function (_ref, ref) {
       Component = _ref$as === void 0 ? 'img' : _ref$as,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "variant", "as"]);
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'card-img');
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref,
-    className: (0, _classnames.default)(variant ? prefix + "-" + variant : prefix, className)
-  }, props));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref,
+      className: (0, _classnames.default)(variant ? prefix + "-" + variant : prefix, className)
+    }, props))
+  );
 });
 
 CardImg.displayName = 'CardImg';
@@ -35291,13 +35477,20 @@ var Card = _react.default.forwardRef(function (_ref, ref) {
       cardHeaderBsPrefix: prefix + "-header"
     };
   }, [prefix]);
-  return _react.default.createElement(_CardContext.default.Provider, {
-    value: cardContext
-  }, _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, prefix, bg && "bg-" + bg, text && "text-" + text, border && "border-" + border)
-  }), body ? _react.default.createElement(CardBody, null, children) : children));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_CardContext.default.Provider, {
+      value: cardContext
+    },
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, prefix, bg && "bg-" + bg, text && "text-" + text, border && "border-" + border)
+    }), body ?
+    /*#__PURE__*/
+    _react.default.createElement(CardBody, null, children) : children))
+  );
 });
 
 Card.displayName = 'Card';
@@ -35705,12 +35898,16 @@ var defaultProps = {
   pause: 'hover',
   wrap: true,
   touch: true,
-  prevIcon: _react.default.createElement("span", {
+  prevIcon:
+  /*#__PURE__*/
+  _react.default.createElement("span", {
     "aria-hidden": "true",
     className: "carousel-control-prev-icon"
   }),
   prevLabel: 'Previous',
-  nextIcon: _react.default.createElement("span", {
+  nextIcon:
+  /*#__PURE__*/
+  _react.default.createElement("span", {
     "aria-hidden": "true",
     className: "carousel-control-next-icon"
   }),
@@ -35991,51 +36188,73 @@ var Carousel = _react.default.forwardRef(function (uncontrolledProps, ref) {
       };
     });
   }, [indicators, numChildren, onSelect]);
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: elementRef
-  }, props, {
-    onKeyDown: handleKeyDown,
-    onMouseOver: handleMouseOver,
-    onMouseOut: handleMouseOut,
-    onTouchStart: handleTouchStart,
-    onTouchMove: handleTouchMove,
-    onTouchEnd: handleTouchEnd,
-    className: (0, _classnames.default)(className, prefix, slide && 'slide', fade && prefix + "-fade")
-  }), indicators && _react.default.createElement("ol", {
-    className: prefix + "-indicators"
-  }, (0, _ElementChildren.map)(children, function (child, index) {
-    return _react.default.createElement("li", {
-      key: index,
-      className: index === renderedActiveIndex ? 'active' : null,
-      onClick: indicatorOnClicks[index]
-    });
-  })), _react.default.createElement("div", {
-    className: prefix + "-inner"
-  }, (0, _ElementChildren.map)(children, function (child, index) {
-    var isActive = index === renderedActiveIndex;
-    return slide ? _react.default.createElement(_Transition.default, {
-      in: isActive,
-      onEnter: isActive ? handleEnter : null,
-      onEntered: isActive ? handleEntered : null,
-      addEndListener: _transitionEnd.default
-    }, function (status) {
-      return _react.default.cloneElement(child, {
-        className: (0, _classnames.default)(child.props.className, isActive && status !== 'entered' && orderClassName, (status === 'entered' || status === 'exiting') && 'active', (status === 'entering' || status === 'exiting') && directionalClassName)
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: elementRef
+    }, props, {
+      onKeyDown: handleKeyDown,
+      onMouseOver: handleMouseOver,
+      onMouseOut: handleMouseOut,
+      onTouchStart: handleTouchStart,
+      onTouchMove: handleTouchMove,
+      onTouchEnd: handleTouchEnd,
+      className: (0, _classnames.default)(className, prefix, slide && 'slide', fade && prefix + "-fade")
+    }), indicators &&
+    /*#__PURE__*/
+    _react.default.createElement("ol", {
+      className: prefix + "-indicators"
+    }, (0, _ElementChildren.map)(children, function (child, index) {
+      return (
+        /*#__PURE__*/
+        _react.default.createElement("li", {
+          key: index,
+          className: index === renderedActiveIndex ? 'active' : null,
+          onClick: indicatorOnClicks[index]
+        })
+      );
+    })),
+    /*#__PURE__*/
+    _react.default.createElement("div", {
+      className: prefix + "-inner"
+    }, (0, _ElementChildren.map)(children, function (child, index) {
+      var isActive = index === renderedActiveIndex;
+      return slide ?
+      /*#__PURE__*/
+      _react.default.createElement(_Transition.default, {
+        in: isActive,
+        onEnter: isActive ? handleEnter : null,
+        onEntered: isActive ? handleEntered : null,
+        addEndListener: _transitionEnd.default
+      }, function (status) {
+        return _react.default.cloneElement(child, {
+          className: (0, _classnames.default)(child.props.className, isActive && status !== 'entered' && orderClassName, (status === 'entered' || status === 'exiting') && 'active', (status === 'entering' || status === 'exiting') && directionalClassName)
+        });
+      }) : _react.default.cloneElement(child, {
+        className: (0, _classnames.default)(child.props.className, isActive && 'active')
       });
-    }) : _react.default.cloneElement(child, {
-      className: (0, _classnames.default)(child.props.className, isActive && 'active')
-    });
-  })), controls && _react.default.createElement(_react.default.Fragment, null, (wrap || activeIndex !== 0) && _react.default.createElement(_SafeAnchor.default, {
-    className: prefix + "-control-prev",
-    onClick: prev
-  }, prevIcon, prevLabel && _react.default.createElement("span", {
-    className: "sr-only"
-  }, prevLabel)), (wrap || activeIndex !== numChildren - 1) && _react.default.createElement(_SafeAnchor.default, {
-    className: prefix + "-control-next",
-    onClick: next
-  }, nextIcon, nextLabel && _react.default.createElement("span", {
-    className: "sr-only"
-  }, nextLabel))));
+    })), controls &&
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null, (wrap || activeIndex !== 0) &&
+    /*#__PURE__*/
+    _react.default.createElement(_SafeAnchor.default, {
+      className: prefix + "-control-prev",
+      onClick: prev
+    }, prevIcon, prevLabel &&
+    /*#__PURE__*/
+    _react.default.createElement("span", {
+      className: "sr-only"
+    }, prevLabel)), (wrap || activeIndex !== numChildren - 1) &&
+    /*#__PURE__*/
+    _react.default.createElement(_SafeAnchor.default, {
+      className: prefix + "-control-next",
+      onClick: next
+    }, nextIcon, nextLabel &&
+    /*#__PURE__*/
+    _react.default.createElement("span", {
+      className: "sr-only"
+    }, nextLabel))))
+  );
 });
 
 Carousel.displayName = 'Carousel';
@@ -36100,10 +36319,13 @@ function (_ref, ref) {
     spans.push(prefix); // plain 'col'
   }
 
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: _classnames.default.apply(void 0, [className].concat(spans, classes))
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: _classnames.default.apply(void 0, [className].concat(spans, classes))
+    }))
+  );
 });
 
 Col.displayName = 'Col';
@@ -36261,15 +36483,7 @@ var _react = _interopRequireDefault(require("react"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var DropdownContext = _react.default.createContext({
-  menuRef: function menuRef() {},
-  toggleRef: function toggleRef() {},
-  onToggle: function onToggle() {},
-  toggleNode: undefined,
-  alignEnd: null,
-  show: null,
-  drop: null
-});
+var DropdownContext = _react.default.createContext(null);
 
 var _default = DropdownContext;
 exports.default = _default;
@@ -36532,20 +36746,13 @@ var _isTableElement = _interopRequireDefault(require("./isTableElement.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// https://stackoverflow.com/a/9851769/2059996
-var isFirefox = function isFirefox() {
-  return typeof window.InstallTrigger !== 'undefined';
-};
-
 function getTrueOffsetParent(element) {
-  var offsetParent;
-
-  if (!(0, _instanceOf.isHTMLElement)(element) || !(offsetParent = element.offsetParent) || // https://github.com/popperjs/popper-core/issues/837
-  isFirefox() && (0, _getComputedStyle.default)(offsetParent).position === 'fixed') {
+  if (!(0, _instanceOf.isHTMLElement)(element) || // https://github.com/popperjs/popper-core/issues/837
+  (0, _getComputedStyle.default)(element).position === 'fixed') {
     return null;
   }
 
-  return offsetParent;
+  return element.offsetParent;
 }
 
 function getOffsetParent(element) {
@@ -36655,8 +36862,11 @@ var _expandToHashMap = _interopRequireDefault(require("../utils/expandToHashMap.
 
 var _enums = require("../enums.js");
 
+var _instanceOf = require("../dom-utils/instanceOf.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// eslint-disable-next-line import/no-unused-modules
 function arrow(_ref) {
   var _state$modifiersData$;
 
@@ -36669,7 +36879,7 @@ function arrow(_ref) {
   var isVertical = [_enums.left, _enums.right].indexOf(basePlacement) >= 0;
   var len = isVertical ? 'height' : 'width';
 
-  if (!arrowElement) {
+  if (!arrowElement || !popperOffsets) {
     return;
   }
 
@@ -36679,15 +36889,18 @@ function arrow(_ref) {
   var maxProp = axis === 'y' ? _enums.bottom : _enums.right;
   var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
   var startDiff = popperOffsets[axis] - state.rects.reference[axis];
-  var arrowOffsetParent = state.elements.arrow && (0, _getOffsetParent.default)(state.elements.arrow);
-  var clientOffset = arrowOffsetParent ? axis === 'y' ? arrowOffsetParent.clientLeft || 0 : arrowOffsetParent.clientTop || 0 : 0;
-  var centerToReference = endDiff / 2 - startDiff / 2 - clientOffset; // Make sure the arrow doesn't overflow the popper if the center point is
+  var arrowOffsetParent = (0, _getOffsetParent.default)(arrowElement);
+  var clientSize = arrowOffsetParent ? axis === 'y' ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
+  var centerToReference = endDiff / 2 - startDiff / 2; // Make sure the arrow doesn't overflow the popper if the center point is
   // outside of the popper bounds
 
-  var center = (0, _within.default)(paddingObject[minProp], state.rects.popper[len] / 2 - arrowRect[len] / 2 + centerToReference, state.rects.popper[len] - arrowRect[len] - paddingObject[maxProp]); // Prevents breaking syntax highlighting...
+  var min = paddingObject[minProp];
+  var max = clientSize - arrowRect[len] - paddingObject[maxProp];
+  var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
+  var offset = (0, _within.default)(min, center, max); // Prevents breaking syntax highlighting...
 
   var axisProp = axis;
-  state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = center, _state$modifiersData$);
+  state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset, _state$modifiersData$.centerOffset = offset - center, _state$modifiersData$);
 }
 
 function effect(_ref2) {
@@ -36697,13 +36910,24 @@ function effect(_ref2) {
   var _options$element = options.element,
       arrowElement = _options$element === void 0 ? '[data-popper-arrow]' : _options$element,
       _options$padding = options.padding,
-      padding = _options$padding === void 0 ? 0 : _options$padding; // CSS selector
+      padding = _options$padding === void 0 ? 0 : _options$padding;
+
+  if (arrowElement == null) {
+    return;
+  } // CSS selector
+
 
   if (typeof arrowElement === 'string') {
     arrowElement = state.elements.popper.querySelector(arrowElement);
 
     if (!arrowElement) {
       return;
+    }
+  }
+
+  if ("development" !== "production") {
+    if (!(0, _instanceOf.isHTMLElement)(arrowElement)) {
+      console.error(['Popper: "arrow" element must be an HTMLElement (not an SVGElement).', 'To use an SVG arrow, wrap it in an HTMLElement that will be used as', 'the arrow.'].join(' '));
     }
   }
 
@@ -36719,7 +36943,8 @@ function effect(_ref2) {
   state.modifiersData[name + "#persistent"] = {
     padding: (0, _mergePaddingObject.default)(typeof padding !== 'number' ? padding : (0, _expandToHashMap.default)(padding, _enums.basePlacements))
   };
-}
+} // eslint-disable-next-line import/no-unused-modules
+
 
 var _default = {
   name: 'arrow',
@@ -36731,7 +36956,7 @@ var _default = {
   requiresIfExists: ['preventOverflow']
 };
 exports.default = _default;
-},{"../utils/getBasePlacement.js":"../../node_modules/@popperjs/core/lib/utils/getBasePlacement.js","../dom-utils/getLayoutRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js","../dom-utils/contains.js":"../../node_modules/@popperjs/core/lib/dom-utils/contains.js","../dom-utils/getOffsetParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js","../utils/getMainAxisFromPlacement.js":"../../node_modules/@popperjs/core/lib/utils/getMainAxisFromPlacement.js","../utils/within.js":"../../node_modules/@popperjs/core/lib/utils/within.js","../utils/mergePaddingObject.js":"../../node_modules/@popperjs/core/lib/utils/mergePaddingObject.js","../utils/expandToHashMap.js":"../../node_modules/@popperjs/core/lib/utils/expandToHashMap.js","../enums.js":"../../node_modules/@popperjs/core/lib/enums.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js":[function(require,module,exports) {
+},{"../utils/getBasePlacement.js":"../../node_modules/@popperjs/core/lib/utils/getBasePlacement.js","../dom-utils/getLayoutRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js","../dom-utils/contains.js":"../../node_modules/@popperjs/core/lib/dom-utils/contains.js","../dom-utils/getOffsetParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js","../utils/getMainAxisFromPlacement.js":"../../node_modules/@popperjs/core/lib/utils/getMainAxisFromPlacement.js","../utils/within.js":"../../node_modules/@popperjs/core/lib/utils/within.js","../utils/mergePaddingObject.js":"../../node_modules/@popperjs/core/lib/utils/mergePaddingObject.js","../utils/expandToHashMap.js":"../../node_modules/@popperjs/core/lib/utils/expandToHashMap.js","../enums.js":"../../node_modules/@popperjs/core/lib/enums.js","../dom-utils/instanceOf.js":"../../node_modules/@popperjs/core/lib/dom-utils/instanceOf.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36762,12 +36987,13 @@ var _getWindow = _interopRequireDefault(require("../dom-utils/getWindow.js"));
 
 var _getDocumentElement = _interopRequireDefault(require("../dom-utils/getDocumentElement.js"));
 
-var _getComputedStyle2 = _interopRequireDefault(require("../dom-utils/getComputedStyle.js"));
+var _getComputedStyle = _interopRequireDefault(require("../dom-utils/getComputedStyle.js"));
 
 var _getBasePlacement = _interopRequireDefault(require("../utils/getBasePlacement.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// eslint-disable-next-line import/no-unused-modules
 var unsetSides = {
   top: 'auto',
   right: 'auto',
@@ -36854,8 +37080,7 @@ function computeStyles(_ref3) {
       adaptive = _options$adaptive === void 0 ? true : _options$adaptive;
 
   if ("development" !== "production") {
-    var _getComputedStyle = (0, _getComputedStyle2.default)(state.elements.popper),
-        transitionProperty = _getComputedStyle.transitionProperty;
+    var transitionProperty = (0, _getComputedStyle.default)(state.elements.popper).transitionProperty || '';
 
     if (adaptive && ['transform', 'top', 'right', 'bottom', 'left'].some(function (property) {
       return transitionProperty.indexOf(property) >= 0;
@@ -36869,13 +37094,15 @@ function computeStyles(_ref3) {
     popper: state.elements.popper,
     popperRect: state.rects.popper,
     gpuAcceleration: gpuAcceleration
-  }; // popper offsets are always available
+  };
 
-  state.styles.popper = Object.assign({}, state.styles.popper, {}, mapToStyles(Object.assign({}, commonStyles, {
-    offsets: state.modifiersData.popperOffsets,
-    position: state.options.strategy,
-    adaptive: adaptive
-  }))); // arrow offsets may not be available
+  if (state.modifiersData.popperOffsets != null) {
+    state.styles.popper = Object.assign({}, state.styles.popper, {}, mapToStyles(Object.assign({}, commonStyles, {
+      offsets: state.modifiersData.popperOffsets,
+      position: state.options.strategy,
+      adaptive: adaptive
+    })));
+  }
 
   if (state.modifiersData.arrow != null) {
     state.styles.arrow = Object.assign({}, state.styles.arrow, {}, mapToStyles(Object.assign({}, commonStyles, {
@@ -36888,7 +37115,8 @@ function computeStyles(_ref3) {
   state.attributes.popper = Object.assign({}, state.attributes.popper, {
     'data-popper-placement': state.placement
   });
-}
+} // eslint-disable-next-line import/no-unused-modules
+
 
 var _default = {
   name: 'computeStyles',
@@ -36910,6 +37138,7 @@ var _getWindow = _interopRequireDefault(require("../dom-utils/getWindow.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// eslint-disable-next-line import/no-unused-modules
 var passive = {
   passive: true
 };
@@ -36946,7 +37175,8 @@ function effect(_ref) {
       window.removeEventListener('resize', instance.update, passive);
     }
   };
-}
+} // eslint-disable-next-line import/no-unused-modules
+
 
 var _default = {
   name: 'eventListeners',
@@ -37028,9 +37258,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function getViewportRect(element) {
   var win = (0, _getWindow.default)(element);
+  var visualViewport = win.visualViewport;
+  var width = win.innerWidth;
+  var height = win.innerHeight; // We don't know which browsers have buggy or odd implementations of this, so
+  // for now we're only applying it to iOS to fix the keyboard issue.
+  // Investigation required
+
+  if (visualViewport && /iPhone|iPod|iPad/.test(navigator.platform)) {
+    width = visualViewport.width;
+    height = visualViewport.height;
+  }
+
   return {
-    width: win.innerWidth,
-    height: win.innerHeight,
+    width: width,
+    height: height,
     x: 0,
     y: 0
   };
@@ -37121,7 +37362,28 @@ function getWindowScrollBarX(element) {
   // this (e.g. Edge 2019, IE11, Safari)
   return (0, _getBoundingClientRect.default)((0, _getDocumentElement.default)(element)).left + (0, _getWindowScroll.default)(element).scrollLeft;
 }
-},{"./getBoundingClientRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js","./getDocumentElement.js":"../../node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js","./getWindowScroll.js":"../../node_modules/@popperjs/core/lib/dom-utils/getWindowScroll.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js":[function(require,module,exports) {
+},{"./getBoundingClientRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js","./getDocumentElement.js":"../../node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js","./getWindowScroll.js":"../../node_modules/@popperjs/core/lib/dom-utils/getWindowScroll.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isScrollParent;
+
+var _getComputedStyle2 = _interopRequireDefault(require("./getComputedStyle.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isScrollParent(element) {
+  // Firefox wants us to check `-x` and `-y` variations as well
+  var _getComputedStyle = (0, _getComputedStyle2.default)(element),
+      overflow = _getComputedStyle.overflow,
+      overflowX = _getComputedStyle.overflowX,
+      overflowY = _getComputedStyle.overflowY;
+
+  return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
+}
+},{"./getComputedStyle.js":"../../node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37141,6 +37403,8 @@ var _getWindowScrollBarX = _interopRequireDefault(require("./getWindowScrollBarX
 
 var _getDocumentElement = _interopRequireDefault(require("./getDocumentElement.js"));
 
+var _isScrollParent = _interopRequireDefault(require("./isScrollParent.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Returns the composite rect of an element relative to its offsetParent.
@@ -37150,7 +37414,7 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
     isFixed = false;
   }
 
-  var documentElement;
+  var documentElement = (0, _getDocumentElement.default)(offsetParent);
   var rect = (0, _getBoundingClientRect.default)(elementOrVirtualElement);
   var scroll = {
     scrollLeft: 0,
@@ -37162,7 +37426,8 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
   };
 
   if (!isFixed) {
-    if ((0, _getNodeName.default)(offsetParent) !== 'body') {
+    if ((0, _getNodeName.default)(offsetParent) !== 'body' || // https://github.com/popperjs/popper-core/issues/1078
+    (0, _isScrollParent.default)(documentElement)) {
       scroll = (0, _getNodeScroll.default)(offsetParent);
     }
 
@@ -37170,7 +37435,7 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
       offsets = (0, _getBoundingClientRect.default)(offsetParent);
       offsets.x += offsetParent.clientLeft;
       offsets.y += offsetParent.clientTop;
-    } else if (documentElement = (0, _getDocumentElement.default)(offsetParent)) {
+    } else if (documentElement) {
       offsets.x = (0, _getWindowScrollBarX.default)(documentElement);
     }
   }
@@ -37182,7 +37447,7 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
     height: rect.height
   };
 }
-},{"./getBoundingClientRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js","./getNodeScroll.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeScroll.js","./getNodeName.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js","./instanceOf.js":"../../node_modules/@popperjs/core/lib/dom-utils/instanceOf.js","./getWindowScrollBarX.js":"../../node_modules/@popperjs/core/lib/dom-utils/getWindowScrollBarX.js","./getDocumentElement.js":"../../node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getDocumentRect.js":[function(require,module,exports) {
+},{"./getBoundingClientRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js","./getNodeScroll.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeScroll.js","./getNodeName.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js","./instanceOf.js":"../../node_modules/@popperjs/core/lib/dom-utils/instanceOf.js","./getWindowScrollBarX.js":"../../node_modules/@popperjs/core/lib/dom-utils/getWindowScrollBarX.js","./getDocumentElement.js":"../../node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js","./isScrollParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getDocumentRect.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37220,6 +37485,8 @@ exports.default = getParentNode;
 
 var _getNodeName = _interopRequireDefault(require("./getNodeName.js"));
 
+var _getDocumentElement = _interopRequireDefault(require("./getDocumentElement.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function getParentNode(element) {
@@ -37227,14 +37494,17 @@ function getParentNode(element) {
     return element;
   }
 
-  return element.parentNode || // DOM Element detected
-  // $FlowFixMe: need a better way to handle this...
-  element.host || // ShadowRoot detected
-  document.ownerDocument || // Fallback to ownerDocument if available
-  document.documentElement // Or to documentElement if everything else fails
-  ;
+  return (// $FlowFixMe: this is a quicker (but less type safe) way to save quite some bytes from the bundle
+    element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+    element.parentNode || // DOM Element detected
+    // $FlowFixMe: need a better way to handle this...
+    element.host || // ShadowRoot detected
+    // $FlowFixMe: HTMLElement is a Node
+    (0, _getDocumentElement.default)(element) // fallback
+
+  );
 }
-},{"./getNodeName.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getScrollParent.js":[function(require,module,exports) {
+},{"./getNodeName.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js","./getDocumentElement.js":"../../node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getScrollParent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37244,7 +37514,7 @@ exports.default = getScrollParent;
 
 var _getParentNode = _interopRequireDefault(require("./getParentNode.js"));
 
-var _getComputedStyle2 = _interopRequireDefault(require("./getComputedStyle.js"));
+var _isScrollParent = _interopRequireDefault(require("./isScrollParent.js"));
 
 var _getNodeName = _interopRequireDefault(require("./getNodeName.js"));
 
@@ -37258,21 +37528,13 @@ function getScrollParent(node) {
     return node.ownerDocument.body;
   }
 
-  if ((0, _instanceOf.isHTMLElement)(node)) {
-    // Firefox wants us to check `-x` and `-y` variations as well
-    var _getComputedStyle = (0, _getComputedStyle2.default)(node),
-        overflow = _getComputedStyle.overflow,
-        overflowX = _getComputedStyle.overflowX,
-        overflowY = _getComputedStyle.overflowY;
-
-    if (/auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX)) {
-      return node;
-    }
+  if ((0, _instanceOf.isHTMLElement)(node) && (0, _isScrollParent.default)(node)) {
+    return node;
   }
 
   return getScrollParent((0, _getParentNode.default)(node));
 }
-},{"./getParentNode.js":"../../node_modules/@popperjs/core/lib/dom-utils/getParentNode.js","./getComputedStyle.js":"../../node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js","./getNodeName.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js","./instanceOf.js":"../../node_modules/@popperjs/core/lib/dom-utils/instanceOf.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js":[function(require,module,exports) {
+},{"./getParentNode.js":"../../node_modules/@popperjs/core/lib/dom-utils/getParentNode.js","./isScrollParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js","./getNodeName.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js","./instanceOf.js":"../../node_modules/@popperjs/core/lib/dom-utils/instanceOf.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37288,6 +37550,8 @@ var _getNodeName = _interopRequireDefault(require("./getNodeName.js"));
 
 var _getWindow = _interopRequireDefault(require("./getWindow.js"));
 
+var _isScrollParent = _interopRequireDefault(require("./isScrollParent.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function listScrollParents(element, list) {
@@ -37297,12 +37561,13 @@ function listScrollParents(element, list) {
 
   var scrollParent = (0, _getScrollParent.default)(element);
   var isBody = (0, _getNodeName.default)(scrollParent) === 'body';
-  var target = isBody ? (0, _getWindow.default)(scrollParent) : scrollParent;
+  var win = (0, _getWindow.default)(scrollParent);
+  var target = isBody ? [win].concat(win.visualViewport || [], (0, _isScrollParent.default)(scrollParent) ? scrollParent : []) : scrollParent;
   var updatedList = list.concat(target);
   return isBody ? updatedList : // $FlowFixMe: isBody tells us target will be an HTMLElement here
   updatedList.concat(listScrollParents((0, _getParentNode.default)(target)));
 }
-},{"./getScrollParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/getScrollParent.js","./getParentNode.js":"../../node_modules/@popperjs/core/lib/dom-utils/getParentNode.js","./getNodeName.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js","./getWindow.js":"../../node_modules/@popperjs/core/lib/dom-utils/getWindow.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getBorders.js":[function(require,module,exports) {
+},{"./getScrollParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/getScrollParent.js","./getParentNode.js":"../../node_modules/@popperjs/core/lib/dom-utils/getParentNode.js","./getNodeName.js":"../../node_modules/@popperjs/core/lib/dom-utils/getNodeName.js","./getWindow.js":"../../node_modules/@popperjs/core/lib/dom-utils/getWindow.js","./isScrollParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js"}],"../../node_modules/@popperjs/core/lib/dom-utils/getBorders.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37592,6 +37857,7 @@ var _expandToHashMap = _interopRequireDefault(require("./expandToHashMap.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// eslint-disable-next-line import/no-unused-modules
 function detectOverflow(state, options) {
   if (options === void 0) {
     options = {};
@@ -37615,7 +37881,7 @@ function detectOverflow(state, options) {
   var referenceElement = state.elements.reference;
   var popperRect = state.rects.popper;
   var element = state.elements[altBoundary ? altContext : elementContext];
-  var clippingClientRect = (0, _getClippingRect.default)((0, _instanceOf.isElement)(element) ? element : (0, _getDocumentElement.default)(state.elements.popper), boundary, rootBoundary);
+  var clippingClientRect = (0, _getClippingRect.default)((0, _instanceOf.isElement)(element) ? element : element.contextElement || (0, _getDocumentElement.default)(state.elements.popper), boundary, rootBoundary);
   var referenceClientRect = (0, _getBoundingClientRect.default)(referenceElement);
   var popperOffsets = (0, _computeOffsets.default)({
     reference: referenceClientRect,
@@ -37664,6 +37930,9 @@ var _getBasePlacement = _interopRequireDefault(require("./getBasePlacement.js"))
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/*:: type OverflowsMap = { [ComputedPlacement]: number }; */
+
+/*;; type OverflowsMap = { [key in ComputedPlacement]: number }; */
 function computeAutoPlacement(state, options) {
   if (options === void 0) {
     options = {};
@@ -37674,11 +37943,15 @@ function computeAutoPlacement(state, options) {
       boundary = _options.boundary,
       rootBoundary = _options.rootBoundary,
       padding = _options.padding,
-      flipVariations = _options.flipVariations;
+      flipVariations = _options.flipVariations,
+      _options$allowedAutoP = _options.allowedAutoPlacements,
+      allowedAutoPlacements = _options$allowedAutoP === void 0 ? _enums.placements : _options$allowedAutoP;
   var variation = (0, _getVariation.default)(placement);
-  var placements = variation ? flipVariations ? _enums.variationPlacements : _enums.variationPlacements.filter(function (placement) {
+  var placements = (variation ? flipVariations ? _enums.variationPlacements : _enums.variationPlacements.filter(function (placement) {
     return (0, _getVariation.default)(placement) === variation;
-  }) : _enums.basePlacements; // $FlowFixMe: Flow seems to have problems with two array unions...
+  }) : _enums.basePlacements).filter(function (placement) {
+    return allowedAutoPlacements.indexOf(placement) >= 0;
+  }); // $FlowFixMe: Flow seems to have problems with two array unions...
 
   var overflows = placements.reduce(function (acc, placement) {
     acc[placement] = (0, _detectOverflow.default)(state, {
@@ -37717,6 +37990,7 @@ var _getVariation = _interopRequireDefault(require("../utils/getVariation.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// eslint-disable-next-line import/no-unused-modules
 function getExpandedFallbackPlacements(placement) {
   if ((0, _getBasePlacement.default)(placement) === _enums.auto) {
     return [];
@@ -37735,13 +38009,18 @@ function flip(_ref) {
     return;
   }
 
-  var specifiedFallbackPlacements = options.fallbackPlacements,
+  var _options$mainAxis = options.mainAxis,
+      checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
+      _options$altAxis = options.altAxis,
+      checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis,
+      specifiedFallbackPlacements = options.fallbackPlacements,
       padding = options.padding,
       boundary = options.boundary,
       rootBoundary = options.rootBoundary,
       altBoundary = options.altBoundary,
       _options$flipVariatio = options.flipVariations,
-      flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio;
+      flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio,
+      allowedAutoPlacements = options.allowedAutoPlacements;
   var preferredPlacement = state.options.placement;
   var basePlacement = (0, _getBasePlacement.default)(preferredPlacement);
   var isBasePlacement = basePlacement === preferredPlacement;
@@ -37752,7 +38031,8 @@ function flip(_ref) {
       boundary: boundary,
       rootBoundary: rootBoundary,
       padding: padding,
-      flipVariations: flipVariations
+      flipVariations: flipVariations,
+      allowedAutoPlacements: allowedAutoPlacements
     }) : placement);
   }, []);
   var referenceRect = state.rects.reference;
@@ -37784,7 +38064,15 @@ function flip(_ref) {
     }
 
     var altVariationSide = (0, _getOppositePlacement.default)(mainVariationSide);
-    var checks = [overflow[_basePlacement] <= 0, overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0];
+    var checks = [];
+
+    if (checkMainAxis) {
+      checks.push(overflow[_basePlacement] <= 0);
+    }
+
+    if (checkAltAxis) {
+      checks.push(overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0);
+    }
 
     if (checks.every(function (check) {
       return check;
@@ -37830,7 +38118,8 @@ function flip(_ref) {
     state.placement = firstFittingPlacement;
     state.reset = true;
   }
-}
+} // eslint-disable-next-line import/no-unused-modules
+
 
 var _default = {
   name: 'flip',
@@ -37905,7 +38194,8 @@ function hide(_ref) {
     'data-popper-reference-hidden': isReferenceHidden,
     'data-popper-escaped': hasPopperEscaped
   });
-}
+} // eslint-disable-next-line import/no-unused-modules
+
 
 var _default = {
   name: 'hide',
@@ -37915,7 +38205,76 @@ var _default = {
   fn: hide
 };
 exports.default = _default;
-},{"../enums.js":"../../node_modules/@popperjs/core/lib/enums.js","../utils/detectOverflow.js":"../../node_modules/@popperjs/core/lib/utils/detectOverflow.js"}],"../../node_modules/@popperjs/core/lib/modifiers/popperOffsets.js":[function(require,module,exports) {
+},{"../enums.js":"../../node_modules/@popperjs/core/lib/enums.js","../utils/detectOverflow.js":"../../node_modules/@popperjs/core/lib/utils/detectOverflow.js"}],"../../node_modules/@popperjs/core/lib/modifiers/offset.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.distanceAndSkiddingToXY = distanceAndSkiddingToXY;
+exports.default = void 0;
+
+var _getBasePlacement = _interopRequireDefault(require("../utils/getBasePlacement.js"));
+
+var _enums = require("../enums.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function distanceAndSkiddingToXY(placement, rects, offset) {
+  var basePlacement = (0, _getBasePlacement.default)(placement);
+  var invertDistance = [_enums.left, _enums.top].indexOf(basePlacement) >= 0 ? -1 : 1;
+
+  var _ref = typeof offset === 'function' ? offset(Object.assign({}, rects, {
+    placement: placement
+  })) : offset,
+      skidding = _ref[0],
+      distance = _ref[1];
+
+  skidding = skidding || 0;
+  distance = (distance || 0) * invertDistance;
+  return [_enums.left, _enums.right].indexOf(basePlacement) >= 0 ? {
+    x: distance,
+    y: skidding
+  } : {
+    x: skidding,
+    y: distance
+  };
+}
+
+function offset(_ref2) {
+  var state = _ref2.state,
+      options = _ref2.options,
+      name = _ref2.name;
+  var _options$offset = options.offset,
+      offset = _options$offset === void 0 ? [0, 0] : _options$offset;
+
+  var data = _enums.placements.reduce(function (acc, placement) {
+    acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset);
+    return acc;
+  }, {});
+
+  var _data$state$placement = data[state.placement],
+      x = _data$state$placement.x,
+      y = _data$state$placement.y;
+
+  if (state.modifiersData.popperOffsets != null) {
+    state.modifiersData.popperOffsets.x += x;
+    state.modifiersData.popperOffsets.y += y;
+  }
+
+  state.modifiersData[name] = data;
+} // eslint-disable-next-line import/no-unused-modules
+
+
+var _default = {
+  name: 'offset',
+  enabled: true,
+  phase: 'main',
+  requires: ['popperOffsets'],
+  fn: offset
+};
+exports.default = _default;
+},{"../utils/getBasePlacement.js":"../../node_modules/@popperjs/core/lib/utils/getBasePlacement.js","../enums.js":"../../node_modules/@popperjs/core/lib/enums.js"}],"../../node_modules/@popperjs/core/lib/modifiers/popperOffsets.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37940,7 +38299,8 @@ function popperOffsets(_ref) {
     strategy: 'absolute',
     placement: state.placement
   });
-}
+} // eslint-disable-next-line import/no-unused-modules
+
 
 var _default = {
   name: 'popperOffsets',
@@ -38029,6 +38389,10 @@ function preventOverflow(_ref) {
     y: 0
   };
 
+  if (!popperOffsets) {
+    return;
+  }
+
   if (checkMainAxis) {
     var mainSide = mainAxis === 'y' ? _enums.top : _enums.left;
     var altSide = mainAxis === 'y' ? _enums.bottom : _enums.right;
@@ -38080,12 +38444,13 @@ function preventOverflow(_ref) {
 
     var _preventedOffset = (0, _within.default)(_min, _offset, _max);
 
-    state.modifiersData.popperOffsets[altAxis] = _preventedOffset;
+    popperOffsets[altAxis] = _preventedOffset;
     data[altAxis] = _preventedOffset - _offset;
   }
 
   state.modifiersData[name] = data;
-}
+} // eslint-disable-next-line import/no-unused-modules
+
 
 var _default = {
   name: 'preventOverflow',
@@ -38318,8 +38683,6 @@ function mergeByName(modifiers) {
     return merged[key];
   });
 }
-},{}],"../../node_modules/@popperjs/core/lib/types.js":[function(require,module,exports) {
-
 },{}],"../../node_modules/@popperjs/core/lib/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -38366,19 +38729,6 @@ Object.keys(_enums).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _enums[key];
-    }
-  });
-});
-
-var _types = require("./types.js");
-
-Object.keys(_types).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function () {
-      return _types[key];
     }
   });
 });
@@ -38438,7 +38788,7 @@ function popperGenerator(generatorOptions) {
         cleanupModifierEffects();
         state.options = Object.assign({}, defaultOptions, {}, state.options, {}, options);
         state.scrollParents = {
-          reference: (0, _instanceOf.isElement)(reference) ? (0, _listScrollParents.default)(reference) : [],
+          reference: (0, _instanceOf.isElement)(reference) ? (0, _listScrollParents.default)(reference) : reference.contextElement ? (0, _listScrollParents.default)(reference.contextElement) : [],
           popper: (0, _listScrollParents.default)(popper)
         }; // Orders the modifiers based on their dependencies and `phase`
         // properties
@@ -38631,7 +38981,7 @@ var createPopper =
 /*#__PURE__*/
 popperGenerator();
 exports.createPopper = createPopper;
-},{"./dom-utils/getCompositeRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js","./dom-utils/getLayoutRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js","./dom-utils/listScrollParents.js":"../../node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js","./dom-utils/getOffsetParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js","./dom-utils/getComputedStyle.js":"../../node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js","./utils/orderModifiers.js":"../../node_modules/@popperjs/core/lib/utils/orderModifiers.js","./utils/debounce.js":"../../node_modules/@popperjs/core/lib/utils/debounce.js","./utils/validateModifiers.js":"../../node_modules/@popperjs/core/lib/utils/validateModifiers.js","./utils/uniqueBy.js":"../../node_modules/@popperjs/core/lib/utils/uniqueBy.js","./utils/getBasePlacement.js":"../../node_modules/@popperjs/core/lib/utils/getBasePlacement.js","./utils/mergeByName.js":"../../node_modules/@popperjs/core/lib/utils/mergeByName.js","./dom-utils/instanceOf.js":"../../node_modules/@popperjs/core/lib/dom-utils/instanceOf.js","./enums.js":"../../node_modules/@popperjs/core/lib/enums.js","./types.js":"../../node_modules/@popperjs/core/lib/types.js"}],"../../node_modules/@popperjs/core/lib/popper-base.js":[function(require,module,exports) {
+},{"./dom-utils/getCompositeRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js","./dom-utils/getLayoutRect.js":"../../node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js","./dom-utils/listScrollParents.js":"../../node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js","./dom-utils/getOffsetParent.js":"../../node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js","./dom-utils/getComputedStyle.js":"../../node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js","./utils/orderModifiers.js":"../../node_modules/@popperjs/core/lib/utils/orderModifiers.js","./utils/debounce.js":"../../node_modules/@popperjs/core/lib/utils/debounce.js","./utils/validateModifiers.js":"../../node_modules/@popperjs/core/lib/utils/validateModifiers.js","./utils/uniqueBy.js":"../../node_modules/@popperjs/core/lib/utils/uniqueBy.js","./utils/getBasePlacement.js":"../../node_modules/@popperjs/core/lib/utils/getBasePlacement.js","./utils/mergeByName.js":"../../node_modules/@popperjs/core/lib/utils/mergeByName.js","./dom-utils/instanceOf.js":"../../node_modules/@popperjs/core/lib/dom-utils/instanceOf.js","./enums.js":"../../node_modules/@popperjs/core/lib/enums.js"}],"../../node_modules/@popperjs/core/lib/popper-base.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38649,9 +38999,19 @@ Object.defineProperty(exports, "popperGenerator", {
     return _index.popperGenerator;
   }
 });
+Object.defineProperty(exports, "detectOverflow", {
+  enumerable: true,
+  get: function () {
+    return _detectOverflow.default;
+  }
+});
 
 var _index = require("./index.js");
-},{"./index.js":"../../node_modules/@popperjs/core/lib/index.js"}],"../../node_modules/react-overlays/esm/popper.js":[function(require,module,exports) {
+
+var _detectOverflow = _interopRequireDefault(require("./utils/detectOverflow.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./index.js":"../../node_modules/@popperjs/core/lib/index.js","./utils/detectOverflow.js":"../../node_modules/@popperjs/core/lib/utils/detectOverflow.js"}],"../../node_modules/react-overlays/esm/popper.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38675,6 +39035,8 @@ var _flip = _interopRequireDefault(require("@popperjs/core/lib/modifiers/flip"))
 
 var _hide = _interopRequireDefault(require("@popperjs/core/lib/modifiers/hide"));
 
+var _offset = _interopRequireDefault(require("@popperjs/core/lib/modifiers/offset"));
+
 var _popperOffsets = _interopRequireDefault(require("@popperjs/core/lib/modifiers/popperOffsets"));
 
 var _preventOverflow = _interopRequireDefault(require("@popperjs/core/lib/modifiers/preventOverflow"));
@@ -38688,10 +39050,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // For the common JS build we will turn this file into a bundle with no imports.
 // This is b/c the Popper lib is all esm files, and would break in a common js only environment
 var createPopper = (0, _popperBase.popperGenerator)({
-  defaultModifiers: [_hide.default, _popperOffsets.default, _computeStyles.default, _eventListeners.default, _flip.default, _preventOverflow.default, _arrow.default]
+  defaultModifiers: [_hide.default, _popperOffsets.default, _computeStyles.default, _eventListeners.default, _offset.default, _flip.default, _preventOverflow.default, _arrow.default]
 });
 exports.createPopper = createPopper;
-},{"@popperjs/core/lib/modifiers/arrow":"../../node_modules/@popperjs/core/lib/modifiers/arrow.js","@popperjs/core/lib/modifiers/computeStyles":"../../node_modules/@popperjs/core/lib/modifiers/computeStyles.js","@popperjs/core/lib/modifiers/eventListeners":"../../node_modules/@popperjs/core/lib/modifiers/eventListeners.js","@popperjs/core/lib/modifiers/flip":"../../node_modules/@popperjs/core/lib/modifiers/flip.js","@popperjs/core/lib/modifiers/hide":"../../node_modules/@popperjs/core/lib/modifiers/hide.js","@popperjs/core/lib/modifiers/popperOffsets":"../../node_modules/@popperjs/core/lib/modifiers/popperOffsets.js","@popperjs/core/lib/modifiers/preventOverflow":"../../node_modules/@popperjs/core/lib/modifiers/preventOverflow.js","@popperjs/core/lib/enums":"../../node_modules/@popperjs/core/lib/enums.js","@popperjs/core/lib/popper-base":"../../node_modules/@popperjs/core/lib/popper-base.js"}],"../../node_modules/react-overlays/esm/usePopper.js":[function(require,module,exports) {
+},{"@popperjs/core/lib/modifiers/arrow":"../../node_modules/@popperjs/core/lib/modifiers/arrow.js","@popperjs/core/lib/modifiers/computeStyles":"../../node_modules/@popperjs/core/lib/modifiers/computeStyles.js","@popperjs/core/lib/modifiers/eventListeners":"../../node_modules/@popperjs/core/lib/modifiers/eventListeners.js","@popperjs/core/lib/modifiers/flip":"../../node_modules/@popperjs/core/lib/modifiers/flip.js","@popperjs/core/lib/modifiers/hide":"../../node_modules/@popperjs/core/lib/modifiers/hide.js","@popperjs/core/lib/modifiers/offset":"../../node_modules/@popperjs/core/lib/modifiers/offset.js","@popperjs/core/lib/modifiers/popperOffsets":"../../node_modules/@popperjs/core/lib/modifiers/popperOffsets.js","@popperjs/core/lib/modifiers/preventOverflow":"../../node_modules/@popperjs/core/lib/modifiers/preventOverflow.js","@popperjs/core/lib/enums":"../../node_modules/@popperjs/core/lib/enums.js","@popperjs/core/lib/popper-base":"../../node_modules/@popperjs/core/lib/popper-base.js"}],"../../node_modules/react-overlays/esm/usePopper.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38699,7 +39061,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.toModifierMap = toModifierMap;
 exports.toModifierArray = toModifierArray;
-exports.default = usePopper;
+exports.default = void 0;
 
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
 
@@ -38720,7 +39082,7 @@ var initialPopperStyles = {
   opacity: '0',
   pointerEvents: 'none'
 };
-var initialArrowStyles = {};
+var initialArrowStyles = {}; // until docjs supports type exports...
 
 function toModifierMap(modifiers) {
   var result = {};
@@ -38737,8 +39099,12 @@ function toModifierMap(modifiers) {
 }
 
 function toModifierArray(map) {
+  if (map === void 0) {
+    map = {};
+  }
+
   if (Array.isArray(map)) return map;
-  return Object.keys(map || {}).map(function (k) {
+  return Object.keys(map).map(function (k) {
     map[k].name = k;
     return map[k];
   });
@@ -38746,35 +39112,34 @@ function toModifierArray(map) {
 /**
  * Position an element relative some reference element using Popper.js
  *
- * @param {HTMLElement} referenceElement The element
- * @param {HTMLElement} popperElement
- * @param {Object}      options
- * @param {Object}      options.modifiers Popper.js modifiers
- * @param {Boolean}     options.enabled toggle the popper functionality on/off
- * @param {String}      options.placement The popper element placement relative to the reference element
- * @param {Boolean}     options.positionFixed use fixed positioning
- * @param {Boolean}     options.eventsEnabled have Popper listen on window resize events to reposition the element
- * @param {Function}    options.onCreate called when the popper is created
- * @param {Function}    options.onUpdate called when the popper is updated
+ * @param referenceElement
+ * @param popperElement
+ * @param {object}      options
+ * @param {object=}     options.modifiers Popper.js modifiers
+ * @param {boolean=}    options.enabled toggle the popper functionality on/off
+ * @param {string=}     options.placement The popper element placement relative to the reference element
+ * @param {string=}     options.strategy the positioning strategy
+ * @param {boolean=}    options.eventsEnabled have Popper listen on window resize events to reposition the element
+ * @param {function=}   options.onCreate called when the popper is created
+ * @param {function=}   options.onUpdate called when the popper is updated
+ *
+ * @returns {UsePopperState} The popper state
  */
 
 
-function usePopper(referenceElement, popperElement, _ref) {
-  if (_ref === void 0) {
-    _ref = {};
-  }
+function usePopper(referenceElement, popperElement, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      _ref$enabled = _ref.enabled,
+      enabled = _ref$enabled === void 0 ? true : _ref$enabled,
+      _ref$placement = _ref.placement,
+      placement = _ref$placement === void 0 ? 'bottom' : _ref$placement,
+      _ref$strategy = _ref.strategy,
+      strategy = _ref$strategy === void 0 ? 'absolute' : _ref$strategy,
+      _ref$eventsEnabled = _ref.eventsEnabled,
+      eventsEnabled = _ref$eventsEnabled === void 0 ? true : _ref$eventsEnabled,
+      userModifiers = _ref.modifiers,
+      popperOptions = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["enabled", "placement", "strategy", "eventsEnabled", "modifiers"]);
 
-  var _ref2 = _ref,
-      _ref2$enabled = _ref2.enabled,
-      enabled = _ref2$enabled === void 0 ? true : _ref2$enabled,
-      _ref2$placement = _ref2.placement,
-      placement = _ref2$placement === void 0 ? 'bottom' : _ref2$placement,
-      _ref2$strategy = _ref2.strategy,
-      strategy = _ref2$strategy === void 0 ? 'absolute' : _ref2$strategy,
-      _ref2$eventsEnabled = _ref2.eventsEnabled,
-      eventsEnabled = _ref2$eventsEnabled === void 0 ? true : _ref2$eventsEnabled,
-      userModifiers = _ref2.modifiers,
-      popperOptions = (0, _objectWithoutPropertiesLoose2.default)(_ref2, ["enabled", "placement", "strategy", "eventsEnabled", "modifiers"]);
   var popperInstanceRef = (0, _react.useRef)();
   var scheduleUpdate = (0, _react.useCallback)(function () {
     if (popperInstanceRef.current) {
@@ -38803,7 +39168,7 @@ function usePopper(referenceElement, popperElement, _ref) {
 
         setState({
           scheduleUpdate: scheduleUpdate,
-          outOfBoundaries: (_data$state$modifiers = data.state.modifiersData.hide) == null ? void 0 : _data$state$modifiers.isReferenceHidden,
+          outOfBoundaries: !!((_data$state$modifiers = data.state.modifiersData.hide) == null ? void 0 : _data$state$modifiers.isReferenceHidden),
           placement: data.state.placement,
           styles: (0, _extends2.default)({}, (_data$state$styles = data.state.styles) == null ? void 0 : _data$state$styles.popper),
           arrowStyles: (0, _extends2.default)({}, (_data$state$styles2 = data.state.styles) == null ? void 0 : _data$state$styles2.arrow),
@@ -38846,17 +39211,17 @@ function usePopper(referenceElement, popperElement, _ref) {
       return undefined;
     }
 
-    popperInstanceRef.current = (0, _popper.createPopper)(referenceElement, popperElement, (0, _extends2.default)({}, popperOptions, {
+    popperInstanceRef.current = (0, _popper.createPopper)(referenceElement, popperElement, (0, _extends2.default)((0, _extends2.default)({}, popperOptions), {}, {
       placement: placement,
       strategy: strategy,
       modifiers: [].concat(modifiers, [updateModifier])
     }));
     return function () {
-      if (popperInstanceRef.current !== null) {
+      if (popperInstanceRef.current != null) {
         popperInstanceRef.current.destroy();
-        popperInstanceRef.current = null;
+        popperInstanceRef.current = undefined;
         setState(function (s) {
-          return (0, _extends2.default)({}, s, {
+          return (0, _extends2.default)((0, _extends2.default)({}, s), {}, {
             styles: initialPopperStyles,
             arrowStyles: initialArrowStyles
           });
@@ -38867,6 +39232,9 @@ function usePopper(referenceElement, popperElement, _ref) {
   }, [enabled, referenceElement, popperElement]);
   return state;
 }
+
+var _default = usePopper;
+exports.default = _default;
 },{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","react":"../../node_modules/react/index.js","@restart/hooks/useSafeState":"../../node_modules/@restart/hooks/esm/useSafeState.js","./popper":"../../node_modules/react-overlays/esm/popper.js"}],"../../node_modules/dom-helpers/esm/contains.js":[function(require,module,exports) {
 "use strict";
 
@@ -38946,24 +39314,45 @@ if (__DEV__) {
 }
 
 module.exports = warning;
-},{}],"../../node_modules/react-overlays/esm/utils/ownerDocument.js":[function(require,module,exports) {
+},{}],"../../node_modules/react-overlays/esm/safeFindDOMNode.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = _default;
+exports.default = safeFindDOMNode;
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function safeFindDOMNode(componentOrElement) {
+  if (componentOrElement && 'setState' in componentOrElement) {
+    return _reactDom.default.findDOMNode(componentOrElement);
+  }
+
+  return componentOrElement != null ? componentOrElement : null;
+}
+},{"react-dom":"../../node_modules/react-dom/index.js"}],"../../node_modules/react-overlays/esm/ownerDocument.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 var _ownerDocument = _interopRequireDefault(require("dom-helpers/ownerDocument"));
+
+var _safeFindDOMNode = _interopRequireDefault(require("./safeFindDOMNode"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _default(componentOrElement) {
-  return (0, _ownerDocument.default)(_reactDom.default.findDOMNode(componentOrElement));
-}
-},{"react-dom":"../../node_modules/react-dom/index.js","dom-helpers/ownerDocument":"../../node_modules/dom-helpers/esm/ownerDocument.js"}],"../../node_modules/react-overlays/esm/useRootClose.js":[function(require,module,exports) {
+var _default = function _default(componentOrElement) {
+  return (0, _ownerDocument.default)((0, _safeFindDOMNode.default)(componentOrElement));
+};
+
+exports.default = _default;
+},{"dom-helpers/ownerDocument":"../../node_modules/dom-helpers/esm/ownerDocument.js","./safeFindDOMNode":"../../node_modules/react-overlays/esm/safeFindDOMNode.js"}],"../../node_modules/react-overlays/esm/useRootClose.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38981,7 +39370,7 @@ var _useEventCallback = _interopRequireDefault(require("@restart/hooks/useEventC
 
 var _warning = _interopRequireDefault(require("warning"));
 
-var _ownerDocument = _interopRequireDefault(require("./utils/ownerDocument"));
+var _ownerDocument = _interopRequireDefault(require("./ownerDocument"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38996,17 +39385,21 @@ function isLeftClickEvent(event) {
 function isModifiedEvent(event) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
+
+var getRefTarget = function getRefTarget(ref) {
+  return ref && ('current' in ref ? ref.current : ref);
+};
 /**
  * The `useRootClose` hook registers your callback on the document
  * when rendered. Powers the `<Overlay/>` component. This is used achieve modal
  * style behavior where your callback is triggered when the user tries to
  * interact with the rest of the document or hits the `esc` key.
  *
- * @param {Ref<HTMLElement>|HTMLElement} ref  The element boundary
+ * @param {Ref<HTMLElement>| HTMLElement} ref  The element boundary
  * @param {function} onRootClose
- * @param {object}  options
- * @param {boolean} options.disabled
- * @param {string}  options.clickTrigger The DOM event name (click, mousedown, etc) to attach listeners on
+ * @param {object=}  options
+ * @param {boolean=} options.disabled
+ * @param {string=}  options.clickTrigger The DOM event name (click, mousedown, etc) to attach listeners on
  */
 
 
@@ -39019,9 +39412,9 @@ function useRootClose(ref, onRootClose, _temp) {
   var preventMouseRootCloseRef = (0, _react.useRef)(false);
   var onClose = onRootClose || noop;
   var handleMouseCapture = (0, _react.useCallback)(function (e) {
-    var currentTarget = ref && ('current' in ref ? ref.current : ref);
+    var currentTarget = getRefTarget(ref);
     (0, _warning.default)(!!currentTarget, 'RootClose captured a close event but does not have a ref to compare it to. ' + 'useRootClose(), should be passed a ref that resolves to a DOM node');
-    preventMouseRootCloseRef.current = !currentTarget || isModifiedEvent(e) || !isLeftClickEvent(e) || (0, _contains.default)(currentTarget, e.target);
+    preventMouseRootCloseRef.current = !currentTarget || isModifiedEvent(e) || !isLeftClickEvent(e) || !!(0, _contains.default)(currentTarget, e.target);
   }, [ref]);
   var handleMouse = (0, _useEventCallback.default)(function (e) {
     if (!preventMouseRootCloseRef.current) {
@@ -39035,7 +39428,7 @@ function useRootClose(ref, onRootClose, _temp) {
   });
   (0, _react.useEffect)(function () {
     if (disabled || ref == null) return undefined;
-    var doc = (0, _ownerDocument.default)(ref.current); // Use capture for this listener so it fires before React's listener, to
+    var doc = (0, _ownerDocument.default)(getRefTarget(ref)); // Use capture for this listener so it fires before React's listener, to
     // avoid false positives in the contains() check below if the target DOM
     // element is removed in the React mouse callback.
 
@@ -39063,7 +39456,7 @@ function useRootClose(ref, onRootClose, _temp) {
 
 var _default = useRootClose;
 exports.default = _default;
-},{"dom-helpers/contains":"../../node_modules/dom-helpers/esm/contains.js","dom-helpers/listen":"../../node_modules/dom-helpers/esm/listen.js","react":"../../node_modules/react/index.js","@restart/hooks/useEventCallback":"../../node_modules/@restart/hooks/esm/useEventCallback.js","warning":"../../node_modules/warning/warning.js","./utils/ownerDocument":"../../node_modules/react-overlays/esm/utils/ownerDocument.js"}],"../../node_modules/react-overlays/esm/DropdownMenu.js":[function(require,module,exports) {
+},{"dom-helpers/contains":"../../node_modules/dom-helpers/esm/contains.js","dom-helpers/listen":"../../node_modules/dom-helpers/esm/listen.js","react":"../../node_modules/react/index.js","@restart/hooks/useEventCallback":"../../node_modules/@restart/hooks/esm/useEventCallback.js","warning":"../../node_modules/warning/warning.js","./ownerDocument":"../../node_modules/react-overlays/esm/ownerDocument.js"}],"../../node_modules/react-overlays/esm/DropdownMenu.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39078,7 +39471,7 @@ var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/exten
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _react = require("react");
+var _react = _interopRequireWildcard(require("react"));
 
 var _useCallbackRef2 = _interopRequireDefault(require("@restart/hooks/useCallbackRef"));
 
@@ -39093,6 +39486,18 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var noop = function noop() {};
+/**
+ * @memberOf Dropdown
+ * @param {object}  options
+ * @param {boolean} options.flip Automatically adjust the menu `drop` position based on viewport edge detection
+ * @param {boolean} options.show Display the menu manually, ignored in the context of a `Dropdown`
+ * @param {boolean} options.usePopper opt in/out of using PopperJS to position menus. When disabled you must position it yourself.
+ * @param {string}  options.rootCloseEvent The pointer event to listen for when determining "clicks outside" the menu for triggering a close.
+ * @param {object}  options.popperConfig Options passed to the [`usePopper`](/api/usePopper) hook.
+ */
+
 
 function useDropdownMenu(options) {
   var _modifiers$arrow;
@@ -39114,36 +39519,37 @@ function useDropdownMenu(options) {
       _options$popperConfig = _options.popperConfig,
       popperConfig = _options$popperConfig === void 0 ? {} : _options$popperConfig,
       _options$usePopper = _options.usePopper,
-      shouldUsePopper = _options$usePopper === void 0 ? true : _options$usePopper;
-  var show = context.show == null ? options.show : context.show;
-  var alignEnd = context.alignEnd == null ? options.alignEnd : context.alignEnd;
+      shouldUsePopper = _options$usePopper === void 0 ? !!context : _options$usePopper;
+  var show = (context == null ? void 0 : context.show) == null ? options.show : context.show;
+  var alignEnd = (context == null ? void 0 : context.alignEnd) == null ? options.alignEnd : context.alignEnd;
 
   if (show && !hasShownRef.current) {
     hasShownRef.current = true;
   }
 
   var handleClose = function handleClose(e) {
-    if (!context.toggle) return;
-    context.toggle(false, e);
+    context == null ? void 0 : context.toggle(false, e);
   };
 
-  var drop = context.drop,
-      setMenu = context.setMenu,
-      menuElement = context.menuElement,
-      toggleElement = context.toggleElement;
+  var _ref = context || {},
+      drop = _ref.drop,
+      setMenu = _ref.setMenu,
+      menuElement = _ref.menuElement,
+      toggleElement = _ref.toggleElement;
+
   var placement = alignEnd ? 'bottom-end' : 'bottom-start';
   if (drop === 'up') placement = alignEnd ? 'top-end' : 'top-start';else if (drop === 'right') placement = alignEnd ? 'right-end' : 'right-start';else if (drop === 'left') placement = alignEnd ? 'left-end' : 'left-start';
   var modifiers = (0, _usePopper.toModifierMap)(popperConfig.modifiers);
-  var popper = (0, _usePopper.default)(toggleElement, menuElement, (0, _extends2.default)({}, popperConfig, {
+  var popper = (0, _usePopper.default)(toggleElement, menuElement, (0, _extends2.default)((0, _extends2.default)({}, popperConfig), {}, {
     placement: placement,
     enabled: !!(shouldUsePopper && show),
-    modifiers: (0, _extends2.default)({}, modifiers, {
+    modifiers: (0, _extends2.default)((0, _extends2.default)({}, modifiers), {}, {
       eventListeners: {
         enabled: !!show
       },
-      arrow: (0, _extends2.default)({}, modifiers.arrow, {
+      arrow: (0, _extends2.default)((0, _extends2.default)({}, modifiers.arrow), {}, {
         enabled: !!arrowElement,
-        options: (0, _extends2.default)({}, (_modifiers$arrow = modifiers.arrow) == null ? void 0 : _modifiers$arrow.options, {
+        options: (0, _extends2.default)((0, _extends2.default)({}, (_modifiers$arrow = modifiers.arrow) == null ? void 0 : _modifiers$arrow.options), {}, {
           element: arrowElement
         })
       }),
@@ -39152,10 +39558,10 @@ function useDropdownMenu(options) {
       }, modifiers.flip)
     })
   }));
-  var menu = null;
+  var menu;
   var menuProps = {
-    ref: setMenu,
-    'aria-labelledby': toggleElement && toggleElement.id
+    ref: setMenu || noop,
+    'aria-labelledby': toggleElement == null ? void 0 : toggleElement.id
   };
   var childArgs = {
     show: show,
@@ -39165,12 +39571,12 @@ function useDropdownMenu(options) {
   };
 
   if (!shouldUsePopper) {
-    menu = (0, _extends2.default)({}, childArgs, {
+    menu = (0, _extends2.default)((0, _extends2.default)({}, childArgs), {}, {
       props: menuProps
     });
   } else {
-    menu = (0, _extends2.default)({}, popper, {}, childArgs, {
-      props: (0, _extends2.default)({}, menuProps, {
+    menu = (0, _extends2.default)((0, _extends2.default)((0, _extends2.default)({}, popper), childArgs), {}, {
+      props: (0, _extends2.default)((0, _extends2.default)({}, menuProps), {}, {
         style: popper.styles
       }),
       arrowProps: {
@@ -39247,12 +39653,21 @@ var propTypes = {
 var defaultProps = {
   usePopper: true
 };
+/**
+ * Also exported as `<Dropdown.Menu>` from `Dropdown`.
+ *
+ * @displayName DropdownMenu
+ * @memberOf Dropdown
+ */
 
-function DropdownMenu(_ref) {
-  var children = _ref.children,
-      options = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["children"]);
+function DropdownMenu(_ref2) {
+  var children = _ref2.children,
+      options = (0, _objectWithoutPropertiesLoose2.default)(_ref2, ["children"]);
   var args = useDropdownMenu(options);
-  return args.hasShown ? children(args) : null;
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null, args.hasShown ? children(args) : null)
+  );
 }
 
 DropdownMenu.displayName = 'ReactOverlaysDropdownMenu';
@@ -39273,24 +39688,35 @@ exports.default = void 0;
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _react = require("react");
+var _react = _interopRequireWildcard(require("react"));
 
 var _DropdownContext = _interopRequireDefault(require("./DropdownContext"));
 
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var noop = function noop() {};
 /**
- * Wires up Dropdown toggle functinality, returning a set a props to attach
+ * Wires up Dropdown toggle functionality, returning a set a props to attach
  * to the element that functions as the dropdown toggle (generally a button).
+ *
+ * @memberOf Dropdown
  */
+
+
 function useDropdownToggle() {
-  var _useContext = (0, _react.useContext)(_DropdownContext.default),
-      show = _useContext.show,
-      toggle = _useContext.toggle,
-      setToggle = _useContext.setToggle;
+  var _ref = (0, _react.useContext)(_DropdownContext.default) || {},
+      _ref$show = _ref.show,
+      show = _ref$show === void 0 ? false : _ref$show,
+      _ref$toggle = _ref.toggle,
+      toggle = _ref$toggle === void 0 ? noop : _ref$toggle,
+      setToggle = _ref.setToggle;
 
   return [{
-    ref: setToggle,
+    ref: setToggle || noop,
     'aria-haspopup': true,
     'aria-expanded': !!show
   }, {
@@ -39317,9 +39743,15 @@ var propTypes = {
    */
   children: _propTypes.default.func.isRequired
 };
+/**
+ * Also exported as `<Dropdown.Toggle>` from `Dropdown`.
+ *
+ * @displayName DropdownToggle
+ * @memberOf Dropdown
+ */
 
-function DropdownToggle(_ref) {
-  var children = _ref.children;
+function DropdownToggle(_ref2) {
+  var children = _ref2.children;
 
   var _useDropdownToggle = useDropdownToggle(),
       props = _useDropdownToggle[0],
@@ -39327,11 +39759,14 @@ function DropdownToggle(_ref) {
       show = _useDropdownToggle$.show,
       toggle = _useDropdownToggle$.toggle;
 
-  return children({
-    show: show,
-    toggle: toggle,
-    props: props
-  });
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null, children({
+      show: show,
+      toggle: toggle,
+      props: props
+    }))
+  );
 }
 
 DropdownToggle.displayName = 'ReactOverlaysDropdownToggle';
@@ -39412,7 +39847,7 @@ var propTypes = {
    * Selectors should be relative to the menu component:
    * e.g. ` > li:not('.disabled')`
    */
-  itemSelector: _propTypes.default.string.isRequired,
+  itemSelector: _propTypes.default.string,
 
   /**
    * Align the menu to the 'end' side of the placement side of the Dropdown toggle. The default placement is `top-start` or `bottom-start`.
@@ -39435,7 +39870,7 @@ var propTypes = {
    * A callback fired when the Dropdown wishes to change visibility. Called with the requested
    * `show` value, the DOM event, and the source that fired it: `'click'`,`'keydown'`,`'rootClose'`, or `'select'`.
    *
-   * ```js
+   * ```ts static
    * function(
    *   isOpen: boolean,
    *   event: SyntheticEvent,
@@ -39446,18 +39881,8 @@ var propTypes = {
    */
   onToggle: _propTypes.default.func
 };
-var defaultProps = {
-  itemSelector: '* > *'
-};
 /**
- * `Dropdown` is set of structural components for building, accessible dropdown menus with close-on-click,
- * keyboard navigation, and correct focus handling. As with all the react-overlay's
- * components its BYOS (bring your own styles). Dropdown is primarily
- * built from three base components, you should compose to build your Dropdowns.
- *
- * - `Dropdown`, which wraps the menu and toggle, and handles keyboard navigation
- * - `Dropdown.Toggle` generally a button that triggers the menu opening
- * - `Dropdown.Menu` The overlaid, menu, positioned to the toggle with PopperJs
+ * @displayName Dropdown
  */
 
 function Dropdown(_ref) {
@@ -39466,20 +39891,15 @@ function Dropdown(_ref) {
       defaultShow = _ref.defaultShow,
       rawShow = _ref.show,
       rawOnToggle = _ref.onToggle,
-      itemSelector = _ref.itemSelector,
+      _ref$itemSelector = _ref.itemSelector,
+      itemSelector = _ref$itemSelector === void 0 ? '* > *' : _ref$itemSelector,
       focusFirstItemOnShow = _ref.focusFirstItemOnShow,
       children = _ref.children;
   var forceUpdate = (0, _useForceUpdate.default)();
 
-  var _useUncontrolled = (0, _uncontrollable.useUncontrolled)({
-    defaultShow: defaultShow,
-    show: rawShow,
-    onToggle: rawOnToggle
-  }, {
-    show: 'onToggle'
-  }),
-      show = _useUncontrolled.show,
-      onToggle = _useUncontrolled.onToggle;
+  var _useUncontrolledProp = (0, _uncontrollable.useUncontrolledProp)(rawShow, defaultShow, rawOnToggle),
+      show = _useUncontrolledProp[0],
+      onToggle = _useUncontrolledProp[1];
 
   var _useCallbackRef = (0, _useCallbackRef2.default)(),
       toggleElement = _useCallbackRef[0],
@@ -39488,7 +39908,7 @@ function Dropdown(_ref) {
   // may run before the state value is set
 
 
-  var menuRef = (0, _react.useRef)();
+  var menuRef = (0, _react.useRef)(null);
   var menuElement = menuRef.current;
   var setMenu = (0, _react.useCallback)(function (ref) {
     menuRef.current = ref; // ensure that a menu set triggers an update for consumers
@@ -39557,8 +39977,8 @@ function Dropdown(_ref) {
   };
 
   var handleKeyDown = function handleKeyDown(event) {
-    var key = event.key,
-        target = event.target; // Second only to https://github.com/twbs/bootstrap/blob/8cfbf6933b8a0146ac3fbc369f19e520bd1ebdac/js/src/dropdown.js#L400
+    var key = event.key;
+    var target = event.target; // Second only to https://github.com/twbs/bootstrap/blob/8cfbf6933b8a0146ac3fbc369f19e520bd1ebdac/js/src/dropdown.js#L400
     // in inscrutability
 
     var isInput = /input|textarea/i.test(target.tagName);
@@ -39600,18 +40020,20 @@ function Dropdown(_ref) {
     }
   };
 
-  return _react.default.createElement(_DropdownContext.default.Provider, {
-    value: context
-  }, children({
-    props: {
-      onKeyDown: handleKeyDown
-    }
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_DropdownContext.default.Provider, {
+      value: context
+    }, children({
+      props: {
+        onKeyDown: handleKeyDown
+      }
+    }))
+  );
 }
 
 Dropdown.displayName = 'ReactOverlaysDropdown';
 Dropdown.propTypes = propTypes;
-Dropdown.defaultProps = defaultProps;
 Dropdown.Menu = _DropdownMenu.default;
 Dropdown.Toggle = _DropdownToggle.default;
 var _default = Dropdown;
@@ -39698,13 +40120,16 @@ var DropdownItem = _react.default.forwardRef(function (_ref, ref) {
     if (onSelectCtx) onSelectCtx(key, event);
     if (onSelect) onSelect(key, event);
   });
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    href: href,
-    disabled: disabled,
-    className: (0, _classnames.default)(className, prefix, active && 'active', disabled && 'disabled'),
-    onClick: handleClick
-  }), children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      href: href,
+      disabled: disabled,
+      className: (0, _classnames.default)(className, prefix, active && 'active', disabled && 'disabled'),
+      onClick: handleClick
+    }), children)
+  );
 });
 
 DropdownItem.displayName = 'DropdownItem';
@@ -39802,7 +40227,89 @@ function useWrappedRefWithWarning(ref, componentName) {
 
   return (0, _useMergedRefs.default)(warningRef, ref);
 }
-},{"invariant":"../../node_modules/invariant/browser.js","react":"../../node_modules/react/index.js","@restart/hooks/useMergedRefs":"../../node_modules/@restart/hooks/esm/useMergedRefs.js"}],"../../node_modules/react-bootstrap/esm/DropdownMenu.js":[function(require,module,exports) {
+},{"invariant":"../../node_modules/invariant/browser.js","react":"../../node_modules/react/index.js","@restart/hooks/useMergedRefs":"../../node_modules/@restart/hooks/esm/useMergedRefs.js"}],"../../node_modules/dom-helpers/esm/hasClass.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = hasClass;
+
+function hasClass(element, className) {
+  if (element.classList) return !!className && element.classList.contains(className);
+  return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
+}
+},{}],"../../node_modules/react-bootstrap/esm/usePopperMarginModifiers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = usePopperMarginModifiers;
+
+var _react = require("react");
+
+var _hasClass = _interopRequireDefault(require("dom-helpers/hasClass"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getMargins(element) {
+  var styles = getComputedStyle(element);
+  var top = parseFloat(styles.marginTop) || 0;
+  var right = parseFloat(styles.marginRight) || 0;
+  var bottom = parseFloat(styles.marginBottom) || 0;
+  var left = parseFloat(styles.marginLeft) || 0;
+  return {
+    top: top,
+    right: right,
+    bottom: bottom,
+    left: left
+  };
+}
+
+function usePopperMarginModifiers() {
+  var overlayRef = (0, _react.useRef)(null);
+  var margins = (0, _react.useRef)(null);
+  return [(0, _react.useCallback)(function (overlay) {
+    if (!overlay || !((0, _hasClass.default)(overlay, 'popover') || (0, _hasClass.default)(overlay, 'dropdown-menu'))) return;
+    margins.current = getMargins(overlay);
+    overlay.style.margin = 0;
+    overlayRef.current = overlay;
+  }, []), [(0, _react.useMemo)(function () {
+    return {
+      name: 'offset',
+      options: {
+        offset: function offset(_ref) {
+          var placement = _ref.placement;
+          if (!margins.current) return [0, 0];
+          var _margins$current = margins.current,
+              top = _margins$current.top,
+              left = _margins$current.left,
+              bottom = _margins$current.bottom,
+              right = _margins$current.right;
+
+          switch (placement.split('-')[0]) {
+            case 'top':
+              return [0, bottom];
+
+            case 'left':
+              return [0, right];
+
+            case 'bottom':
+              return [0, top];
+
+            case 'right':
+              return [0, left];
+
+            default:
+              return [0, 0];
+          }
+        }
+      }
+    };
+  }, [margins])]];
+}
+},{"react":"../../node_modules/react/index.js","dom-helpers/hasClass":"../../node_modules/dom-helpers/esm/hasClass.js"}],"../../node_modules/react-bootstrap/esm/DropdownMenu.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39828,6 +40335,8 @@ var _ThemeProvider = require("./ThemeProvider");
 
 var _useWrappedRefWithWarning = _interopRequireDefault(require("./useWrappedRefWithWarning"));
 
+var _usePopperMarginModifiers = _interopRequireDefault(require("./usePopperMarginModifiers"));
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -39845,21 +40354,29 @@ var DropdownMenu = _react.default.forwardRef(function (_ref, ref) {
       alignRight = _ref.alignRight,
       rootCloseEvent = _ref.rootCloseEvent,
       flip = _ref.flip,
-      popperConfig = _ref.popperConfig,
       showProps = _ref.show,
+      renderOnMount = _ref.renderOnMount,
       _ref$as = _ref.as,
       Component = _ref$as === void 0 ? 'div' : _ref$as,
-      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "alignRight", "rootCloseEvent", "flip", "popperConfig", "show", "as"]);
+      _ref$popperConfig = _ref.popperConfig,
+      popperConfig = _ref$popperConfig === void 0 ? {} : _ref$popperConfig,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "alignRight", "rootCloseEvent", "flip", "show", "renderOnMount", "as", "popperConfig"]);
   var isNavbar = (0, _react.useContext)(_NavbarContext.default);
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'dropdown-menu');
 
+  var _usePopperMarginModif = (0, _usePopperMarginModifiers.default)(),
+      popperRef = _usePopperMarginModif[0],
+      marginModifiers = _usePopperMarginModif[1];
+
   var _useDropdownMenu = (0, _DropdownMenu.useDropdownMenu)({
     flip: flip,
-    popperConfig: popperConfig,
     rootCloseEvent: rootCloseEvent,
     show: showProps,
     alignEnd: alignRight,
-    usePopper: !isNavbar
+    usePopper: !isNavbar,
+    popperConfig: (0, _extends2.default)({}, popperConfig, {
+      modifiers: marginModifiers.concat(popperConfig.modifiers || [])
+    })
   }),
       hasShown = _useDropdownMenu.hasShown,
       placement = _useDropdownMenu.placement,
@@ -39868,8 +40385,8 @@ var DropdownMenu = _react.default.forwardRef(function (_ref, ref) {
       close = _useDropdownMenu.close,
       menuProps = _useDropdownMenu.props;
 
-  menuProps.ref = (0, _useMergedRefs.default)(menuProps.ref, (0, _useWrappedRefWithWarning.default)(ref, 'DropdownMenu'));
-  if (!hasShown) return null; // For custom components provide additional, non-DOM, props;
+  menuProps.ref = (0, _useMergedRefs.default)(popperRef, (0, _useMergedRefs.default)((0, _useWrappedRefWithWarning.default)(ref, 'DropdownMenu'), menuProps.ref));
+  if (!hasShown && !renderOnMount) return null; // For custom components provide additional, non-DOM, props;
 
   if (typeof Component !== 'string') {
     menuProps.show = show;
@@ -39886,17 +40403,20 @@ var DropdownMenu = _react.default.forwardRef(function (_ref, ref) {
     props['x-placement'] = placement;
   }
 
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, menuProps, {
-    style: style,
-    className: (0, _classnames.default)(className, prefix, show && 'show', alignEnd && prefix + "-right")
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, menuProps, {
+      style: style,
+      className: (0, _classnames.default)(className, prefix, show && 'show', alignEnd && prefix + "-right")
+    }))
+  );
 });
 
 DropdownMenu.displayName = 'DropdownMenu';
 DropdownMenu.defaultProps = defaultProps;
 var _default = DropdownMenu;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","classnames":"../../node_modules/classnames/index.js","react":"../../node_modules/react/index.js","react-overlays/DropdownMenu":"../../node_modules/react-overlays/esm/DropdownMenu.js","@restart/hooks/useMergedRefs":"../../node_modules/@restart/hooks/esm/useMergedRefs.js","./NavbarContext":"../../node_modules/react-bootstrap/esm/NavbarContext.js","./ThemeProvider":"../../node_modules/react-bootstrap/esm/ThemeProvider.js","./useWrappedRefWithWarning":"../../node_modules/react-bootstrap/esm/useWrappedRefWithWarning.js"}],"../../node_modules/prop-types-extra/lib/isRequiredForA11y.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","classnames":"../../node_modules/classnames/index.js","react":"../../node_modules/react/index.js","react-overlays/DropdownMenu":"../../node_modules/react-overlays/esm/DropdownMenu.js","@restart/hooks/useMergedRefs":"../../node_modules/@restart/hooks/esm/useMergedRefs.js","./NavbarContext":"../../node_modules/react-bootstrap/esm/NavbarContext.js","./ThemeProvider":"../../node_modules/react-bootstrap/esm/ThemeProvider.js","./useWrappedRefWithWarning":"../../node_modules/react-bootstrap/esm/useWrappedRefWithWarning.js","./usePopperMarginModifiers":"../../node_modules/react-bootstrap/esm/usePopperMarginModifiers.js"}],"../../node_modules/prop-types-extra/lib/isRequiredForA11y.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -39972,10 +40492,13 @@ var DropdownToggle = _react.default.forwardRef(function (_ref, ref) {
   toggleProps.ref = (0, _useMergedRefs.default)(toggleProps.ref, (0, _useWrappedRefWithWarning.default)(ref, 'DropdownToggle')); // This intentionally forwards size and variant (if set) to the
   // underlying component, to allow it to render size and style variants.
 
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    onClick: toggle,
-    className: (0, _classnames.default)(className, prefix, split && prefix + "-split")
-  }, toggleProps, props), children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      onClick: toggle,
+      className: (0, _classnames.default)(className, prefix, split && prefix + "-split")
+    }, toggleProps, props), children)
+  );
 });
 
 DropdownToggle.displayName = 'DropdownToggle';
@@ -40059,22 +40582,30 @@ var Dropdown = _react.default.forwardRef(function (uncontrolledProps, ref) {
     if (onSelect) onSelect(key, event);
     handleToggle(false, event, 'select');
   });
-  return _react.default.createElement(_SelectableContext.default.Provider, {
-    value: handleSelect
-  }, _react.default.createElement(_Dropdown.default, {
-    drop: drop,
-    show: show,
-    alignEnd: alignRight,
-    onToggle: handleToggle,
-    focusFirstItemOnShow: focusFirstItemOnShow,
-    itemSelector: "." + prefix + "-item:not(.disabled):not(:disabled)"
-  }, function (_ref) {
-    var dropdownProps = _ref.props;
-    return _react.default.createElement(Component, (0, _extends2.default)({}, props, dropdownProps, {
-      ref: ref,
-      className: (0, _classnames.default)(className, show && 'show', (!drop || drop === 'down') && prefix, drop === 'up' && 'dropup', drop === 'right' && 'dropright', drop === 'left' && 'dropleft')
-    }));
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_SelectableContext.default.Provider, {
+      value: handleSelect
+    },
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default, {
+      drop: drop,
+      show: show,
+      alignEnd: alignRight,
+      onToggle: handleToggle,
+      focusFirstItemOnShow: focusFirstItemOnShow,
+      itemSelector: "." + prefix + "-item:not(.disabled):not(:disabled)"
+    }, function (_ref) {
+      var dropdownProps = _ref.props;
+      return (
+        /*#__PURE__*/
+        _react.default.createElement(Component, (0, _extends2.default)({}, props, dropdownProps, {
+          ref: ref,
+          className: (0, _classnames.default)(className, show && 'show', (!drop || drop === 'down') && prefix, drop === 'up' && 'dropup', drop === 'right' && 'dropright', drop === 'left' && 'dropleft')
+        }))
+      );
+    }))
+  );
 });
 
 Dropdown.displayName = 'Dropdown';
@@ -40137,6 +40668,9 @@ var propTypes = {
   /** An ARIA accessible role applied to the Menu component. When set to 'menu', The dropdown */
   menuRole: _propTypes.default.string,
 
+  /** Whether to render the dropdown menu in the DOM before the first time it is shown */
+  renderMenuOnMount: _propTypes.default.bool,
+
   /**
    *  Which event when fired outside the component will cause it to be closed.
    *
@@ -40170,23 +40704,32 @@ var DropdownButton = _react.default.forwardRef(function (_ref, ref) {
       variant = _ref.variant,
       size = _ref.size,
       menuRole = _ref.menuRole,
+      renderMenuOnMount = _ref.renderMenuOnMount,
       disabled = _ref.disabled,
       href = _ref.href,
       id = _ref.id,
-      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["title", "children", "bsPrefix", "rootCloseEvent", "variant", "size", "menuRole", "disabled", "href", "id"]);
-  return _react.default.createElement(_Dropdown.default, (0, _extends2.default)({
-    ref: ref
-  }, props), _react.default.createElement(_Dropdown.default.Toggle, {
-    id: id,
-    href: href,
-    size: size,
-    variant: variant,
-    disabled: disabled,
-    childBsPrefix: bsPrefix
-  }, title), _react.default.createElement(_Dropdown.default.Menu, {
-    role: menuRole,
-    rootCloseEvent: rootCloseEvent
-  }, children));
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["title", "children", "bsPrefix", "rootCloseEvent", "variant", "size", "menuRole", "renderMenuOnMount", "disabled", "href", "id"]);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default, (0, _extends2.default)({
+      ref: ref
+    }, props),
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default.Toggle, {
+      id: id,
+      href: href,
+      size: size,
+      variant: variant,
+      disabled: disabled,
+      childBsPrefix: bsPrefix
+    }, title),
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default.Menu, {
+      role: menuRole,
+      renderOnMount: renderMenuOnMount,
+      rootCloseEvent: rootCloseEvent
+    }, children))
+  );
 });
 
 DropdownButton.displayName = 'DropdownButton';
@@ -40320,10 +40863,13 @@ function (_ref, ref) {
       className = _ref.className,
       type = _ref.type,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["as", "className", "type"]);
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(className, type && type + "-feedback")
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(className, type && type + "-feedback")
+    }))
+  );
 });
 
 Feedback.displayName = 'Feedback';
@@ -40395,12 +40941,19 @@ var FormCheckInput = _react.default.forwardRef(function (_ref, ref) {
       controlId = _useContext.controlId,
       custom = _useContext.custom;
 
-  bsPrefix = custom ? (0, _ThemeProvider.useBootstrapPrefix)(bsCustomPrefix, 'custom-control-input') : (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'form-check-input');
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    id: id || controlId,
-    className: (0, _classnames.default)(className, bsPrefix, isValid && 'is-valid', isInvalid && 'is-invalid', isStatic && 'position-static')
-  }));
+  var _ref2 = custom ? [bsCustomPrefix, 'custom-control-input'] : [bsPrefix, 'form-check-input'],
+      prefix = _ref2[0],
+      defaultPrefix = _ref2[1];
+
+  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(prefix, defaultPrefix);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      id: id || controlId,
+      className: (0, _classnames.default)(className, bsPrefix, isValid && 'is-valid', isInvalid && 'is-invalid', isStatic && 'position-static')
+    }))
+  );
 });
 
 FormCheckInput.displayName = 'FormCheckInput';
@@ -40444,12 +40997,19 @@ var FormCheckLabel = _react.default.forwardRef(function (_ref, ref) {
       controlId = _useContext.controlId,
       custom = _useContext.custom;
 
-  bsPrefix = custom ? (0, _ThemeProvider.useBootstrapPrefix)(bsCustomPrefix, 'custom-control-label') : (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'form-check-label');
-  return _react.default.createElement("label", (0, _extends2.default)({}, props, {
-    ref: ref,
-    htmlFor: htmlFor || controlId,
-    className: (0, _classnames.default)(className, bsPrefix)
-  }));
+  var _ref2 = custom ? [bsCustomPrefix, 'custom-control-label'] : [bsPrefix, 'form-check-label'],
+      prefix = _ref2[0],
+      defaultPrefix = _ref2[1];
+
+  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(prefix, defaultPrefix);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("label", (0, _extends2.default)({}, props, {
+      ref: ref,
+      htmlFor: htmlFor || controlId,
+      className: (0, _classnames.default)(className, bsPrefix)
+    }))
+  );
 });
 
 FormCheckLabel.displayName = 'FormCheckLabel';
@@ -40518,7 +41078,12 @@ var FormCheck = _react.default.forwardRef(function (_ref, ref) {
       as = _ref$as === void 0 ? 'input' : _ref$as,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["id", "bsPrefix", "bsCustomPrefix", "inline", "disabled", "isValid", "isInvalid", "feedback", "className", "style", "title", "type", "label", "children", "custom", "as"]);
   var custom = type === 'switch' ? true : propCustom;
-  bsPrefix = custom ? (0, _ThemeProvider.useBootstrapPrefix)(bsCustomPrefix, 'custom-control') : (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'form-check');
+
+  var _ref2 = custom ? [bsCustomPrefix, 'custom-control'] : [bsPrefix, 'form-check'],
+      prefix = _ref2[0],
+      defaultPrefix = _ref2[1];
+
+  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(prefix, defaultPrefix);
 
   var _useContext = (0, _react.useContext)(_FormContext.default),
       controlId = _useContext.controlId;
@@ -40531,7 +41096,9 @@ var FormCheck = _react.default.forwardRef(function (_ref, ref) {
   }, [controlId, custom, id]);
   var hasLabel = label != null && label !== false && !children;
 
-  var input = _react.default.createElement(_FormCheckInput.default, (0, _extends2.default)({}, props, {
+  var input =
+  /*#__PURE__*/
+  _react.default.createElement(_FormCheckInput.default, (0, _extends2.default)({}, props, {
     type: type === 'switch' ? 'checkbox' : type,
     ref: ref,
     isValid: isValid,
@@ -40541,16 +41108,27 @@ var FormCheck = _react.default.forwardRef(function (_ref, ref) {
     as: as
   }));
 
-  return _react.default.createElement(_FormContext.default.Provider, {
-    value: innerFormContext
-  }, _react.default.createElement("div", {
-    style: style,
-    className: (0, _classnames.default)(className, bsPrefix, custom && "custom-" + type, inline && bsPrefix + "-inline")
-  }, children || _react.default.createElement(_react.default.Fragment, null, input, hasLabel && _react.default.createElement(_FormCheckLabel.default, {
-    title: title
-  }, label), (isValid || isInvalid) && _react.default.createElement(_Feedback.default, {
-    type: isValid ? 'valid' : 'invalid'
-  }, feedback))));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_FormContext.default.Provider, {
+      value: innerFormContext
+    },
+    /*#__PURE__*/
+    _react.default.createElement("div", {
+      style: style,
+      className: (0, _classnames.default)(className, bsPrefix, custom && "custom-" + type, inline && bsPrefix + "-inline")
+    }, children ||
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null, input, hasLabel &&
+    /*#__PURE__*/
+    _react.default.createElement(_FormCheckLabel.default, {
+      title: title
+    }, label), (isValid || isInvalid) &&
+    /*#__PURE__*/
+    _react.default.createElement(_Feedback.default, {
+      type: isValid ? 'valid' : 'invalid'
+    }, feedback))))
+  );
 });
 
 FormCheck.displayName = 'FormCheck';
@@ -40602,14 +41180,22 @@ var FormFileInput = _react.default.forwardRef(function (_ref, ref) {
       custom = _useContext.custom;
 
   var type = 'file';
-  bsPrefix = custom ? (0, _ThemeProvider.useBootstrapPrefix)(bsCustomPrefix, 'custom-file-input') : (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'form-control-file');
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    id: id || controlId,
-    type: type,
-    lang: lang,
-    className: (0, _classnames.default)(className, bsPrefix, isValid && 'is-valid', isInvalid && 'is-invalid')
-  }));
+
+  var _ref2 = custom ? [bsCustomPrefix, 'custom-file-input'] : [bsPrefix, 'form-control-file'],
+      prefix = _ref2[0],
+      defaultPrefix = _ref2[1];
+
+  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(prefix, defaultPrefix);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      id: id || controlId,
+      type: type,
+      lang: lang,
+      className: (0, _classnames.default)(className, bsPrefix, isValid && 'is-valid', isInvalid && 'is-invalid')
+    }))
+  );
 });
 
 FormFileInput.displayName = 'FormFileInput';
@@ -40652,13 +41238,20 @@ var FormFileLabel = _react.default.forwardRef(function (_ref, ref) {
       controlId = _useContext.controlId,
       custom = _useContext.custom;
 
-  bsPrefix = custom ? (0, _ThemeProvider.useBootstrapPrefix)(bsCustomPrefix, 'custom-file-label') : (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'form-file-label');
-  return _react.default.createElement("label", (0, _extends2.default)({}, props, {
-    ref: ref,
-    htmlFor: htmlFor || controlId,
-    className: (0, _classnames.default)(className, bsPrefix),
-    "data-browse": props['data-browse']
-  }));
+  var _ref2 = custom ? [bsCustomPrefix, 'custom-file-label'] : [bsPrefix, 'form-file-label'],
+      prefix = _ref2[0],
+      defaultPrefix = _ref2[1];
+
+  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(prefix, defaultPrefix);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("label", (0, _extends2.default)({}, props, {
+      ref: ref,
+      htmlFor: htmlFor || controlId,
+      className: (0, _classnames.default)(className, bsPrefix),
+      "data-browse": props['data-browse']
+    }))
+  );
 });
 
 FormFileLabel.displayName = 'FormFileLabel';
@@ -40724,7 +41317,12 @@ var FormFile = _react.default.forwardRef(function (_ref, ref) {
       _ref$inputAs = _ref.inputAs,
       inputAs = _ref$inputAs === void 0 ? 'input' : _ref$inputAs,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["id", "bsPrefix", "bsCustomPrefix", "disabled", "isValid", "isInvalid", "feedback", "className", "style", "label", "children", "custom", "lang", "data-browse", "as", "inputAs"]);
-  bsPrefix = custom ? (0, _ThemeProvider.useBootstrapPrefix)(bsCustomPrefix, 'custom') : (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'form-file');
+
+  var _ref2 = custom ? [bsCustomPrefix, 'custom'] : [bsPrefix, 'form-file'],
+      prefix = _ref2[0],
+      defaultPrefix = _ref2[1];
+
+  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(prefix, defaultPrefix);
   var type = 'file';
 
   var _useContext = (0, _react.useContext)(_FormContext.default),
@@ -40738,7 +41336,9 @@ var FormFile = _react.default.forwardRef(function (_ref, ref) {
   }, [controlId, custom, id]);
   var hasLabel = label != null && label !== false && !children;
 
-  var input = _react.default.createElement(_FormFileInput.default, (0, _extends2.default)({}, props, {
+  var input =
+  /*#__PURE__*/
+  _react.default.createElement(_FormFileInput.default, (0, _extends2.default)({}, props, {
     ref: ref,
     isValid: isValid,
     isInvalid: isInvalid,
@@ -40747,16 +41347,33 @@ var FormFile = _react.default.forwardRef(function (_ref, ref) {
     lang: lang
   }));
 
-  return _react.default.createElement(_FormContext.default.Provider, {
-    value: innerFormContext
-  }, _react.default.createElement(Component, {
-    style: style,
-    className: (0, _classnames.default)(className, bsPrefix, custom && "custom-" + type)
-  }, children || _react.default.createElement(_react.default.Fragment, null, custom ? _react.default.createElement(_react.default.Fragment, null, input, hasLabel && _react.default.createElement(_FormFileLabel.default, {
-    "data-browse": dataBrowse
-  }, label)) : _react.default.createElement(_react.default.Fragment, null, hasLabel && _react.default.createElement(_FormFileLabel.default, null, label), input), (isValid || isInvalid) && _react.default.createElement(_Feedback.default, {
-    type: isValid ? 'valid' : 'invalid'
-  }, feedback))));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_FormContext.default.Provider, {
+      value: innerFormContext
+    },
+    /*#__PURE__*/
+    _react.default.createElement(Component, {
+      style: style,
+      className: (0, _classnames.default)(className, bsPrefix, custom && "custom-" + type)
+    }, children ||
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null, custom ?
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null, input, hasLabel &&
+    /*#__PURE__*/
+    _react.default.createElement(_FormFileLabel.default, {
+      "data-browse": dataBrowse
+    }, label)) :
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null, hasLabel &&
+    /*#__PURE__*/
+    _react.default.createElement(_FormFileLabel.default, null, label), input), (isValid || isInvalid) &&
+    /*#__PURE__*/
+    _react.default.createElement(_Feedback.default, {
+      type: isValid ? 'valid' : 'invalid'
+    }, feedback))))
+  );
 });
 
 FormFile.displayName = 'FormFile';
@@ -40816,7 +41433,11 @@ var FormControl = _react.default.forwardRef(function (_ref, ref) {
   var _useContext = (0, _react.useContext)(_FormContext.default),
       controlId = _useContext.controlId;
 
-  bsPrefix = custom ? (0, _ThemeProvider.useBootstrapPrefix)(bsCustomPrefix, 'custom') : (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'form-control');
+  var _ref2 = custom ? [bsCustomPrefix, 'custom'] : [bsPrefix, 'form-control'],
+      prefix = _ref2[0],
+      defaultPrefix = _ref2[1];
+
+  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(prefix, defaultPrefix);
   var classes;
 
   if (plaintext) {
@@ -40842,13 +41463,16 @@ var FormControl = _react.default.forwardRef(function (_ref, ref) {
   }
 
   "development" !== "production" ? (0, _warning.default)(controlId == null || !id, '`controlId` is ignored on `<FormControl>` when `id` is specified.') : void 0;
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    type: type,
-    ref: ref,
-    readOnly: readOnly,
-    id: id || controlId,
-    className: (0, _classnames.default)(className, classes, isValid && "is-valid", isInvalid && "is-invalid")
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      type: type,
+      ref: ref,
+      readOnly: readOnly,
+      id: id || controlId,
+      className: (0, _classnames.default)(className, classes, isValid && "is-valid", isInvalid && "is-invalid")
+    }))
+  );
 });
 
 FormControl.displayName = 'FormControl';
@@ -40895,12 +41519,17 @@ var FormGroup = _react.default.forwardRef(function (_ref, ref) {
       controlId: controlId
     };
   }, [controlId]);
-  return _react.default.createElement(_FormContext.default.Provider, {
-    value: context
-  }, _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(className, bsPrefix)
-  }), children));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_FormContext.default.Provider, {
+      value: context
+    },
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(className, bsPrefix)
+    }), children))
+  );
 });
 
 FormGroup.displayName = 'FormGroup';
@@ -40960,12 +41589,17 @@ var FormLabel = _react.default.forwardRef(function (_ref, ref) {
   var classes = (0, _classnames.default)(className, bsPrefix, srOnly && 'sr-only', column && columnClass);
   "development" !== "production" ? (0, _warning.default)(controlId == null || !htmlFor, '`controlId` is ignored on `<FormLabel>` when `htmlFor` is specified.') : void 0;
   htmlFor = htmlFor || controlId;
-  if (column) return _react.default.createElement(_Col.default, (0, _extends2.default)({
-    as: "label",
-    className: classes,
-    htmlFor: htmlFor
-  }, props));
-  return (// eslint-disable-next-line jsx-a11y/label-has-for, jsx-a11y/label-has-associated-control
+  if (column) return (
+    /*#__PURE__*/
+    _react.default.createElement(_Col.default, (0, _extends2.default)({
+      as: "label",
+      className: classes,
+      htmlFor: htmlFor
+    }, props))
+  );
+  return (
+    /*#__PURE__*/
+    // eslint-disable-next-line jsx-a11y/label-has-for, jsx-a11y/label-has-associated-control
     _react.default.createElement(Component, (0, _extends2.default)({
       ref: ref,
       className: classes,
@@ -41007,10 +41641,13 @@ function (_ref, ref) {
       muted = _ref.muted,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "as", "muted"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'form-text');
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(className, bsPrefix, muted && 'text-muted')
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(className, bsPrefix, muted && 'text-muted')
+    }))
+  );
 });
 
 FormText.displayName = 'FormText';
@@ -41033,10 +41670,13 @@ var _FormCheck = _interopRequireDefault(require("./FormCheck"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Switch = _react.default.forwardRef(function (props, ref) {
-  return _react.default.createElement(_FormCheck.default, (0, _extends2.default)({}, props, {
-    ref: ref,
-    type: "switch"
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_FormCheck.default, (0, _extends2.default)({}, props, {
+      ref: ref,
+      type: "switch"
+    }))
+  );
 });
 
 Switch.displayName = 'Switch';
@@ -41093,10 +41733,13 @@ var Form = _react.default.forwardRef(function (_ref, ref) {
       Component = _ref$as === void 0 ? 'form' : _ref$as,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "inline", "className", "validated", "as"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'form');
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(className, validated && 'was-validated', inline && bsPrefix + "-inline")
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(className, validated && 'was-validated', inline && bsPrefix + "-inline")
+    }))
+  );
 });
 
 Form.displayName = 'Form';
@@ -41144,11 +41787,14 @@ var Container = _react.default.forwardRef(function (_ref, ref) {
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "fluid", "as", "className"]);
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'container');
   var suffix = typeof fluid === 'string' ? "-" + fluid : '-fluid';
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, fluid ? "" + prefix + suffix : prefix)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, fluid ? "" + prefix + suffix : prefix)
+    }))
+  );
 });
 
 Container.displayName = 'Container';
@@ -41192,12 +41838,15 @@ var Image = _react.default.forwardRef(function (_ref, ref) {
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "fluid", "rounded", "roundedCircle", "thumbnail"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'img');
   var classes = (0, _classnames.default)(fluid && bsPrefix + "-fluid", rounded && "rounded", roundedCircle && "rounded-circle", thumbnail && bsPrefix + "-thumbnail");
-  return _react.default.createElement("img", (0, _extends2.default)({
-    // eslint-disable-line jsx-a11y/alt-text
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, classes)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("img", (0, _extends2.default)({
+      // eslint-disable-line jsx-a11y/alt-text
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, classes)
+    }))
+  );
 });
 
 Image.displayName = 'Image';
@@ -41259,11 +41908,14 @@ var defaultProps = {
 var FigureImage = _react.default.forwardRef(function (_ref, ref) {
   var className = _ref.className,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["className"]);
-  return _react.default.createElement(_Image.default, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, 'figure-img')
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Image.default, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, 'figure-img')
+    }))
+  );
 });
 
 FigureImage.displayName = 'FigureImage';
@@ -41349,11 +42001,14 @@ var InputGroup = _react.default.forwardRef(function (_ref, ref) {
       Component = _ref$as === void 0 ? 'div' : _ref$as,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "size", "className", "as"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'input-group');
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, bsPrefix, size && bsPrefix + "-" + size)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, bsPrefix, size && bsPrefix + "-" + size)
+    }))
+  );
 });
 
 var InputGroupAppend = (0, _createWithBsPrefix.default)('input-group-append');
@@ -41363,15 +42018,25 @@ var InputGroupText = (0, _createWithBsPrefix.default)('input-group-text', {
 });
 
 var InputGroupCheckbox = function InputGroupCheckbox(props) {
-  return _react.default.createElement(InputGroupText, null, _react.default.createElement("input", (0, _extends2.default)({
-    type: "checkbox"
-  }, props)));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(InputGroupText, null,
+    /*#__PURE__*/
+    _react.default.createElement("input", (0, _extends2.default)({
+      type: "checkbox"
+    }, props)))
+  );
 };
 
 var InputGroupRadio = function InputGroupRadio(props) {
-  return _react.default.createElement(InputGroupText, null, _react.default.createElement("input", (0, _extends2.default)({
-    type: "radio"
-  }, props)));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(InputGroupText, null,
+    /*#__PURE__*/
+    _react.default.createElement("input", (0, _extends2.default)({
+      type: "radio"
+    }, props)))
+  );
 };
 
 InputGroup.displayName = 'InputGroup';
@@ -41417,11 +42082,14 @@ var Jumbotron = _react.default.forwardRef(function (_ref, ref) {
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["as", "className", "fluid", "bsPrefix"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'jumbotron');
   var classes = (_classes = {}, _classes[bsPrefix] = true, _classes[bsPrefix + "-fluid"] = fluid, _classes);
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, classes)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, classes)
+    }))
+  );
 });
 
 Jumbotron.defaultProps = defaultProps;
@@ -41556,21 +42224,28 @@ var AbstractNav = _react.default.forwardRef(function (_ref, ref) {
     needsRefocusRef.current = false;
   });
   var mergedRef = (0, _useMergedRefs.default)(ref, listNode);
-  return _react.default.createElement(_SelectableContext.default.Provider, {
-    value: handleSelect
-  }, _react.default.createElement(_NavContext.default.Provider, {
-    value: {
-      role: role,
-      // used by NavLink to determine it's role
-      activeKey: (0, _SelectableContext.makeEventKey)(activeKey),
-      getControlledId: getControlledId || noop,
-      getControllerId: getControllerId || noop
-    }
-  }, _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    onKeyDown: handleKeyDown,
-    ref: mergedRef,
-    role: role
-  }))));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_SelectableContext.default.Provider, {
+      value: handleSelect
+    },
+    /*#__PURE__*/
+    _react.default.createElement(_NavContext.default.Provider, {
+      value: {
+        role: role,
+        // used by NavLink to determine it's role
+        activeKey: (0, _SelectableContext.makeEventKey)(activeKey),
+        getControlledId: getControlledId || noop,
+        getControllerId: getControllerId || noop
+      }
+    },
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      onKeyDown: handleKeyDown,
+      ref: mergedRef,
+      role: role
+    }))))
+  );
 });
 
 var _default = AbstractNav;
@@ -41592,6 +42267,8 @@ var _classnames = _interopRequireDefault(require("classnames"));
 var _react = _interopRequireWildcard(require("react"));
 
 var _useEventCallback = _interopRequireDefault(require("@restart/hooks/useEventCallback"));
+
+var _warning = _interopRequireDefault(require("warning"));
 
 var _NavContext = _interopRequireDefault(require("./NavContext"));
 
@@ -41623,9 +42300,13 @@ var AbstractNavItem = _react.default.forwardRef(function (_ref, ref) {
 
   if (navContext) {
     if (!props.role && navContext.role === 'tablist') props.role = 'tab';
+    var contextControllerId = navContext.getControllerId(navKey);
+    var contextControlledId = navContext.getControlledId(navKey);
+    "development" !== "production" ? (0, _warning.default)(!contextControllerId || !props.id, "[react-bootstrap] The provided id '" + props.id + "' was overwritten by the current navContext with '" + contextControllerId + "'.") : void 0;
+    "development" !== "production" ? (0, _warning.default)(!contextControlledId || !props['aria-controls'], "[react-bootstrap] The provided aria-controls value '" + props['aria-controls'] + "' was overwritten by the current navContext with '" + contextControlledId + "'.") : void 0;
     props['data-rb-event-key'] = navKey;
-    props.id = navContext.getControllerId(navKey);
-    props['aria-controls'] = navContext.getControlledId(navKey);
+    props.id = contextControllerId || props.id;
+    props['aria-controls'] = contextControlledId || props['aria-controls'];
     isActive = active == null && navKey != null ? navContext.activeKey === navKey : active;
   }
 
@@ -41640,17 +42321,20 @@ var AbstractNavItem = _react.default.forwardRef(function (_ref, ref) {
     if (onSelect) onSelect(navKey, e);
     if (parentOnSelect) parentOnSelect(navKey, e);
   });
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    onClick: handleOnclick,
-    className: (0, _classnames.default)(className, isActive && 'active')
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      onClick: handleOnclick,
+      className: (0, _classnames.default)(className, isActive && 'active')
+    }))
+  );
 });
 
 AbstractNavItem.defaultProps = defaultProps;
 var _default = AbstractNavItem;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","classnames":"../../node_modules/classnames/index.js","react":"../../node_modules/react/index.js","@restart/hooks/useEventCallback":"../../node_modules/@restart/hooks/esm/useEventCallback.js","./NavContext":"../../node_modules/react-bootstrap/esm/NavContext.js","./SelectableContext":"../../node_modules/react-bootstrap/esm/SelectableContext.js"}],"../../node_modules/react-bootstrap/esm/ListGroupItem.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","classnames":"../../node_modules/classnames/index.js","react":"../../node_modules/react/index.js","@restart/hooks/useEventCallback":"../../node_modules/@restart/hooks/esm/useEventCallback.js","warning":"../../node_modules/warning/warning.js","./NavContext":"../../node_modules/react-bootstrap/esm/NavContext.js","./SelectableContext":"../../node_modules/react-bootstrap/esm/SelectableContext.js"}],"../../node_modules/react-bootstrap/esm/ListGroupItem.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41705,15 +42389,18 @@ var ListGroupItem = _react.default.forwardRef(function (_ref, ref) {
 
     if (onClick) onClick(event);
   }, [disabled, onClick]);
-  return _react.default.createElement(_AbstractNavItem.default, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    eventKey: (0, _SelectableContext.makeEventKey)(eventKey, props.href) // eslint-disable-next-line
-    ,
-    as: as || (action ? props.href ? 'a' : 'button' : 'div'),
-    onClick: handleClick,
-    className: (0, _classnames.default)(className, bsPrefix, active && 'active', disabled && 'disabled', variant && bsPrefix + "-" + variant, action && bsPrefix + "-action")
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_AbstractNavItem.default, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      eventKey: (0, _SelectableContext.makeEventKey)(eventKey, props.href) // eslint-disable-next-line
+      ,
+      as: as || (action ? props.href ? 'a' : 'button' : 'div'),
+      onClick: handleClick,
+      className: (0, _classnames.default)(className, bsPrefix, active && 'active', disabled && 'disabled', variant && bsPrefix + "-" + variant, action && bsPrefix + "-action")
+    }))
+  );
 });
 
 ListGroupItem.defaultProps = defaultProps;
@@ -41775,12 +42462,15 @@ var ListGroup = _react.default.forwardRef(function (props, ref) {
   }
 
   "development" !== "production" ? (0, _warning.default)(!(horizontal && variant === 'flush'), '`variant="flush"` and `horizontal` should not be used together.') : void 0;
-  return _react.default.createElement(_AbstractNav.default, (0, _extends2.default)({
-    ref: ref
-  }, controlledProps, {
-    as: as,
-    className: (0, _classnames.default)(className, bsPrefix, variant && bsPrefix + "-" + variant, horizontalVariant && bsPrefix + "-" + horizontalVariant)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_AbstractNav.default, (0, _extends2.default)({
+      ref: ref
+    }, controlledProps, {
+      as: as,
+      className: (0, _classnames.default)(className, bsPrefix, variant && bsPrefix + "-" + variant, horizontalVariant && bsPrefix + "-" + horizontalVariant)
+    }))
+  );
 });
 
 ListGroup.defaultProps = defaultProps;
@@ -41818,10 +42508,13 @@ function (_ref, ref) {
       Component = _ref$as === void 0 ? 'div' : _ref$as,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "as"]);
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'media');
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(className, prefix)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(className, prefix)
+    }))
+  );
 });
 
 Media.displayName = 'Media';
@@ -41859,22 +42552,7 @@ function scrollbarSize(recalc) {
 
   return size;
 }
-},{"./canUseDOM":"../../node_modules/dom-helpers/esm/canUseDOM.js"}],"../../node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _assertThisInitialized;
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-},{}],"../../node_modules/dom-helpers/esm/activeElement.js":[function(require,module,exports) {
+},{"./canUseDOM":"../../node_modules/dom-helpers/esm/canUseDOM.js"}],"../../node_modules/dom-helpers/esm/activeElement.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41909,19 +42587,7 @@ function activeElement(doc) {
     return doc.body;
   }
 }
-},{"./ownerDocument":"../../node_modules/dom-helpers/esm/ownerDocument.js"}],"../../node_modules/dom-helpers/esm/hasClass.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = hasClass;
-
-function hasClass(element, className) {
-  if (element.classList) return !!className && element.classList.contains(className);
-  return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
-}
-},{}],"../../node_modules/dom-helpers/esm/addClass.js":[function(require,module,exports) {
+},{"./ownerDocument":"../../node_modules/dom-helpers/esm/ownerDocument.js"}],"../../node_modules/dom-helpers/esm/addClass.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41986,7 +42652,7 @@ function isWindow(node) {
   if ((0, _isDocument.default)(node)) return node.defaultView || false;
   return false;
 }
-},{"./isDocument":"../../node_modules/dom-helpers/esm/isDocument.js"}],"../../node_modules/react-overlays/esm/utils/isOverflowing.js":[function(require,module,exports) {
+},{"./isDocument":"../../node_modules/dom-helpers/esm/isDocument.js"}],"../../node_modules/react-overlays/esm/isOverflowing.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42005,8 +42671,8 @@ function isBody(node) {
 }
 
 function bodyIsOverflowing(node) {
-  var doc = (0, _ownerDocument.default)(node);
-  var win = (0, _isWindow.default)(doc);
+  var doc = (0, _isWindow.default)(node) ? (0, _ownerDocument.default)() : (0, _ownerDocument.default)(node);
+  var win = (0, _isWindow.default)(node) || doc.defaultView;
   return doc.body.clientWidth < win.innerWidth;
 }
 
@@ -42014,7 +42680,7 @@ function isOverflowing(container) {
   var win = (0, _isWindow.default)(container);
   return win || isBody(container) ? bodyIsOverflowing(container) : container.scrollHeight > container.clientHeight;
 }
-},{"dom-helpers/isWindow":"../../node_modules/dom-helpers/esm/isWindow.js","dom-helpers/ownerDocument":"../../node_modules/dom-helpers/esm/ownerDocument.js"}],"../../node_modules/react-overlays/esm/utils/manageAriaHidden.js":[function(require,module,exports) {
+},{"dom-helpers/isWindow":"../../node_modules/dom-helpers/esm/isWindow.js","dom-helpers/ownerDocument":"../../node_modules/dom-helpers/esm/ownerDocument.js"}],"../../node_modules/react-overlays/esm/manageAriaHidden.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42032,7 +42698,6 @@ var isHidable = function isHidable(_ref) {
 };
 
 var siblings = function siblings(container, exclude, cb) {
-  exclude = [].concat(exclude);
   [].forEach.call(container.children, function (node) {
     if (exclude.indexOf(node) === -1 && isHidable(node)) {
       cb(node);
@@ -42081,9 +42746,9 @@ var _css = _interopRequireDefault(require("dom-helpers/css"));
 
 var _scrollbarSize = _interopRequireDefault(require("dom-helpers/scrollbarSize"));
 
-var _isOverflowing = _interopRequireDefault(require("./utils/isOverflowing"));
+var _isOverflowing = _interopRequireDefault(require("./isOverflowing"));
 
-var _manageAriaHidden = require("./utils/manageAriaHidden");
+var _manageAriaHidden = require("./manageAriaHidden");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42116,6 +42781,12 @@ function () {
         _ref$handleContainerO = _ref.handleContainerOverflow,
         handleContainerOverflow = _ref$handleContainerO === void 0 ? true : _ref$handleContainerO;
 
+    this.hideSiblingNodes = void 0;
+    this.handleContainerOverflow = void 0;
+    this.modals = void 0;
+    this.containers = void 0;
+    this.data = void 0;
+    this.scrollbarSize = void 0;
     this.hideSiblingNodes = hideSiblingNodes;
     this.handleContainerOverflow = handleContainerOverflow;
     this.modals = [];
@@ -42151,7 +42822,7 @@ function () {
     if (containerState.overflowing) {
       // use computed style, here to get the real padding
       // to add our scrollbar width
-      style.paddingRight = parseInt((0, _css.default)(container, 'paddingRight') || 0, 10) + this.scrollbarSize + "px";
+      style.paddingRight = parseInt((0, _css.default)(container, 'paddingRight') || '0', 10) + this.scrollbarSize + "px";
     }
 
     (0, _css.default)(container, style);
@@ -42247,13 +42918,14 @@ function () {
 
 var _default = ModalManager;
 exports.default = _default;
-},{"dom-helpers/addClass":"../../node_modules/dom-helpers/esm/addClass.js","dom-helpers/removeClass":"../../node_modules/dom-helpers/esm/removeClass.js","dom-helpers/css":"../../node_modules/dom-helpers/esm/css.js","dom-helpers/scrollbarSize":"../../node_modules/dom-helpers/esm/scrollbarSize.js","./utils/isOverflowing":"../../node_modules/react-overlays/esm/utils/isOverflowing.js","./utils/manageAriaHidden":"../../node_modules/react-overlays/esm/utils/manageAriaHidden.js"}],"../../node_modules/react-overlays/esm/utils/useWaitForDOMRef.js":[function(require,module,exports) {
+},{"dom-helpers/addClass":"../../node_modules/dom-helpers/esm/addClass.js","dom-helpers/removeClass":"../../node_modules/dom-helpers/esm/removeClass.js","dom-helpers/css":"../../node_modules/dom-helpers/esm/css.js","dom-helpers/scrollbarSize":"../../node_modules/dom-helpers/esm/scrollbarSize.js","./isOverflowing":"../../node_modules/react-overlays/esm/isOverflowing.js","./manageAriaHidden":"../../node_modules/react-overlays/esm/manageAriaHidden.js"}],"../../node_modules/react-overlays/esm/useWaitForDOMRef.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = useWaitForDOMRef;
+exports.resolveContainerRef = void 0;
 
 var _ownerDocument = _interopRequireDefault(require("dom-helpers/ownerDocument"));
 
@@ -42261,24 +42933,28 @@ var _react = require("react");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var resolveRef = function resolveRef(ref) {
-  if (typeof document === 'undefined') return undefined;
+var resolveContainerRef = function resolveContainerRef(ref) {
+  var _ref;
+
+  if (typeof document === 'undefined') return null;
   if (ref == null) return (0, _ownerDocument.default)().body;
   if (typeof ref === 'function') ref = ref();
-  if (ref && ref.current) ref = ref.current;
-  if (ref && ref.nodeType) return ref;
+  if (ref && 'current' in ref) ref = ref.current;
+  if ((_ref = ref) == null ? void 0 : _ref.nodeType) return ref || null;
   return null;
 };
 
+exports.resolveContainerRef = resolveContainerRef;
+
 function useWaitForDOMRef(ref, onResolved) {
   var _useState = (0, _react.useState)(function () {
-    return resolveRef(ref);
+    return resolveContainerRef(ref);
   }),
       resolvedRef = _useState[0],
       setRef = _useState[1];
 
   if (!resolvedRef) {
-    var earlyRef = resolveRef(ref);
+    var earlyRef = resolveContainerRef(ref);
     if (earlyRef) setRef(earlyRef);
   }
 
@@ -42288,7 +42964,7 @@ function useWaitForDOMRef(ref, onResolved) {
     }
   }, [onResolved, resolvedRef]);
   (0, _react.useEffect)(function () {
-    var nextRef = resolveRef(ref);
+    var nextRef = resolveContainerRef(ref);
 
     if (nextRef !== resolvedRef) {
       setRef(nextRef);
@@ -42308,10 +42984,6 @@ var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/exten
 
 var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose"));
 
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/assertThisInitialized"));
-
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/inheritsLoose"));
-
 var _activeElement = _interopRequireDefault(require("dom-helpers/activeElement"));
 
 var _contains = _interopRequireDefault(require("dom-helpers/contains"));
@@ -42322,335 +42994,297 @@ var _listen = _interopRequireDefault(require("dom-helpers/listen"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
+var _useMounted = _interopRequireDefault(require("@restart/hooks/useMounted"));
+
+var _useWillUnmount = _interopRequireDefault(require("@restart/hooks/useWillUnmount"));
+
+var _usePrevious = _interopRequireDefault(require("@restart/hooks/usePrevious"));
+
+var _useEventCallback = _interopRequireDefault(require("@restart/hooks/useEventCallback"));
+
 var _ModalManager = _interopRequireDefault(require("./ModalManager"));
 
-var _ownerDocument = _interopRequireDefault(require("./utils/ownerDocument"));
+var _useWaitForDOMRef = _interopRequireDefault(require("./useWaitForDOMRef"));
 
-var _useWaitForDOMRef = _interopRequireDefault(require("./utils/useWaitForDOMRef"));
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
+
 /* eslint-disable react/prop-types */
-function omitProps(props, propTypes) {
-  var keys = Object.keys(props);
-  var newProps = {};
-  keys.forEach(function (prop) {
-    if (!Object.prototype.hasOwnProperty.call(propTypes, prop)) {
-      newProps[prop] = props[prop];
-    }
-  });
-  return newProps;
+var manager;
+
+function getManager() {
+  if (!manager) manager = new _ModalManager.default();
+  return manager;
 }
 
-var manager;
-/**
- * Love them or hate them, `<Modal />` provides a solid foundation for creating dialogs, lightboxes, or whatever else.
- * The Modal component renders its `children` node in front of a backdrop component.
- *
- * The Modal offers a few helpful features over using just a `<Portal/>` component and some styles:
- *
- * - Manages dialog stacking when one-at-a-time just isn't enough.
- * - Creates a backdrop, for disabling interaction below the modal.
- * - It properly manages focus; moving to the modal content, and keeping it there until the modal is closed.
- * - It disables scrolling of the page content while open.
- * - Adds the appropriate ARIA roles are automatically.
- * - Easily pluggable animations via a `<Transition/>` component.
- *
- * Note that, in the same way the backdrop element prevents users from clicking or interacting
- * with the page content underneath the Modal, Screen readers also need to be signaled to not to
- * interact with page content while the Modal is open. To do this, we use a common technique of applying
- * the `aria-hidden='true'` attribute to the non-Modal elements in the Modal `container`. This means that for
- * a Modal to be truly modal, it should have a `container` that is _outside_ your app's
- * React hierarchy (such as the default: document.body).
- */
+function useModalManager(provided) {
+  var modalManager = provided || getManager();
+  var modal = (0, _react.useRef)({
+    dialog: null,
+    backdrop: null
+  });
+  return Object.assign(modal.current, {
+    add: function add(container, className) {
+      return modalManager.add(modal.current, container, className);
+    },
+    remove: function remove() {
+      return modalManager.remove(modal.current);
+    },
+    isTopModal: function isTopModal() {
+      return modalManager.isTopModal(modal.current);
+    },
+    setDialogRef: (0, _react.useCallback)(function (ref) {
+      modal.current.dialog = ref;
+    }, []),
+    setBackdropRef: (0, _react.useCallback)(function (ref) {
+      modal.current.backdrop = ref;
+    }, [])
+  });
+}
 
-var Modal =
-/*#__PURE__*/
-function (_React$Component) {
-  (0, _inheritsLoose2.default)(Modal, _React$Component);
+var Modal = (0, _react.forwardRef)(function (_ref, ref) {
+  var _ref$show = _ref.show,
+      show = _ref$show === void 0 ? false : _ref$show,
+      _ref$role = _ref.role,
+      role = _ref$role === void 0 ? 'dialog' : _ref$role,
+      className = _ref.className,
+      style = _ref.style,
+      children = _ref.children,
+      _ref$backdrop = _ref.backdrop,
+      backdrop = _ref$backdrop === void 0 ? true : _ref$backdrop,
+      _ref$keyboard = _ref.keyboard,
+      keyboard = _ref$keyboard === void 0 ? true : _ref$keyboard,
+      onBackdropClick = _ref.onBackdropClick,
+      onEscapeKeyDown = _ref.onEscapeKeyDown,
+      transition = _ref.transition,
+      backdropTransition = _ref.backdropTransition,
+      _ref$autoFocus = _ref.autoFocus,
+      autoFocus = _ref$autoFocus === void 0 ? true : _ref$autoFocus,
+      _ref$enforceFocus = _ref.enforceFocus,
+      enforceFocus = _ref$enforceFocus === void 0 ? true : _ref$enforceFocus,
+      _ref$restoreFocus = _ref.restoreFocus,
+      restoreFocus = _ref$restoreFocus === void 0 ? true : _ref$restoreFocus,
+      restoreFocusOptions = _ref.restoreFocusOptions,
+      renderDialog = _ref.renderDialog,
+      _ref$renderBackdrop = _ref.renderBackdrop,
+      renderBackdrop = _ref$renderBackdrop === void 0 ? function (props) {
+    return (
+      /*#__PURE__*/
+      _react.default.createElement("div", props)
+    );
+  } : _ref$renderBackdrop,
+      providedManager = _ref.manager,
+      containerRef = _ref.container,
+      containerClassName = _ref.containerClassName,
+      onShow = _ref.onShow,
+      _ref$onHide = _ref.onHide,
+      onHide = _ref$onHide === void 0 ? function () {} : _ref$onHide,
+      onExit = _ref.onExit,
+      onExited = _ref.onExited,
+      onExiting = _ref.onExiting,
+      onEnter = _ref.onEnter,
+      onEntering = _ref.onEntering,
+      onEntered = _ref.onEntered,
+      rest = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["show", "role", "className", "style", "children", "backdrop", "keyboard", "onBackdropClick", "onEscapeKeyDown", "transition", "backdropTransition", "autoFocus", "enforceFocus", "restoreFocus", "restoreFocusOptions", "renderDialog", "renderBackdrop", "manager", "container", "containerClassName", "onShow", "onHide", "onExit", "onExited", "onExiting", "onEnter", "onEntering", "onEntered"]);
+  var container = (0, _useWaitForDOMRef.default)(containerRef);
+  var modal = useModalManager(providedManager);
+  var isMounted = (0, _useMounted.default)();
+  var prevShow = (0, _usePrevious.default)(show);
 
-  function Modal() {
-    var _this;
+  var _useState = (0, _react.useState)(!show),
+      exited = _useState[0],
+      setExited = _useState[1];
 
-    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
-      _args[_key] = arguments[_key];
-    }
+  var lastFocusRef = (0, _react.useRef)(null);
+  (0, _react.useImperativeHandle)(ref, function () {
+    return modal;
+  }, [modal]);
 
-    _this = _React$Component.call.apply(_React$Component, [this].concat(_args)) || this;
-    _this.state = {
-      exited: !_this.props.show
-    };
-
-    _this.onShow = function () {
-      var _this$props = _this.props,
-          container = _this$props.container,
-          containerClassName = _this$props.containerClassName,
-          onShow = _this$props.onShow;
-
-      _this.getModalManager().add((0, _assertThisInitialized2.default)(_this), container, containerClassName);
-
-      _this.removeKeydownListener = (0, _listen.default)(document, 'keydown', _this.handleDocumentKeyDown);
-      _this.removeFocusListener = (0, _listen.default)(document, 'focus', // the timeout is necessary b/c this will run before the new modal is mounted
-      // and so steals focus from it
-      function () {
-        return setTimeout(_this.enforceFocus);
-      }, true);
-
-      if (onShow) {
-        onShow();
-      } // autofocus after onShow, to not trigger a focus event for previous
-      // modals before this one is shown.
-
-
-      _this.autoFocus();
-    };
-
-    _this.onHide = function () {
-      _this.getModalManager().remove((0, _assertThisInitialized2.default)(_this));
-
-      _this.removeKeydownListener();
-
-      _this.removeFocusListener();
-
-      if (_this.props.restoreFocus) {
-        _this.restoreLastFocus();
-      }
-    };
-
-    _this.setDialogRef = function (ref) {
-      _this.dialog = ref;
-    };
-
-    _this.setBackdropRef = function (ref) {
-      _this.backdrop = ref && _reactDom.default.findDOMNode(ref);
-    };
-
-    _this.handleHidden = function () {
-      _this.setState({
-        exited: true
-      });
-
-      _this.onHide();
-
-      if (_this.props.onExited) {
-        var _this$props2;
-
-        (_this$props2 = _this.props).onExited.apply(_this$props2, arguments);
-      }
-    };
-
-    _this.handleBackdropClick = function (e) {
-      if (e.target !== e.currentTarget) {
-        return;
-      }
-
-      if (_this.props.onBackdropClick) {
-        _this.props.onBackdropClick(e);
-      }
-
-      if (_this.props.backdrop === true) {
-        _this.props.onHide();
-      }
-    };
-
-    _this.handleDocumentKeyDown = function (e) {
-      if (_this.props.keyboard && e.keyCode === 27 && _this.isTopModal()) {
-        if (_this.props.onEscapeKeyDown) {
-          _this.props.onEscapeKeyDown(e);
-        }
-
-        _this.props.onHide();
-      }
-    };
-
-    _this.enforceFocus = function () {
-      if (!_this.props.enforceFocus || !_this._isMounted || !_this.isTopModal()) {
-        return;
-      }
-
-      var currentActiveElement = (0, _activeElement.default)((0, _ownerDocument.default)((0, _assertThisInitialized2.default)(_this)));
-
-      if (_this.dialog && !(0, _contains.default)(_this.dialog, currentActiveElement)) {
-        _this.dialog.focus();
-      }
-    };
-
-    _this.renderBackdrop = function () {
-      var _this$props3 = _this.props,
-          renderBackdrop = _this$props3.renderBackdrop,
-          Transition = _this$props3.backdropTransition;
-      var backdrop = renderBackdrop({
-        ref: _this.setBackdropRef,
-        onClick: _this.handleBackdropClick
-      });
-
-      if (Transition) {
-        backdrop = _react.default.createElement(Transition, {
-          appear: true,
-          "in": _this.props.show
-        }, backdrop);
-      }
-
-      return backdrop;
-    };
-
-    return _this;
+  if (_canUseDOM.default && !prevShow && show) {
+    lastFocusRef.current = (0, _activeElement.default)();
   }
 
-  Modal.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps) {
-    if (nextProps.show) {
-      return {
-        exited: false
-      };
+  if (!transition && !show && !exited) {
+    setExited(true);
+  } else if (show && exited) {
+    setExited(false);
+  }
+
+  var handleShow = (0, _useEventCallback.default)(function () {
+    modal.add(container, containerClassName);
+    removeKeydownListenerRef.current = (0, _listen.default)(document, 'keydown', handleDocumentKeyDown);
+    removeFocusListenerRef.current = (0, _listen.default)(document, 'focus', // the timeout is necessary b/c this will run before the new modal is mounted
+    // and so steals focus from it
+    function () {
+      return setTimeout(handleEnforceFocus);
+    }, true);
+
+    if (onShow) {
+      onShow();
+    } // autofocus after onShow to not trigger a focus event for previous
+    // modals before this one is shown.
+
+
+    if (autoFocus) {
+      var currentActiveElement = (0, _activeElement.default)(document);
+
+      if (modal.dialog && currentActiveElement && !(0, _contains.default)(modal.dialog, currentActiveElement)) {
+        lastFocusRef.current = currentActiveElement;
+        modal.dialog.focus();
+      }
+    }
+  });
+  var handleHide = (0, _useEventCallback.default)(function () {
+    modal.remove();
+    removeKeydownListenerRef.current == null ? void 0 : removeKeydownListenerRef.current();
+    removeFocusListenerRef.current == null ? void 0 : removeFocusListenerRef.current();
+
+    if (restoreFocus) {
+      var _lastFocusRef$current; // Support: <=IE11 doesn't support `focus()` on svg elements (RB: #917)
+
+
+      (_lastFocusRef$current = lastFocusRef.current) == null ? void 0 : _lastFocusRef$current.focus == null ? void 0 : _lastFocusRef$current.focus(restoreFocusOptions);
+      lastFocusRef.current = null;
+    }
+  }); // TODO: try and combine these effects: https://github.com/react-bootstrap/react-overlays/pull/794#discussion_r409954120
+  // Show logic when:
+  //  - show is `true` _and_ `container` has resolved
+
+  (0, _react.useEffect)(function () {
+    if (!show || !container) return;
+    handleShow();
+  }, [show, container,
+  /* should never change: */
+  handleShow]); // Hide cleanup logic when:
+  //  - `exited` switches to true
+  //  - component unmounts;
+
+  (0, _react.useEffect)(function () {
+    if (!exited) return;
+    handleHide();
+  }, [exited, handleHide]);
+  (0, _useWillUnmount.default)(function () {
+    handleHide();
+  }); // --------------------------------
+
+  var handleEnforceFocus = (0, _useEventCallback.default)(function () {
+    if (!enforceFocus || !isMounted() || !modal.isTopModal()) {
+      return;
     }
 
-    if (!nextProps.transition) {
-      // Otherwise let handleHidden take care of marking exited.
-      return {
-        exited: true
-      };
+    var currentActiveElement = (0, _activeElement.default)();
+
+    if (modal.dialog && currentActiveElement && !(0, _contains.default)(modal.dialog, currentActiveElement)) {
+      modal.dialog.focus();
+    }
+  });
+  var handleBackdropClick = (0, _useEventCallback.default)(function (e) {
+    if (e.target !== e.currentTarget) {
+      return;
     }
 
+    onBackdropClick == null ? void 0 : onBackdropClick(e);
+
+    if (backdrop === true) {
+      onHide();
+    }
+  });
+  var handleDocumentKeyDown = (0, _useEventCallback.default)(function (e) {
+    if (keyboard && e.keyCode === 27 && modal.isTopModal()) {
+      onEscapeKeyDown == null ? void 0 : onEscapeKeyDown(e);
+
+      if (!e.defaultPrevented) {
+        onHide();
+      }
+    }
+  });
+  var removeFocusListenerRef = (0, _react.useRef)();
+  var removeKeydownListenerRef = (0, _react.useRef)();
+
+  var handleHidden = function handleHidden() {
+    setExited(true);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    onExited == null ? void 0 : onExited.apply(void 0, args);
+  };
+
+  var Transition = transition;
+
+  if (!container || !(show || Transition && !exited)) {
     return null;
-  };
+  }
 
-  var _proto = Modal.prototype;
+  var dialogProps = (0, _extends2.default)((0, _extends2.default)({
+    role: role,
+    ref: modal.setDialogRef,
+    // apparently only works on the dialog role element
+    'aria-modal': role === 'dialog' ? true : undefined
+  }, rest), {}, {
+    style: style,
+    className: className,
+    tabIndex: -1
+  });
+  var dialog = renderDialog ? renderDialog(dialogProps) :
+  /*#__PURE__*/
+  _react.default.createElement("div", dialogProps, _react.default.cloneElement(children, {
+    role: 'document'
+  }));
 
-  _proto.componentDidMount = function componentDidMount() {
-    this._isMounted = true;
+  if (Transition) {
+    dialog =
+    /*#__PURE__*/
+    _react.default.createElement(Transition, {
+      appear: true,
+      unmountOnExit: true,
+      "in": !!show,
+      onExit: onExit,
+      onExiting: onExiting,
+      onExited: handleHidden,
+      onEnter: onEnter,
+      onEntering: onEntering,
+      onEntered: onEntered
+    }, dialog);
+  }
 
-    if (this.props.show) {
-      this.onShow();
-    }
-  };
+  var backdropElement = null;
 
-  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
-    var transition = this.props.transition;
-
-    if (prevProps.show && !this.props.show && !transition) {
-      // Otherwise handleHidden will call this.
-      this.onHide();
-    } else if (!prevProps.show && this.props.show) {
-      this.onShow();
-    }
-  };
-
-  _proto.componentWillUnmount = function componentWillUnmount() {
-    var _this$props4 = this.props,
-        show = _this$props4.show,
-        transition = _this$props4.transition;
-    this._isMounted = false;
-
-    if (show || transition && !this.state.exited) {
-      this.onHide();
-    }
-  };
-
-  _proto.getSnapshotBeforeUpdate = function getSnapshotBeforeUpdate(prevProps) {
-    if (_canUseDOM.default && !prevProps.show && this.props.show) {
-      this.lastFocus = (0, _activeElement.default)();
-    }
-
-    return null;
-  };
-
-  _proto.getModalManager = function getModalManager() {
-    if (this.props.manager) {
-      return this.props.manager;
-    }
-
-    if (!manager) {
-      manager = new _ModalManager.default();
-    }
-
-    return manager;
-  };
-
-  _proto.restoreLastFocus = function restoreLastFocus() {
-    // Support: <=IE11 doesn't support `focus()` on svg elements (RB: #917)
-    if (this.lastFocus && this.lastFocus.focus) {
-      this.lastFocus.focus(this.props.restoreFocusOptions);
-      this.lastFocus = null;
-    }
-  };
-
-  _proto.autoFocus = function autoFocus() {
-    if (!this.props.autoFocus) return;
-    var currentActiveElement = (0, _activeElement.default)((0, _ownerDocument.default)(this));
-
-    if (this.dialog && !(0, _contains.default)(this.dialog, currentActiveElement)) {
-      this.lastFocus = currentActiveElement;
-      this.dialog.focus();
-    }
-  };
-
-  _proto.isTopModal = function isTopModal() {
-    return this.getModalManager().isTopModal(this);
-  };
-
-  _proto.render = function render() {
-    var _this$props5 = this.props,
-        show = _this$props5.show,
-        container = _this$props5.container,
-        children = _this$props5.children,
-        renderDialog = _this$props5.renderDialog,
-        _this$props5$role = _this$props5.role,
-        role = _this$props5$role === void 0 ? 'dialog' : _this$props5$role,
-        Transition = _this$props5.transition,
-        backdrop = _this$props5.backdrop,
-        className = _this$props5.className,
-        style = _this$props5.style,
-        onExit = _this$props5.onExit,
-        onExiting = _this$props5.onExiting,
-        onEnter = _this$props5.onEnter,
-        onEntering = _this$props5.onEntering,
-        onEntered = _this$props5.onEntered,
-        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props5, ["show", "container", "children", "renderDialog", "role", "transition", "backdrop", "className", "style", "onExit", "onExiting", "onEnter", "onEntering", "onEntered"]);
-
-    if (!(show || Transition && !this.state.exited)) {
-      return null;
-    }
-
-    var dialogProps = (0, _extends2.default)({
-      role: role,
-      ref: this.setDialogRef,
-      // apparently only works on the dialog role element
-      'aria-modal': role === 'dialog' ? true : undefined
-    }, omitProps(props, Modal.propTypes), {
-      style: style,
-      className: className,
-      tabIndex: '-1'
+  if (backdrop) {
+    var BackdropTransition = backdropTransition;
+    backdropElement = renderBackdrop({
+      ref: modal.setBackdropRef,
+      onClick: handleBackdropClick
     });
-    var dialog = renderDialog ? renderDialog(dialogProps) : _react.default.createElement("div", dialogProps, _react.default.cloneElement(children, {
-      role: 'document'
-    }));
 
-    if (Transition) {
-      dialog = _react.default.createElement(Transition, {
+    if (BackdropTransition) {
+      backdropElement =
+      /*#__PURE__*/
+      _react.default.createElement(BackdropTransition, {
         appear: true,
-        unmountOnExit: true,
-        "in": show,
-        onExit: onExit,
-        onExiting: onExiting,
-        onExited: this.handleHidden,
-        onEnter: onEnter,
-        onEntering: onEntering,
-        onEntered: onEntered
-      }, dialog);
+        "in": !!show
+      }, backdropElement);
     }
+  }
 
-    return _reactDom.default.createPortal(_react.default.createElement(_react.default.Fragment, null, backdrop && this.renderBackdrop(), dialog), container);
-  };
-
-  return Modal;
-}(_react.default.Component); // dumb HOC for the sake react-docgen
-
-
-Modal.propTypes = {
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null, _reactDom.default.createPortal(
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null, backdropElement, dialog), container))
+  );
+});
+var propTypes = {
   /**
    * Set the visibility of the Modal
    */
@@ -42686,8 +43320,8 @@ Modal.propTypes = {
    * A function that returns the dialog component. Useful for custom
    * rendering. **Note:** the component should make sure to apply the provided ref.
    *
-   * ```js
-   *  renderDialog={props => <MyDialog {...props} />}
+   * ```js static
+   * renderDialog={props => <MyDialog {...props} />}
    * ```
    */
   renderDialog: _propTypes.default.func,
@@ -42704,6 +43338,8 @@ Modal.propTypes = {
 
   /**
    * A callback fired when the escape key, if specified in `keyboard`, is pressed.
+   *
+   * If preventDefault() is called on the keyboard event, closing the modal will be cancelled.
    */
   onEscapeKeyDown: _propTypes.default.func,
 
@@ -42802,42 +43438,17 @@ Modal.propTypes = {
    * A ModalManager instance used to track and manage the state of open
    * Modals. Useful when customizing how modals interact within a container
    */
-  manager: _propTypes.default.object
+  manager: _propTypes.default.instanceOf(_ModalManager.default)
 };
-Modal.defaultProps = {
-  show: false,
-  role: 'dialog',
-  backdrop: true,
-  keyboard: true,
-  autoFocus: true,
-  enforceFocus: true,
-  restoreFocus: true,
-  onHide: function onHide() {},
-  renderBackdrop: function renderBackdrop(props) {
-    return _react.default.createElement("div", props);
-  }
-};
+Modal.displayName = 'Modal';
+Modal.propTypes = propTypes;
 
-function forwardRef(Component) {
-  // eslint-disable-next-line react/display-name
-  var ModalWithContainer = _react.default.forwardRef(function (props, ref) {
-    var resolved = (0, _useWaitForDOMRef.default)(props.container);
-    return resolved ? _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-      ref: ref,
-      container: resolved
-    })) : null;
-  });
+var _default = Object.assign(Modal, {
+  Manager: _ModalManager.default
+});
 
-  ModalWithContainer.Manager = _ModalManager.default;
-  ModalWithContainer._Inner = Component;
-  return ModalWithContainer;
-}
-
-var ModalWithContainer = forwardRef(Modal);
-ModalWithContainer.Manager = _ModalManager.default;
-var _default = ModalWithContainer;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","@babel/runtime/helpers/esm/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js","@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","dom-helpers/activeElement":"../../node_modules/dom-helpers/esm/activeElement.js","dom-helpers/contains":"../../node_modules/dom-helpers/esm/contains.js","dom-helpers/canUseDOM":"../../node_modules/dom-helpers/esm/canUseDOM.js","dom-helpers/listen":"../../node_modules/dom-helpers/esm/listen.js","prop-types":"../../node_modules/prop-types/index.js","react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","./ModalManager":"../../node_modules/react-overlays/esm/ModalManager.js","./utils/ownerDocument":"../../node_modules/react-overlays/esm/utils/ownerDocument.js","./utils/useWaitForDOMRef":"../../node_modules/react-overlays/esm/utils/useWaitForDOMRef.js"}],"../../node_modules/react-bootstrap/esm/BootstrapModalManager.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","dom-helpers/activeElement":"../../node_modules/dom-helpers/esm/activeElement.js","dom-helpers/contains":"../../node_modules/dom-helpers/esm/contains.js","dom-helpers/canUseDOM":"../../node_modules/dom-helpers/esm/canUseDOM.js","dom-helpers/listen":"../../node_modules/dom-helpers/esm/listen.js","prop-types":"../../node_modules/prop-types/index.js","react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","@restart/hooks/useMounted":"../../node_modules/@restart/hooks/esm/useMounted.js","@restart/hooks/useWillUnmount":"../../node_modules/@restart/hooks/esm/useWillUnmount.js","@restart/hooks/usePrevious":"../../node_modules/@restart/hooks/esm/usePrevious.js","@restart/hooks/useEventCallback":"../../node_modules/@restart/hooks/esm/useEventCallback.js","./ModalManager":"../../node_modules/react-overlays/esm/ModalManager.js","./useWaitForDOMRef":"../../node_modules/react-overlays/esm/useWaitForDOMRef.js"}],"../../node_modules/react-bootstrap/esm/BootstrapModalManager.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -43002,12 +43613,17 @@ var ModalDialog = _react.default.forwardRef(function (_ref, ref) {
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "centered", "size", "children", "scrollable"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'modal');
   var dialogClass = bsPrefix + "-dialog";
-  return _react.default.createElement("div", (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(dialogClass, className, size && bsPrefix + "-" + size, centered && dialogClass + "-centered", scrollable && dialogClass + "-scrollable")
-  }), _react.default.createElement("div", {
-    className: bsPrefix + "-content"
-  }, children));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(dialogClass, className, size && bsPrefix + "-" + size, centered && dialogClass + "-centered", scrollable && dialogClass + "-scrollable")
+    }),
+    /*#__PURE__*/
+    _react.default.createElement("div", {
+      className: bsPrefix + "-content"
+    }, children))
+  );
 });
 
 ModalDialog.displayName = 'ModalDialog';
@@ -43077,14 +43693,19 @@ var ModalHeader = _react.default.forwardRef(function (_ref, ref) {
     if (context) context.onHide();
     if (onHide) onHide();
   });
-  return _react.default.createElement("div", (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, bsPrefix)
-  }), children, closeButton && _react.default.createElement(_CloseButton.default, {
-    label: closeLabel,
-    onClick: handleClick
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, bsPrefix)
+    }), children, closeButton &&
+    /*#__PURE__*/
+    _react.default.createElement(_CloseButton.default, {
+      label: closeLabel,
+      onClick: handleClick
+    }))
+  );
 });
 
 ModalHeader.displayName = 'ModalHeader';
@@ -43176,11 +43797,17 @@ var defaultProps = {
 /* eslint-disable no-use-before-define, react/no-multi-comp */
 
 function DialogTransition(props) {
-  return _react.default.createElement(_Fade.default, props);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Fade.default, props)
+  );
 }
 
 function BackdropTransition(props) {
-  return _react.default.createElement(_Fade.default, props);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Fade.default, props)
+  );
 }
 /* eslint-enable no-use-before-define */
 
@@ -43295,9 +43922,12 @@ function (_React$Component) {
           bsPrefix = _this$props4.bsPrefix,
           backdropClassName = _this$props4.backdropClassName,
           animation = _this$props4.animation;
-      return _react.default.createElement("div", (0, _extends2.default)({}, props, {
-        className: (0, _classnames.default)(bsPrefix + "-backdrop", backdropClassName, !animation && 'show')
-      }));
+      return (
+        /*#__PURE__*/
+        _react.default.createElement("div", (0, _extends2.default)({}, props, {
+          className: (0, _classnames.default)(bsPrefix + "-backdrop", backdropClassName, !animation && 'show')
+        }))
+      );
     };
 
     return _this;
@@ -43330,6 +43960,7 @@ function (_React$Component) {
         dialogClassName = _this$props5.dialogClassName,
         children = _this$props5.children,
         Dialog = _this$props5.dialogAs,
+        ariaLabelledby = _this$props5['aria-labelledby'],
         show = _this$props5.show,
         animation = _this$props5.animation,
         backdrop = _this$props5.backdrop,
@@ -43350,45 +43981,53 @@ function (_React$Component) {
         _6 = _this$props5.onEnter,
         _4 = _this$props5.onEntering,
         _2 = _this$props5.backdropClassName,
-        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props5, ["bsPrefix", "className", "style", "dialogClassName", "children", "dialogAs", "show", "animation", "backdrop", "keyboard", "onEscapeKeyDown", "onShow", "onHide", "container", "autoFocus", "enforceFocus", "restoreFocus", "restoreFocusOptions", "onEntered", "onExit", "onExiting", "onExited", "onEntering", "onEnter", "onEntering", "backdropClassName"]);
+        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props5, ["bsPrefix", "className", "style", "dialogClassName", "children", "dialogAs", "aria-labelledby", "show", "animation", "backdrop", "keyboard", "onEscapeKeyDown", "onShow", "onHide", "container", "autoFocus", "enforceFocus", "restoreFocus", "restoreFocusOptions", "onEntered", "onExit", "onExiting", "onExited", "onEntering", "onEnter", "onEntering", "backdropClassName"]);
     var clickHandler = backdrop === true ? this.handleClick : null;
     var baseModalStyle = (0, _extends2.default)({}, style, {}, this.state.style); // Sets `display` always block when `animation` is false
 
     if (!animation) baseModalStyle.display = 'block';
-    return _react.default.createElement(_ModalContext.default.Provider, {
-      value: this.modalContext
-    }, _react.default.createElement(_Modal.default, {
-      show: show,
-      backdrop: backdrop,
-      container: container,
-      keyboard: keyboard,
-      autoFocus: autoFocus,
-      enforceFocus: enforceFocus,
-      restoreFocus: restoreFocus,
-      restoreFocusOptions: restoreFocusOptions,
-      onEscapeKeyDown: onEscapeKeyDown,
-      onShow: onShow,
-      onHide: onHide,
-      onEntered: onEntered,
-      onExit: onExit,
-      onExiting: onExiting,
-      manager: this.getModalManager(),
-      ref: this.setModalRef,
-      style: baseModalStyle,
-      className: (0, _classnames.default)(className, bsPrefix),
-      containerClassName: bsPrefix + "-open",
-      transition: animation ? DialogTransition : undefined,
-      backdropTransition: animation ? BackdropTransition : undefined,
-      renderBackdrop: this.renderBackdrop,
-      onClick: clickHandler,
-      onMouseUp: this.handleMouseUp,
-      onEnter: this.handleEnter,
-      onEntering: this.handleEntering,
-      onExited: this.handleExited
-    }, _react.default.createElement(Dialog, (0, _extends2.default)({}, props, {
-      onMouseDown: this.handleDialogMouseDown,
-      className: dialogClassName
-    }), children)));
+    return (
+      /*#__PURE__*/
+      _react.default.createElement(_ModalContext.default.Provider, {
+        value: this.modalContext
+      },
+      /*#__PURE__*/
+      _react.default.createElement(_Modal.default, {
+        show: show,
+        backdrop: backdrop,
+        container: container,
+        keyboard: keyboard,
+        autoFocus: autoFocus,
+        enforceFocus: enforceFocus,
+        restoreFocus: restoreFocus,
+        restoreFocusOptions: restoreFocusOptions,
+        onEscapeKeyDown: onEscapeKeyDown,
+        onShow: onShow,
+        onHide: onHide,
+        onEntered: onEntered,
+        onExit: onExit,
+        onExiting: onExiting,
+        manager: this.getModalManager(),
+        ref: this.setModalRef,
+        style: baseModalStyle,
+        className: (0, _classnames.default)(className, bsPrefix),
+        containerClassName: bsPrefix + "-open",
+        transition: animation ? DialogTransition : undefined,
+        backdropTransition: animation ? BackdropTransition : undefined,
+        renderBackdrop: this.renderBackdrop,
+        onClick: clickHandler,
+        onMouseUp: this.handleMouseUp,
+        onEnter: this.handleEnter,
+        onEntering: this.handleEntering,
+        onExited: this.handleExited,
+        'aria-labelledby': ariaLabelledby
+      },
+      /*#__PURE__*/
+      _react.default.createElement(Dialog, (0, _extends2.default)({}, props, {
+        onMouseDown: this.handleDialogMouseDown,
+        className: dialogClassName
+      }), children)))
+    );
   };
 
   return Modal;
@@ -43434,10 +44073,13 @@ function (_ref, ref) {
       Component = _ref$as === void 0 ? 'div' : _ref$as,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "children", "as"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'nav-item');
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(className, bsPrefix)
-  }), children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(className, bsPrefix)
+    }), children)
+  );
 });
 
 NavItem.displayName = 'NavItem';
@@ -43482,15 +44124,18 @@ var NavLink = _react.default.forwardRef(function (_ref, ref) {
       as = _ref.as,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "disabled", "className", "href", "eventKey", "onSelect", "as"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'nav-link');
-  return _react.default.createElement(_AbstractNavItem.default, (0, _extends2.default)({}, props, {
-    href: href,
-    ref: ref,
-    eventKey: eventKey,
-    as: as,
-    disabled: disabled,
-    onSelect: onSelect,
-    className: (0, _classnames.default)(className, bsPrefix, disabled && 'disabled')
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_AbstractNavItem.default, (0, _extends2.default)({}, props, {
+      href: href,
+      ref: ref,
+      eventKey: eventKey,
+      as: as,
+      disabled: disabled,
+      onSelect: onSelect,
+      className: (0, _classnames.default)(className, bsPrefix, disabled && 'disabled')
+    }))
+  );
 });
 
 NavLink.displayName = 'NavLink';
@@ -43570,12 +44215,15 @@ var Nav = _react.default.forwardRef(function (uncontrolledProps, ref) {
     cardHeaderBsPrefix = cardContext.cardHeaderBsPrefix;
   }
 
-  return _react.default.createElement(_AbstractNav.default, (0, _extends2.default)({
-    as: as,
-    ref: ref,
-    activeKey: activeKey,
-    className: (0, _classnames.default)(className, (_classNames = {}, _classNames[bsPrefix] = !navbar, _classNames[navbarBsPrefix + "-nav"] = navbar, _classNames[cardHeaderBsPrefix + "-" + variant] = !!cardHeaderBsPrefix, _classNames[bsPrefix + "-" + variant] = !!variant, _classNames[bsPrefix + "-fill"] = fill, _classNames[bsPrefix + "-justified"] = justify, _classNames))
-  }, props), children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_AbstractNav.default, (0, _extends2.default)({
+      as: as,
+      ref: ref,
+      activeKey: activeKey,
+      className: (0, _classnames.default)(className, (_classNames = {}, _classNames[bsPrefix] = !navbar, _classNames[navbarBsPrefix + "-nav"] = navbar, _classNames[cardHeaderBsPrefix + "-" + variant] = !!cardHeaderBsPrefix, _classNames[bsPrefix + "-" + variant] = !!variant, _classNames[bsPrefix + "-fill"] = fill, _classNames[bsPrefix + "-justified"] = justify, _classNames))
+    }, props), children)
+  );
 });
 
 Nav.displayName = 'Nav';
@@ -43611,10 +44259,13 @@ var NavbarBrand = _react.default.forwardRef(function (_ref, ref) {
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "as"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'navbar-brand');
   var Component = as || (props.href ? 'a' : 'span');
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(className, bsPrefix)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(className, bsPrefix)
+    }))
+  );
 });
 
 NavbarBrand.displayName = 'NavbarBrand';
@@ -43647,14 +44298,22 @@ var NavbarCollapse = _react.default.forwardRef(function (_ref, ref) {
       bsPrefix = _ref.bsPrefix,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["children", "bsPrefix"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'navbar-collapse');
-  return _react.default.createElement(_NavbarContext.default.Consumer, null, function (context) {
-    return _react.default.createElement(_Collapse.default, (0, _extends2.default)({
-      in: !!(context && context.expanded)
-    }, props), _react.default.createElement("div", {
-      ref: ref,
-      className: bsPrefix
-    }, children));
-  });
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_NavbarContext.default.Consumer, null, function (context) {
+      return (
+        /*#__PURE__*/
+        _react.default.createElement(_Collapse.default, (0, _extends2.default)({
+          in: !!(context && context.expanded)
+        }, props),
+        /*#__PURE__*/
+        _react.default.createElement("div", {
+          ref: ref,
+          className: bsPrefix
+        }, children))
+      );
+    })
+  );
 });
 
 NavbarCollapse.displayName = 'NavbarCollapse';
@@ -43716,14 +44375,19 @@ var NavbarToggle = _react.default.forwardRef(function (_ref, ref) {
     props.type = 'button';
   }
 
-  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
-    ref: ref,
-    onClick: handleClick,
-    "aria-label": label,
-    className: (0, _classnames.default)(className, bsPrefix, !expanded && 'collapsed')
-  }), children || _react.default.createElement("span", {
-    className: bsPrefix + "-icon"
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      ref: ref,
+      onClick: handleClick,
+      "aria-label": label,
+      className: (0, _classnames.default)(className, bsPrefix, !expanded && 'collapsed')
+    }), children ||
+    /*#__PURE__*/
+    _react.default.createElement("span", {
+      className: bsPrefix + "-icon"
+    }))
+  );
 });
 
 NavbarToggle.displayName = 'NavbarToggle';
@@ -43820,15 +44484,22 @@ var Navbar = _react.default.forwardRef(function (props, ref) {
       expanded: expanded
     };
   }, [bsPrefix, expanded, _onToggle]);
-  return _react.default.createElement(_NavbarContext.default.Provider, {
-    value: navbarContext
-  }, _react.default.createElement(_SelectableContext.default.Provider, {
-    value: handleCollapse
-  }, _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, controlledProps, {
-    className: (0, _classnames.default)(className, bsPrefix, expand && expandClass, variant && bsPrefix + "-" + variant, bg && "bg-" + bg, sticky && "sticky-" + sticky, fixed && "fixed-" + fixed)
-  }), children)));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_NavbarContext.default.Provider, {
+      value: navbarContext
+    },
+    /*#__PURE__*/
+    _react.default.createElement(_SelectableContext.default.Provider, {
+      value: handleCollapse
+    },
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, controlledProps, {
+      className: (0, _classnames.default)(className, bsPrefix, expand && expandClass, variant && bsPrefix + "-" + variant, bg && "bg-" + bg, sticky && "sticky-" + sticky, fixed && "fixed-" + fixed)
+    }), children)))
+  );
 });
 
 Navbar.defaultProps = defaultProps;
@@ -43888,6 +44559,9 @@ var propTypes = {
   /** An ARIA accessible role applied to the Menu component. When set to 'menu', The dropdown */
   menuRole: _propTypes.default.string,
 
+  /** Whether to render the dropdown menu in the DOM before the first time it is shown */
+  renderMenuOnMount: _propTypes.default.bool,
+
   /**
    *  Which event when fired outside the component will cause it to be closed.
    *
@@ -43908,22 +44582,31 @@ var NavDropdown = _react.default.forwardRef(function (_ref, ref) {
       menuRole = _ref.menuRole,
       disabled = _ref.disabled,
       active = _ref.active,
-      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["id", "title", "children", "bsPrefix", "rootCloseEvent", "menuRole", "disabled", "active"]);
-  return _react.default.createElement(_Dropdown.default, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    as: _NavItem.default
-  }), _react.default.createElement(_Dropdown.default.Toggle, {
-    id: id,
-    eventKey: null,
-    active: active,
-    disabled: disabled,
-    childBsPrefix: bsPrefix,
-    as: _NavLink.default
-  }, title), _react.default.createElement(_Dropdown.default.Menu, {
-    role: menuRole,
-    rootCloseEvent: rootCloseEvent
-  }, children));
+      renderMenuOnMount = _ref.renderMenuOnMount,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["id", "title", "children", "bsPrefix", "rootCloseEvent", "menuRole", "disabled", "active", "renderMenuOnMount"]);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      as: _NavItem.default
+    }),
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default.Toggle, {
+      id: id,
+      eventKey: null,
+      active: active,
+      disabled: disabled,
+      childBsPrefix: bsPrefix,
+      as: _NavLink.default
+    }, title),
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default.Menu, {
+      role: menuRole,
+      renderOnMount: renderMenuOnMount,
+      rootCloseEvent: rootCloseEvent
+    }, children))
+  );
 });
 
 NavDropdown.displayName = 'NavDropdown';
@@ -43961,7 +44644,7 @@ var _usePopper2 = _interopRequireWildcard(require("./usePopper"));
 
 var _useRootClose = _interopRequireDefault(require("./useRootClose"));
 
-var _useWaitForDOMRef = _interopRequireDefault(require("./utils/useWaitForDOMRef"));
+var _useWaitForDOMRef = _interopRequireDefault(require("./useWaitForDOMRef"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -43978,7 +44661,8 @@ var Overlay = _react.default.forwardRef(function (props, outerRef) {
 
   var flip = props.flip,
       placement = props.placement,
-      containerPadding = props.containerPadding,
+      _props$containerPaddi = props.containerPadding,
+      containerPadding = _props$containerPaddi === void 0 ? 5 : _props$containerPaddi,
       _props$popperConfig = props.popperConfig,
       popperConfig = _props$popperConfig === void 0 ? {} : _props$popperConfig,
       Transition = props.transition;
@@ -44001,20 +44685,20 @@ var Overlay = _react.default.forwardRef(function (props, outerRef) {
 
   var modifiers = (0, _usePopper2.toModifierMap)(popperConfig.modifiers);
 
-  var _usePopper = (0, _usePopper2.default)(target, rootElement, (0, _extends2.default)({}, popperConfig, {
+  var _usePopper = (0, _usePopper2.default)(target, rootElement, (0, _extends2.default)((0, _extends2.default)({}, popperConfig), {}, {
     placement: placement || 'bottom',
-    modifiers: (0, _extends2.default)({}, modifiers, {
+    modifiers: (0, _extends2.default)((0, _extends2.default)({}, modifiers), {}, {
       eventListeners: {
         enabled: !!props.show
       },
-      preventOverflow: (0, _extends2.default)({}, modifiers.preventOverflow, {
+      preventOverflow: (0, _extends2.default)((0, _extends2.default)({}, modifiers.preventOverflow), {}, {
         options: (0, _extends2.default)({
           padding: containerPadding || 5
         }, (_modifiers$preventOve = modifiers.preventOverflow) == null ? void 0 : _modifiers$preventOve.options)
       }),
-      arrow: (0, _extends2.default)({}, modifiers.arrow, {
+      arrow: (0, _extends2.default)((0, _extends2.default)({}, modifiers.arrow), {}, {
         enabled: !!arrowElement,
-        options: (0, _extends2.default)({}, (_modifiers$arrow = modifiers.arrow) == null ? void 0 : _modifiers$arrow.options, {
+        options: (0, _extends2.default)((0, _extends2.default)({}, (_modifiers$arrow = modifiers.arrow) == null ? void 0 : _modifiers$arrow.options), {}, {
           element: arrowElement
         })
       }),
@@ -44053,8 +44737,8 @@ var Overlay = _react.default.forwardRef(function (props, outerRef) {
     return null;
   }
 
-  var child = props.children((0, _extends2.default)({}, popper, {
-    show: props.show,
+  var child = props.children((0, _extends2.default)((0, _extends2.default)({}, popper), {}, {
+    show: !!props.show,
     props: {
       style: styles,
       ref: mergedRef
@@ -44071,7 +44755,9 @@ var Overlay = _react.default.forwardRef(function (props, outerRef) {
         onEnter = props.onEnter,
         onEntering = props.onEntering,
         onEntered = props.onEntered;
-    child = _react.default.createElement(Transition, {
+    child =
+    /*#__PURE__*/
+    _react.default.createElement(Transition, {
       "in": props.show,
       appear: true,
       onExit: onExit,
@@ -44171,23 +44857,24 @@ Overlay.propTypes = {
    * @type func
    */
   onHide: function onHide(props) {
-    var propType = _propTypes.default.func;
-
-    if (props.rootClose) {
-      propType = propType.isRequired;
-    }
-
     for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
     }
 
-    return propType.apply(void 0, [props].concat(args));
+    if (props.rootClose) {
+      var _PropTypes$func;
+
+      return (_PropTypes$func = _propTypes.default.func).isRequired.apply(_PropTypes$func, [props].concat(args));
+    }
+
+    return _propTypes.default.func.apply(_propTypes.default, [props].concat(args));
   },
 
   /**
    * A `react-transition-group@2.0.0` `<Transition/>` component
    * used to animate the overlay as it changes visibility.
    */
+  // @ts-ignore
   transition: _propTypes.default.elementType,
 
   /**
@@ -44220,12 +44907,9 @@ Overlay.propTypes = {
    */
   onExited: _propTypes.default.func
 };
-Overlay.defaultProps = {
-  containerPadding: 5
-};
 var _default = Overlay;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","prop-types":"../../node_modules/prop-types/index.js","react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","@restart/hooks/useCallbackRef":"../../node_modules/@restart/hooks/esm/useCallbackRef.js","@restart/hooks/useMergedRefs":"../../node_modules/@restart/hooks/esm/useMergedRefs.js","./popper":"../../node_modules/react-overlays/esm/popper.js","./usePopper":"../../node_modules/react-overlays/esm/usePopper.js","./useRootClose":"../../node_modules/react-overlays/esm/useRootClose.js","./utils/useWaitForDOMRef":"../../node_modules/react-overlays/esm/utils/useWaitForDOMRef.js"}],"../../node_modules/react-bootstrap/esm/Overlay.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","prop-types":"../../node_modules/prop-types/index.js","react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","@restart/hooks/useCallbackRef":"../../node_modules/@restart/hooks/esm/useCallbackRef.js","@restart/hooks/useMergedRefs":"../../node_modules/@restart/hooks/esm/useMergedRefs.js","./popper":"../../node_modules/react-overlays/esm/popper.js","./usePopper":"../../node_modules/react-overlays/esm/usePopper.js","./useRootClose":"../../node_modules/react-overlays/esm/useRootClose.js","./useWaitForDOMRef":"../../node_modules/react-overlays/esm/useWaitForDOMRef.js"}],"../../node_modules/react-bootstrap/esm/Overlay.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44239,11 +44923,13 @@ var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runt
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _reactDom = require("react-dom");
-
 var _classnames = _interopRequireDefault(require("classnames"));
 
 var _Overlay = _interopRequireDefault(require("react-overlays/Overlay"));
+
+var _safeFindDOMNode = _interopRequireDefault(require("react-overlays/safeFindDOMNode"));
+
+var _usePopperMarginModifiers = _interopRequireDefault(require("./usePopperMarginModifiers"));
 
 var _Fade = _interopRequireDefault(require("./Fade"));
 
@@ -44265,58 +44951,72 @@ function wrapRefs(props, arrowProps) {
   var aRef = arrowProps.ref;
 
   props.ref = ref.__wrapped || (ref.__wrapped = function (r) {
-    return ref((0, _reactDom.findDOMNode)(r));
+    return ref((0, _safeFindDOMNode.default)(r));
   });
 
   arrowProps.ref = aRef.__wrapped || (aRef.__wrapped = function (r) {
-    return aRef((0, _reactDom.findDOMNode)(r));
+    return aRef((0, _safeFindDOMNode.default)(r));
   });
 }
 
 function Overlay(_ref) {
   var overlay = _ref.children,
       transition = _ref.transition,
-      outerProps = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["children", "transition"]);
+      _ref$popperConfig = _ref.popperConfig,
+      popperConfig = _ref$popperConfig === void 0 ? {} : _ref$popperConfig,
+      outerProps = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["children", "transition", "popperConfig"]);
   var popperRef = (0, _react.useRef)({});
+
+  var _usePopperMarginModif = (0, _usePopperMarginModifiers.default)(),
+      ref = _usePopperMarginModif[0],
+      marginModifiers = _usePopperMarginModif[1];
+
   transition = transition === true ? _Fade.default : transition || null;
-  return _react.default.createElement(_Overlay.default, (0, _extends2.default)({}, outerProps, {
-    transition: transition
-  }), function (_ref2) {
-    var overlayProps = _ref2.props,
-        arrowProps = _ref2.arrowProps,
-        show = _ref2.show,
-        state = _ref2.state,
-        scheduleUpdate = _ref2.scheduleUpdate,
-        placement = _ref2.placement,
-        outOfBoundaries = _ref2.outOfBoundaries,
-        props = (0, _objectWithoutPropertiesLoose2.default)(_ref2, ["props", "arrowProps", "show", "state", "scheduleUpdate", "placement", "outOfBoundaries"]);
-    wrapRefs(overlayProps, arrowProps);
-    var popper = Object.assign(popperRef.current, {
-      state: state,
-      scheduleUpdate: scheduleUpdate,
-      placement: placement,
-      outOfBoundaries: outOfBoundaries
-    });
-    if (typeof overlay === 'function') return overlay((0, _extends2.default)({}, props, {}, overlayProps, {
-      placement: placement,
-      show: show,
-      popper: popper,
-      arrowProps: arrowProps
-    }));
-    return _react.default.cloneElement(overlay, (0, _extends2.default)({}, props, {}, overlayProps, {
-      placement: placement,
-      arrowProps: arrowProps,
-      popper: popper,
-      className: (0, _classnames.default)(overlay.props.className, !transition && show && 'show'),
-      style: (0, _extends2.default)({}, overlay.props.style, {}, overlayProps.style)
-    }));
-  });
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Overlay.default, (0, _extends2.default)({}, outerProps, {
+      ref: ref,
+      popperConfig: (0, _extends2.default)({}, popperConfig, {
+        modifiers: marginModifiers.concat(popperConfig.modifiers || [])
+      }),
+      transition: transition
+    }), function (_ref2) {
+      var overlayProps = _ref2.props,
+          arrowProps = _ref2.arrowProps,
+          show = _ref2.show,
+          state = _ref2.state,
+          scheduleUpdate = _ref2.scheduleUpdate,
+          placement = _ref2.placement,
+          outOfBoundaries = _ref2.outOfBoundaries,
+          props = (0, _objectWithoutPropertiesLoose2.default)(_ref2, ["props", "arrowProps", "show", "state", "scheduleUpdate", "placement", "outOfBoundaries"]);
+      wrapRefs(overlayProps, arrowProps);
+      var popper = Object.assign(popperRef.current, {
+        state: state,
+        scheduleUpdate: scheduleUpdate,
+        placement: placement,
+        outOfBoundaries: outOfBoundaries
+      });
+      if (typeof overlay === 'function') return overlay((0, _extends2.default)({}, props, {}, overlayProps, {
+        placement: placement,
+        show: show,
+        popper: popper,
+        arrowProps: arrowProps
+      }));
+      return _react.default.cloneElement(overlay, (0, _extends2.default)({}, props, {}, overlayProps, {
+        placement: placement,
+        arrowProps: arrowProps,
+        popper: popper,
+        className: (0, _classnames.default)(overlay.props.className, !transition && show && 'show'),
+        style: (0, _extends2.default)({}, overlay.props.style, {}, overlayProps.style)
+      }));
+    })
+  );
 }
 
 Overlay.defaultProps = defaultProps;
 var _default = Overlay;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","classnames":"../../node_modules/classnames/index.js","react-overlays/Overlay":"../../node_modules/react-overlays/esm/Overlay.js","./Fade":"../../node_modules/react-bootstrap/esm/Fade.js"}],"../../node_modules/react-bootstrap/esm/OverlayTrigger.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","react":"../../node_modules/react/index.js","classnames":"../../node_modules/classnames/index.js","react-overlays/Overlay":"../../node_modules/react-overlays/esm/Overlay.js","react-overlays/safeFindDOMNode":"../../node_modules/react-overlays/esm/safeFindDOMNode.js","./usePopperMarginModifiers":"../../node_modules/react-bootstrap/esm/usePopperMarginModifiers.js","./Fade":"../../node_modules/react-bootstrap/esm/Fade.js"}],"../../node_modules/react-bootstrap/esm/OverlayTrigger.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44336,7 +45036,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _useTimeout = _interopRequireDefault(require("@restart/hooks/useTimeout"));
 
-var _reactDom = _interopRequireDefault(require("react-dom"));
+var _safeFindDOMNode = _interopRequireDefault(require("react-overlays/safeFindDOMNode"));
 
 var _warning = _interopRequireDefault(require("warning"));
 
@@ -44399,7 +45099,10 @@ function OverlayTrigger(_ref) {
       popperConfig = _ref$popperConfig === void 0 ? {} : _ref$popperConfig,
       defaultShow = _ref.defaultShow,
       propsDelay = _ref.delay,
-      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["trigger", "overlay", "children", "popperConfig", "defaultShow", "delay"]);
+      placement = _ref.placement,
+      _ref$flip = _ref.flip,
+      flip = _ref$flip === void 0 ? placement && placement.indexOf('auto') !== -1 : _ref$flip,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["trigger", "overlay", "children", "popperConfig", "defaultShow", "delay", "placement", "flip"]);
   var triggerNodeRef = (0, _react.useRef)(null);
   var timeout = (0, _useTimeout.default)();
   var hoverStateRef = (0, _react.useRef)();
@@ -44417,7 +45120,7 @@ function OverlayTrigger(_ref) {
       onBlur = _child$props.onBlur,
       onClick = _child$props.onClick;
   var getTarget = (0, _react.useCallback)(function () {
-    return _reactDom.default.findDOMNode(triggerNodeRef.current);
+    return (0, _safeFindDOMNode.default)(triggerNodeRef.current);
   }, []);
   var handleShow = (0, _react.useCallback)(function () {
     timeout.clear();
@@ -44508,22 +45211,31 @@ function OverlayTrigger(_ref) {
     triggerProps.onMouseOut = handleMouseOut;
   }
 
-  return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(RefHolder, {
-    ref: triggerNodeRef
-  }, (0, _react.cloneElement)(child, triggerProps)), _react.default.createElement(_Overlay.default, (0, _extends2.default)({}, props, {
-    popperConfig: (0, _extends2.default)({}, popperConfig, {
-      modifiers: [ariaModifier].concat(popperConfig.modifiers || [])
-    }),
-    show: show,
-    onHide: handleHide,
-    target: getTarget
-  }), overlay));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_react.default.Fragment, null,
+    /*#__PURE__*/
+    _react.default.createElement(RefHolder, {
+      ref: triggerNodeRef
+    }, (0, _react.cloneElement)(child, triggerProps)),
+    /*#__PURE__*/
+    _react.default.createElement(_Overlay.default, (0, _extends2.default)({}, props, {
+      popperConfig: (0, _extends2.default)({}, popperConfig, {
+        modifiers: [ariaModifier].concat(popperConfig.modifiers || [])
+      }),
+      show: show,
+      onHide: handleHide,
+      target: getTarget,
+      placement: placement,
+      flip: flip
+    }), overlay))
+  );
 }
 
 OverlayTrigger.defaultProps = defaultProps;
 var _default = OverlayTrigger;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","dom-helpers/contains":"../../node_modules/dom-helpers/esm/contains.js","react":"../../node_modules/react/index.js","@restart/hooks/useTimeout":"../../node_modules/@restart/hooks/esm/useTimeout.js","react-dom":"../../node_modules/react-dom/index.js","warning":"../../node_modules/warning/warning.js","./Overlay":"../../node_modules/react-bootstrap/esm/Overlay.js"}],"../../node_modules/react-bootstrap/esm/PageItem.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","dom-helpers/contains":"../../node_modules/dom-helpers/esm/contains.js","react":"../../node_modules/react/index.js","@restart/hooks/useTimeout":"../../node_modules/@restart/hooks/esm/useTimeout.js","react-overlays/safeFindDOMNode":"../../node_modules/react-overlays/esm/safeFindDOMNode.js","warning":"../../node_modules/warning/warning.js","./Overlay":"../../node_modules/react-bootstrap/esm/Overlay.js"}],"../../node_modules/react-bootstrap/esm/PageItem.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44561,19 +45273,26 @@ var PageItem = _react.default.forwardRef(function (_ref, ref) {
       children = _ref.children,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["active", "disabled", "className", "style", "activeLabel", "children"]);
   var Component = active || disabled ? 'span' : _SafeAnchor.default;
-  return _react.default.createElement("li", {
-    ref: ref,
-    style: style,
-    className: (0, _classnames.default)(className, 'page-item', {
-      active: active,
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("li", {
+      ref: ref,
+      style: style,
+      className: (0, _classnames.default)(className, 'page-item', {
+        active: active,
+        disabled: disabled
+      })
+    },
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      className: "page-link",
       disabled: disabled
-    })
-  }, _react.default.createElement(Component, (0, _extends2.default)({
-    className: "page-link",
-    disabled: disabled
-  }, props), children, active && activeLabel && _react.default.createElement("span", {
-    className: "sr-only"
-  }, activeLabel)));
+    }, props), children, active && activeLabel &&
+    /*#__PURE__*/
+    _react.default.createElement("span", {
+      className: "sr-only"
+    }, activeLabel)))
+  );
 });
 
 PageItem.defaultProps = defaultProps;
@@ -44604,11 +45323,18 @@ function createButton(name, defaultValue, label) {
           children = _this$props.children,
           props = (0, _objectWithoutPropertiesLoose2.default)(_this$props, ["children"]);
       delete props.active;
-      return _react.default.createElement(PageItem, props, _react.default.createElement("span", {
-        "aria-hidden": "true"
-      }, children || defaultValue), _react.default.createElement("span", {
-        className: "sr-only"
-      }, label));
+      return (
+        /*#__PURE__*/
+        _react.default.createElement(PageItem, props,
+        /*#__PURE__*/
+        _react.default.createElement("span", {
+          "aria-hidden": "true"
+        }, children || defaultValue),
+        /*#__PURE__*/
+        _react.default.createElement("span", {
+          className: "sr-only"
+        }, label))
+      );
     };
 
     return _class;
@@ -44666,11 +45392,14 @@ var Pagination = _react.default.forwardRef(function (_ref, ref) {
       size = _ref.size,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "children", "size"]);
   var decoratedBsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'pagination');
-  return _react.default.createElement("ul", (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, decoratedBsPrefix, size && decoratedBsPrefix + "-" + size)
-  }), children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("ul", (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, decoratedBsPrefix, size && decoratedBsPrefix + "-" + size)
+    }), children)
+  );
 });
 
 Pagination.First = _PageItem.First;
@@ -44709,11 +45438,14 @@ var PopoverTitle = _react.default.forwardRef(function (_ref, ref) {
       children = _ref.children,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["as", "bsPrefix", "className", "children"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'popover-header');
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(bsPrefix, className)
-  }), children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(bsPrefix, className)
+    }), children)
+  );
 });
 
 var _default = PopoverTitle;
@@ -44746,11 +45478,14 @@ var PopoverContent = _react.default.forwardRef(function (_ref, ref) {
       children = _ref.children,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["as", "bsPrefix", "className", "children"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'popover-body');
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, bsPrefix)
-  }), children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, bsPrefix)
+    }), children)
+  );
 });
 
 var _default = PopoverContent;
@@ -44797,15 +45532,27 @@ var Popover = _react.default.forwardRef(function (_ref, ref) {
       _1 = _ref.show,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "placement", "className", "style", "children", "content", "arrowProps", "popper", "show"]);
   var decoratedBsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'popover');
-  return _react.default.createElement("div", (0, _extends2.default)({
-    ref: ref,
-    role: "tooltip",
-    style: style,
-    "x-placement": placement,
-    className: (0, _classnames.default)(className, decoratedBsPrefix, "bs-popover-" + placement)
-  }, props), _react.default.createElement("div", (0, _extends2.default)({
-    className: "arrow"
-  }, arrowProps)), content ? _react.default.createElement(_PopoverContent.default, null, children) : children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({
+      ref: ref,
+      role: "tooltip",
+      style: style,
+      "x-placement": placement,
+      className: (0, _classnames.default)(className, decoratedBsPrefix, "bs-popover-" + placement)
+    }, props),
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({
+      className: "arrow"
+    }, arrowProps, {
+      // this prevents an error if you render a Popover without arrow props, like in a test
+      style: arrowProps ? (0, _extends2.default)({}, arrowProps.style, {
+        margin: 0
+      }) : undefined
+    })), content ?
+    /*#__PURE__*/
+    _react.default.createElement(_PopoverContent.default, null, children) : children)
+  );
 });
 
 Popover.defaultProps = defaultProps;
@@ -44865,7 +45612,9 @@ function onlyProgressBar(props, propName, componentName) {
      */
 
 
-    var element = _react.default.createElement(ProgressBar, null);
+    var element =
+    /*#__PURE__*/
+    _react.default.createElement(ProgressBar, null);
 
     if (child.type === element.type) return;
     var childIdentifier = _react.default.isValidElement(child) ? child.type.displayName || child.type.name || child.type : child;
@@ -44904,20 +45653,25 @@ function renderProgressBar(_ref, ref) {
       variant = _ref.variant,
       bsPrefix = _ref.bsPrefix,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["min", "now", "max", "label", "srOnly", "striped", "animated", "className", "style", "variant", "bsPrefix"]);
-  return _react.default.createElement("div", (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    role: "progressbar",
-    className: (0, _classnames.default)(className, bsPrefix + "-bar", (_classNames = {}, _classNames["bg-" + variant] = variant, _classNames[bsPrefix + "-bar-animated"] = animated, _classNames[bsPrefix + "-bar-striped"] = animated || striped, _classNames)),
-    style: (0, _extends2.default)({
-      width: getPercentage(now, min, max) + "%"
-    }, style),
-    "aria-valuenow": now,
-    "aria-valuemin": min,
-    "aria-valuemax": max
-  }), srOnly ? _react.default.createElement("span", {
-    className: "sr-only"
-  }, label) : label);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      role: "progressbar",
+      className: (0, _classnames.default)(className, bsPrefix + "-bar", (_classNames = {}, _classNames["bg-" + variant] = variant, _classNames[bsPrefix + "-bar-animated"] = animated, _classNames[bsPrefix + "-bar-striped"] = animated || striped, _classNames)),
+      style: (0, _extends2.default)({
+        width: getPercentage(now, min, max) + "%"
+      }, style),
+      "aria-valuenow": now,
+      "aria-valuemin": min,
+      "aria-valuemax": max
+    }), srOnly ?
+    /*#__PURE__*/
+    _react.default.createElement("span", {
+      className: "sr-only"
+    }, label) : label)
+  );
 }
 
 var ProgressBar = _react.default.forwardRef(function (_ref2, ref) {
@@ -44941,25 +45695,28 @@ var ProgressBar = _react.default.forwardRef(function (_ref2, ref) {
       className = props.className,
       children = props.children,
       wrapperProps = (0, _objectWithoutPropertiesLoose2.default)(props, ["min", "now", "max", "label", "srOnly", "striped", "animated", "bsPrefix", "variant", "className", "children"]);
-  return _react.default.createElement("div", (0, _extends2.default)({
-    ref: ref
-  }, wrapperProps, {
-    className: (0, _classnames.default)(className, bsPrefix)
-  }), children ? (0, _ElementChildren.map)(children, function (child) {
-    return (0, _react.cloneElement)(child, {
-      isChild: true
-    });
-  }) : renderProgressBar({
-    min: min,
-    now: now,
-    max: max,
-    label: label,
-    srOnly: srOnly,
-    striped: striped,
-    animated: animated,
-    bsPrefix: bsPrefix,
-    variant: variant
-  }, ref));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({
+      ref: ref
+    }, wrapperProps, {
+      className: (0, _classnames.default)(className, bsPrefix)
+    }), children ? (0, _ElementChildren.map)(children, function (child) {
+      return (0, _react.cloneElement)(child, {
+        isChild: true
+      });
+    }) : renderProgressBar({
+      min: min,
+      now: now,
+      max: max,
+      label: label,
+      srOnly: srOnly,
+      striped: striped,
+      animated: animated,
+      bsPrefix: bsPrefix,
+      variant: variant
+    }, ref))
+  );
 });
 
 ProgressBar.displayName = 'ProgressBar';
@@ -45000,13 +45757,16 @@ var ResponsiveEmbed = _react.default.forwardRef(function (_ref, ref) {
 
   var child = _react.default.Children.only(children);
 
-  return _react.default.createElement("div", (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(decoratedBsPrefix, className, aspectRatio && decoratedBsPrefix + "-" + aspectRatio)
-  }), _react.default.cloneElement(child, {
-    className: (0, _classnames.default)(child.props.className, decoratedBsPrefix + "-item")
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(decoratedBsPrefix, className, aspectRatio && decoratedBsPrefix + "-" + aspectRatio)
+    }), _react.default.cloneElement(child, {
+      className: (0, _classnames.default)(child.props.className, decoratedBsPrefix + "-item")
+    }))
+  );
 });
 
 ResponsiveEmbed.defaultProps = defaultProps;
@@ -45061,11 +45821,14 @@ var Row = _react.default.forwardRef(function (_ref, ref) {
     var infix = brkPoint !== 'xs' ? "-" + brkPoint : '';
     if (cols != null) classes.push("" + sizePrefix + infix + "-" + cols);
   });
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: _classnames.default.apply(void 0, [className, decoratedBsPrefix, noGutters && 'no-gutters'].concat(classes))
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: _classnames.default.apply(void 0, [className, decoratedBsPrefix, noGutters && 'no-gutters'].concat(classes))
+    }))
+  );
 });
 
 Row.displayName = 'Row';
@@ -45104,11 +45867,14 @@ var Spinner = _react.default.forwardRef(function (_ref, ref) {
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "variant", "animation", "size", "children", "as", "className"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'spinner');
   var bsSpinnerPrefix = bsPrefix + "-" + animation;
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, bsSpinnerPrefix, size && bsSpinnerPrefix + "-" + size, variant && "text-" + variant)
-  }), children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, bsSpinnerPrefix, size && bsSpinnerPrefix + "-" + size, variant && "text-" + variant)
+    }), children)
+  );
 });
 
 Spinner.displayName = 'Spinner';
@@ -45172,6 +45938,9 @@ var propTypes = {
   /** An ARIA accessible role applied to the Menu component. When set to 'menu', The dropdown */
   menuRole: _propTypes.default.string,
 
+  /** Whether to render the dropdown menu in the DOM before the first time it is shown */
+  renderMenuOnMount: _propTypes.default.bool,
+
   /**
    *  Which event when fired outside the component will cause it to be closed.
    *
@@ -45206,34 +45975,47 @@ var SplitButton = _react.default.forwardRef(function (_ref, ref) {
       href = _ref.href,
       target = _ref.target,
       menuRole = _ref.menuRole,
+      renderMenuOnMount = _ref.renderMenuOnMount,
       rootCloseEvent = _ref.rootCloseEvent,
-      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["id", "bsPrefix", "size", "variant", "title", "type", "toggleLabel", "children", "onClick", "href", "target", "menuRole", "rootCloseEvent"]);
-  return _react.default.createElement(_Dropdown.default, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    as: _ButtonGroup.default
-  }), _react.default.createElement(_Button.default, {
-    size: size,
-    variant: variant,
-    disabled: props.disabled,
-    bsPrefix: bsPrefix,
-    href: href,
-    target: target,
-    onClick: onClick,
-    type: type
-  }, title), _react.default.createElement(_Dropdown.default.Toggle, {
-    split: true,
-    id: id,
-    size: size,
-    variant: variant,
-    disabled: props.disabled,
-    childBsPrefix: bsPrefix
-  }, _react.default.createElement("span", {
-    className: "sr-only"
-  }, toggleLabel)), _react.default.createElement(_Dropdown.default.Menu, {
-    role: menuRole,
-    rootCloseEvent: rootCloseEvent
-  }, children));
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["id", "bsPrefix", "size", "variant", "title", "type", "toggleLabel", "children", "onClick", "href", "target", "menuRole", "renderMenuOnMount", "rootCloseEvent"]);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      as: _ButtonGroup.default
+    }),
+    /*#__PURE__*/
+    _react.default.createElement(_Button.default, {
+      size: size,
+      variant: variant,
+      disabled: props.disabled,
+      bsPrefix: bsPrefix,
+      href: href,
+      target: target,
+      onClick: onClick,
+      type: type
+    }, title),
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default.Toggle, {
+      split: true,
+      id: id,
+      size: size,
+      variant: variant,
+      disabled: props.disabled,
+      childBsPrefix: bsPrefix
+    },
+    /*#__PURE__*/
+    _react.default.createElement("span", {
+      className: "sr-only"
+    }, toggleLabel)),
+    /*#__PURE__*/
+    _react.default.createElement(_Dropdown.default.Menu, {
+      role: menuRole,
+      renderOnMount: renderMenuOnMount,
+      rootCloseEvent: rootCloseEvent
+    }, children))
+  );
 });
 
 SplitButton.propTypes = propTypes;
@@ -45297,11 +46079,16 @@ var TabContainer = function TabContainer(props) {
       }
     };
   }, [onSelect, activeKey, transition, mountOnEnter, unmountOnExit, generateChildId]);
-  return _react.default.createElement(_TabContext.default.Provider, {
-    value: tabContext
-  }, _react.default.createElement(_SelectableContext.default.Provider, {
-    value: onSelect
-  }, children));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_TabContext.default.Provider, {
+      value: tabContext
+    },
+    /*#__PURE__*/
+    _react.default.createElement(_SelectableContext.default.Provider, {
+      value: onSelect
+    }, children))
+  );
 };
 
 var _default = TabContainer;
@@ -45333,11 +46120,14 @@ var TabContent = _react.default.forwardRef(function (_ref, ref) {
       className = _ref.className,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "as", "className"]);
   var decoratedBsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'tab-content');
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, decoratedBsPrefix)
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(Component, (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(className, decoratedBsPrefix)
+    }))
+  );
 });
 
 var _default = TabContent;
@@ -45413,7 +46203,9 @@ var TabPane = _react.default.forwardRef(function (props, ref) {
   var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'tab-pane');
   if (!active && !Transition && unmountOnExit) return null;
 
-  var pane = _react.default.createElement(Component, (0, _extends2.default)({}, rest, {
+  var pane =
+  /*#__PURE__*/
+  _react.default.createElement(Component, (0, _extends2.default)({}, rest, {
     ref: ref,
     role: "tabpanel",
     "aria-hidden": !active,
@@ -45422,7 +46214,9 @@ var TabPane = _react.default.forwardRef(function (props, ref) {
     })
   }));
 
-  if (Transition) pane = _react.default.createElement(Transition, {
+  if (Transition) pane =
+  /*#__PURE__*/
+  _react.default.createElement(Transition, {
     in: active,
     onEnter: onEnter,
     onEntering: onEntering,
@@ -45435,11 +46229,16 @@ var TabPane = _react.default.forwardRef(function (props, ref) {
   }, pane); // We provide an empty the TabContext so `<Nav>`s in `<TabPane>`s don't
   // conflict with the top level one.
 
-  return _react.default.createElement(_TabContext.default.Provider, {
-    value: null
-  }, _react.default.createElement(_SelectableContext.default.Provider, {
-    value: null
-  }, pane));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_TabContext.default.Provider, {
+      value: null
+    },
+    /*#__PURE__*/
+    _react.default.createElement(_SelectableContext.default.Provider, {
+      value: null
+    }, pane))
+  );
 });
 
 TabPane.displayName = 'TabPane';
@@ -45523,7 +46322,9 @@ var Table = _react.default.forwardRef(function (_ref, ref) {
   var decoratedBsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'table');
   var classes = (0, _classnames.default)(className, decoratedBsPrefix, variant && decoratedBsPrefix + "-" + variant, size && decoratedBsPrefix + "-" + size, striped && decoratedBsPrefix + "-striped", bordered && decoratedBsPrefix + "-bordered", borderless && decoratedBsPrefix + "-borderless", hover && decoratedBsPrefix + "-hover");
 
-  var table = _react.default.createElement("table", (0, _extends2.default)({}, props, {
+  var table =
+  /*#__PURE__*/
+  _react.default.createElement("table", (0, _extends2.default)({}, props, {
     className: classes,
     ref: ref
   }));
@@ -45535,9 +46336,12 @@ var Table = _react.default.forwardRef(function (_ref, ref) {
       responsiveClass = responsiveClass + "-" + responsive;
     }
 
-    return _react.default.createElement("div", {
-      className: responsiveClass
-    }, table);
+    return (
+      /*#__PURE__*/
+      _react.default.createElement("div", {
+        className: responsiveClass
+      }, table)
+    );
   }
 
   return table;
@@ -45600,18 +46404,23 @@ function renderTab(child) {
       title = _child$props.title,
       eventKey = _child$props.eventKey,
       disabled = _child$props.disabled,
-      tabClassName = _child$props.tabClassName;
+      tabClassName = _child$props.tabClassName,
+      id = _child$props.id;
 
   if (title == null) {
     return null;
   }
 
-  return _react.default.createElement(_NavItem.default, {
-    as: _NavLink.default,
-    eventKey: eventKey,
-    disabled: disabled,
-    className: tabClassName
-  }, title);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_NavItem.default, {
+      as: _NavLink.default,
+      eventKey: eventKey,
+      disabled: disabled,
+      id: id,
+      className: tabClassName
+    }, title)
+  );
 }
 
 var Tabs = _react.default.forwardRef(function (props, ref) {
@@ -45628,24 +46437,34 @@ var Tabs = _react.default.forwardRef(function (props, ref) {
       activeKey = _useUncontrolled$acti === void 0 ? getDefaultActiveKey(children) : _useUncontrolled$acti,
       controlledProps = (0, _objectWithoutPropertiesLoose2.default)(_useUncontrolled, ["id", "onSelect", "transition", "mountOnEnter", "unmountOnExit", "children", "activeKey"]);
 
-  return _react.default.createElement(_TabContainer.default, {
-    ref: ref,
-    id: id,
-    activeKey: activeKey,
-    onSelect: onSelect,
-    transition: transition,
-    mountOnEnter: mountOnEnter,
-    unmountOnExit: unmountOnExit
-  }, _react.default.createElement(_Nav.default, (0, _extends2.default)({}, controlledProps, {
-    role: "tablist",
-    as: "nav"
-  }), (0, _ElementChildren.map)(children, renderTab)), _react.default.createElement(_TabContent.default, null, (0, _ElementChildren.map)(children, function (child) {
-    var childProps = (0, _extends2.default)({}, child.props);
-    delete childProps.title;
-    delete childProps.disabled;
-    delete childProps.tabClassName;
-    return _react.default.createElement(_TabPane.default, childProps);
-  })));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_TabContainer.default, {
+      ref: ref,
+      id: id,
+      activeKey: activeKey,
+      onSelect: onSelect,
+      transition: transition,
+      mountOnEnter: mountOnEnter,
+      unmountOnExit: unmountOnExit
+    },
+    /*#__PURE__*/
+    _react.default.createElement(_Nav.default, (0, _extends2.default)({}, controlledProps, {
+      role: "tablist",
+      as: "nav"
+    }), (0, _ElementChildren.map)(children, renderTab)),
+    /*#__PURE__*/
+    _react.default.createElement(_TabContent.default, null, (0, _ElementChildren.map)(children, function (child) {
+      var childProps = (0, _extends2.default)({}, child.props);
+      delete childProps.title;
+      delete childProps.disabled;
+      delete childProps.tabClassName;
+      return (
+        /*#__PURE__*/
+        _react.default.createElement(_TabPane.default, childProps)
+      );
+    })))
+  );
 });
 
 Tabs.defaultProps = defaultProps;
@@ -45700,24 +46519,29 @@ var ToggleButton = _react.default.forwardRef(function (_ref, ref) {
   var handleBlur = (0, _react.useCallback)(function (e) {
     if (e.target.tagName === 'INPUT') setFocused(false);
   }, []);
-  return _react.default.createElement(_Button.default, (0, _extends2.default)({}, props, {
-    ref: ref,
-    className: (0, _classnames.default)(className, focused && 'focus', disabled && 'disabled'),
-    type: null,
-    active: !!checked,
-    as: "label"
-  }), _react.default.createElement("input", {
-    name: name,
-    type: type,
-    value: value,
-    ref: inputRef,
-    autoComplete: "off",
-    checked: !!checked,
-    disabled: !!disabled,
-    onFocus: handleFocus,
-    onBlur: handleBlur,
-    onChange: onChange || noop
-  }), children);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_Button.default, (0, _extends2.default)({}, props, {
+      ref: ref,
+      className: (0, _classnames.default)(className, focused && 'focus', disabled && 'disabled'),
+      type: null,
+      active: !!checked,
+      as: "label"
+    }),
+    /*#__PURE__*/
+    _react.default.createElement("input", {
+      name: name,
+      type: type,
+      value: value,
+      ref: inputRef,
+      autoComplete: "off",
+      checked: !!checked,
+      disabled: !!disabled,
+      onFocus: handleFocus,
+      onBlur: handleBlur,
+      onChange: onChange || noop
+    }), children)
+  );
 });
 
 ToggleButton.displayName = 'ToggleButton';
@@ -45789,26 +46613,29 @@ var ToggleButtonGroup = _react.default.forwardRef(function (props, ref) {
   };
 
   !(type !== 'radio' || !!name) ? "development" !== "production" ? (0, _invariant.default)(false, 'A `name` is required to group the toggle buttons when the `type` ' + 'is set to "radio"') : (0, _invariant.default)(false) : void 0;
-  return _react.default.createElement(_ButtonGroup.default, (0, _extends2.default)({}, controlledProps, {
-    ref: ref,
-    toggle: true
-  }), (0, _ElementChildren.map)(children, function (child) {
-    var values = getValues();
-    var _child$props = child.props,
-        childVal = _child$props.value,
-        childOnChange = _child$props.onChange;
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_ButtonGroup.default, (0, _extends2.default)({}, controlledProps, {
+      ref: ref,
+      toggle: true
+    }), (0, _ElementChildren.map)(children, function (child) {
+      var values = getValues();
+      var _child$props = child.props,
+          childVal = _child$props.value,
+          childOnChange = _child$props.onChange;
 
-    var handler = function handler(e) {
-      return handleToggle(childVal, e);
-    };
+      var handler = function handler(e) {
+        return handleToggle(childVal, e);
+      };
 
-    return _react.default.cloneElement(child, {
-      type: type,
-      name: child.name || name,
-      checked: values.indexOf(childVal) !== -1,
-      onChange: (0, _createChainedFunction.default)(childOnChange, handler)
-    });
-  }));
+      return _react.default.cloneElement(child, {
+        type: type,
+        name: child.name || name,
+        checked: values.indexOf(childVal) !== -1,
+        onChange: (0, _createChainedFunction.default)(childOnChange, handler)
+      });
+    }))
+  );
 });
 
 ToggleButtonGroup.defaultProps = defaultProps;
@@ -45852,17 +46679,24 @@ var Tooltip = _react.default.forwardRef(function (_ref, ref) {
       _2 = _ref.show,
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "placement", "className", "style", "children", "arrowProps", "popper", "show"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'tooltip');
-  return _react.default.createElement("div", (0, _extends2.default)({
-    ref: ref,
-    style: style,
-    role: "tooltip",
-    "x-placement": placement,
-    className: (0, _classnames.default)(className, bsPrefix, "bs-tooltip-" + placement)
-  }, props), _react.default.createElement("div", (0, _extends2.default)({
-    className: "arrow"
-  }, arrowProps)), _react.default.createElement("div", {
-    className: bsPrefix + "-inner"
-  }, children));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({
+      ref: ref,
+      style: style,
+      role: "tooltip",
+      "x-placement": placement,
+      className: (0, _classnames.default)(className, bsPrefix, "bs-tooltip-" + placement)
+    }, props),
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({
+      className: "arrow"
+    }, arrowProps)),
+    /*#__PURE__*/
+    _react.default.createElement("div", {
+      className: bsPrefix + "-inner"
+    }, children))
+  );
 });
 
 Tooltip.defaultProps = defaultProps;
@@ -45931,21 +46765,26 @@ var ToastHeader = _react.default.forwardRef(function (_ref, ref) {
       props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "closeLabel", "closeButton", "className", "children"]);
   bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'toast-header');
   var context = (0, _react.useContext)(_ToastContext.default);
-  var handleClick = (0, _useEventCallback.default)(function () {
-    if (context) {
-      context.onClose();
+  var handleClick = (0, _useEventCallback.default)(function (e) {
+    if (context && context.onClose) {
+      context.onClose(e);
     }
   });
-  return _react.default.createElement("div", (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(bsPrefix, className)
-  }), children, closeButton && _react.default.createElement(_CloseButton.default, {
-    label: closeLabel,
-    onClick: handleClick,
-    className: "ml-2 mb-1",
-    "data-dismiss": "toast"
-  }));
+  return (
+    /*#__PURE__*/
+    _react.default.createElement("div", (0, _extends2.default)({
+      ref: ref
+    }, props, {
+      className: (0, _classnames.default)(bsPrefix, className)
+    }), children, closeButton &&
+    /*#__PURE__*/
+    _react.default.createElement(_CloseButton.default, {
+      label: closeLabel,
+      onClick: handleClick,
+      className: "ml-2 mb-1",
+      "data-dismiss": "toast"
+    }))
+  );
 });
 
 ToastHeader.displayName = 'ToastHeader';
@@ -46038,13 +46877,15 @@ var Toast = _react.default.forwardRef(function (_ref, ref) {
     onCloseRef.current();
   }, [autohide, show]);
   autohideTimeout.set(autohideFunc, delayRef.current);
-  var useAnimation = (0, _react.useMemo)(function () {
+  var hasAnimation = (0, _react.useMemo)(function () {
     return Transition && animation;
   }, [Transition, animation]);
 
-  var toast = _react.default.createElement("div", (0, _extends2.default)({}, props, {
+  var toast =
+  /*#__PURE__*/
+  _react.default.createElement("div", (0, _extends2.default)({}, props, {
     ref: ref,
-    className: (0, _classnames.default)(bsPrefix, className, !useAnimation && show && 'show'),
+    className: (0, _classnames.default)(bsPrefix, className, !hasAnimation && (show ? 'show' : 'hide')),
     role: "alert",
     "aria-live": "assertive",
     "aria-atomic": "true"
@@ -46053,11 +46894,17 @@ var Toast = _react.default.forwardRef(function (_ref, ref) {
   var toastContext = {
     onClose: onClose
   };
-  return _react.default.createElement(_ToastContext.default.Provider, {
-    value: toastContext
-  }, useAnimation ? _react.default.createElement(Transition, {
-    in: show
-  }, toast) : toast);
+  return (
+    /*#__PURE__*/
+    _react.default.createElement(_ToastContext.default.Provider, {
+      value: toastContext
+    }, hasAnimation ?
+    /*#__PURE__*/
+    _react.default.createElement(Transition, {
+      in: show,
+      unmountOnExit: true
+    }, toast) : toast)
+  );
 });
 
 Toast.defaultProps = defaultProps;
@@ -46909,7 +47756,7 @@ function (_Component) {
       }, "Transaction Pool Map"), _react.default.createElement(_reactRouterDom.Link, {
         to: "/trace"
       }, "Trace"), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/logout"
+        to: "/Log-out"
       }, "Logout"));
     }
   }]);
@@ -47542,8 +48389,15 @@ function (_Component) {
     _classCallCheck(this, PoolMap);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PoolMap).call(this, props));
+
+    _this.display = function (transactionPool) {
+      for (var index = 0; index < transactionPool.length; index++) {
+        transactionPool[index].id;
+      }
+    };
+
     _this.state = {
-      transactionPool: [],
+      transactionPool: {},
       isLoggedIn: true
     };
     return _this;
@@ -47569,6 +48423,8 @@ function (_Component) {
       var _this$state = this.state,
           transactionPool = _this$state.transactionPool,
           isLoggedIn = _this$state.isLoggedIn;
+      console.log(transactionPool);
+      var keys = Object.keys(transactionPool);
 
       if (isLoggedIn === false) {
         return _react.default.createElement(_reactRouterDom.Redirect, {
@@ -47799,7 +48655,205 @@ function (_Component) {
 
 var _default = Home;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","../assets/logo.png":"assets/logo.png","../components/Navigation":"components/Navigation.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js"}],"index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","../assets/logo.png":"assets/logo.png","../components/Navigation":"components/Navigation.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js"}],"components/Logout.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Logout =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Logout, _Component);
+
+  function Logout() {
+    _classCallCheck(this, Logout);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Logout).apply(this, arguments));
+  }
+
+  _createClass(Logout, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      fetch('http://localhost:3001/logout').then(function (response) {
+        return response.json();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Redirect, {
+        to: "/"
+      }));
+    }
+  }]);
+
+  return Logout;
+}(_react.Component);
+
+var _default = Logout;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/Login.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Login =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Login, _Component);
+
+  function Login() {
+    _classCallCheck(this, Login);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Login).apply(this, arguments));
+  }
+
+  _createClass(Login, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      fetch('http://localhost:3001/login').then(function (response) {
+        return response.json();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Redirect, {
+        to: "/Home"
+      }));
+    }
+  }]);
+
+  return Login;
+}(_react.Component);
+
+var _default = Login;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/CreateUser.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var CreateUser =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(CreateUser, _Component);
+
+  function CreateUser() {
+    _classCallCheck(this, CreateUser);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(CreateUser).apply(this, arguments));
+  }
+
+  _createClass(CreateUser, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      fetch('http://localhost:3001/createUser').then(function (response) {
+        return response.json();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Redirect, {
+        to: "/Home"
+      }));
+    }
+  }]);
+
+  return CreateUser;
+}(_react.Component);
+
+var _default = CreateUser;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -47827,6 +48881,12 @@ var _PoolMapp = _interopRequireDefault(require("./components/PoolMapp"));
 var _Trace = _interopRequireDefault(require("./components/Trace"));
 
 var _Home = _interopRequireDefault(require("./components/Home"));
+
+var _Logout = _interopRequireDefault(require("./components/Logout"));
+
+var _Login = _interopRequireDefault(require("./components/Login"));
+
+var _CreateUser = _interopRequireDefault(require("./components/CreateUser"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47857,8 +48917,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 }), _react.default.createElement(_reactRouterDom.Route, {
   path: "/Home",
   component: _Home.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  path: "/Log-out",
+  component: _Logout.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  path: "/Log-in",
+  component: _Login.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  path: "/Create-User",
+  component: _CreateUser.default
 }))), document.getElementById('root'));
-},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./history":"history.js","./components/App":"components/App.js","./components/Blocks":"components/Blocks.js","./components/ConductTransaction":"components/ConductTransaction.js","./index.css":"index.css","./components/sendTransaction":"components/sendTransaction.js","./components/receiveTransaction":"components/receiveTransaction.js","./components/PoolMapp":"components/PoolMapp.js","./components/Trace":"components/Trace.js","./components/Home":"components/Home.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./history":"history.js","./components/App":"components/App.js","./components/Blocks":"components/Blocks.js","./components/ConductTransaction":"components/ConductTransaction.js","./index.css":"index.css","./components/sendTransaction":"components/sendTransaction.js","./components/receiveTransaction":"components/receiveTransaction.js","./components/PoolMapp":"components/PoolMapp.js","./components/Trace":"components/Trace.js","./components/Home":"components/Home.js","./components/Logout":"components/Logout.js","./components/Login":"components/Login.js","./components/CreateUser":"components/CreateUser.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -47886,7 +48955,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43087" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40939" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -7,7 +7,7 @@ class PoolMap extends Component {
         super(props)
 
         this.state = {
-            transactionPool: [],
+            transactionPool: {},
             isLoggedIn: true,
         };
     }
@@ -18,8 +18,16 @@ class PoolMap extends Component {
         .then(json => this.setState({ transactionPool: json.transactionPool,isLoggedIn: json.isLoggedIn}));
     }
 
+    display = (transactionPool) => {
+        for (let index = 0; index < transactionPool.length; index++) {
+            transactionPool[index].id    
+        }
+    }
+
     render() {
         const { transactionPool,isLoggedIn } = this.state;
+        console.log(transactionPool);
+        var keys = Object.keys(transactionPool);
         if (isLoggedIn===false) {
             return(
                 <Redirect to='/'></Redirect>
