@@ -252,8 +252,6 @@ app.get('/api/mine-transactions', (req, res)=>{
     // pubsub.broadcastPeer(myIp);
     // peer.addPeer(myIp);
     // console.log("Ip " + myIp + " has been added to peersList.");
-
-    res.redirect('/blocks');
 });
 
 app.get('/api/wallet-info',(req, res)=>{

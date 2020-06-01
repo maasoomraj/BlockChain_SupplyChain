@@ -48642,7 +48642,7 @@ function (_Component) {
       }), _react.default.createElement("br", null), _react.default.createElement("div", null, "Hey !!"), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "walletInfo "
       }, _react.default.createElement("div", null, "Address: ", address), _react.default.createElement("div", null, "Balance: ", balance)), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/api/mine-transactions"
+        to: "/mine-transactions"
       }, _react.default.createElement(_reactBootstrap.Button, {
         bsstyle: "danger",
         bssize: "small"
@@ -48853,6 +48853,72 @@ function (_Component) {
 
 var _default = CreateUser;
 exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/Mine.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Mine =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Mine, _Component);
+
+  function Mine() {
+    _classCallCheck(this, Mine);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Mine).apply(this, arguments));
+  }
+
+  _createClass(Mine, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      fetch('http://localhost:3001/api/mine-transactions').then(function (response) {
+        return response.json();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Redirect, {
+        to: "/blocks"
+      }));
+    }
+  }]);
+
+  return Mine;
+}(_react.Component);
+
+var _default = Mine;
+exports.default = _default;
 },{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -48888,6 +48954,8 @@ var _Login = _interopRequireDefault(require("./components/Login"));
 
 var _CreateUser = _interopRequireDefault(require("./components/CreateUser"));
 
+var _Mine = _interopRequireDefault(require("./components/Mine"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _reactDom.render)(_react.default.createElement(_reactRouterDom.Router, {
@@ -48915,19 +48983,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   path: "/trace",
   component: _Trace.default
 }), _react.default.createElement(_reactRouterDom.Route, {
-  path: "/Home",
+  path: "/home",
   component: _Home.default
 }), _react.default.createElement(_reactRouterDom.Route, {
-  path: "/Log-out",
+  path: "/log-out",
   component: _Logout.default
 }), _react.default.createElement(_reactRouterDom.Route, {
-  path: "/Log-in",
+  path: "/log-in",
   component: _Login.default
 }), _react.default.createElement(_reactRouterDom.Route, {
-  path: "/Create-User",
+  path: "/create-user",
   component: _CreateUser.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  path: "/mine-transactions",
+  component: _Mine.default
 }))), document.getElementById('root'));
-},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./history":"history.js","./components/App":"components/App.js","./components/Blocks":"components/Blocks.js","./components/ConductTransaction":"components/ConductTransaction.js","./index.css":"index.css","./components/sendTransaction":"components/sendTransaction.js","./components/receiveTransaction":"components/receiveTransaction.js","./components/PoolMapp":"components/PoolMapp.js","./components/Trace":"components/Trace.js","./components/Home":"components/Home.js","./components/Logout":"components/Logout.js","./components/Login":"components/Login.js","./components/CreateUser":"components/CreateUser.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./history":"history.js","./components/App":"components/App.js","./components/Blocks":"components/Blocks.js","./components/ConductTransaction":"components/ConductTransaction.js","./index.css":"index.css","./components/sendTransaction":"components/sendTransaction.js","./components/receiveTransaction":"components/receiveTransaction.js","./components/PoolMapp":"components/PoolMapp.js","./components/Trace":"components/Trace.js","./components/Home":"components/Home.js","./components/Logout":"components/Logout.js","./components/Login":"components/Login.js","./components/CreateUser":"components/CreateUser.js","./components/Mine":"components/Mine.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -48955,7 +49026,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40939" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43689" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

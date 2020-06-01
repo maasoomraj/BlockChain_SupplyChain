@@ -30,7 +30,7 @@ class Home extends Component {
                 </div>
 
                 <div>
-                <Link to='/api/mine-transactions'>
+                <Link to='/mine-transactions'>
                     {/* <Redirect to='/blocks'> */}
                     <Button bsstyle="danger" bssize="small">Mine Transactions</Button>
                     {/* </Redirect> */}

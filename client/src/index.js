@@ -14,6 +14,7 @@ import Home from './components/Home';
 import Logout from './components/Logout';
 import Login from './components/Login';
 import CreateUser from './components/CreateUser';
+import Mine from './components/Mine';
 
 
 render(
@@ -26,10 +27,11 @@ render(
             <Route path='/receive-transaction' component={receiveTransaction} />
             <Route path='/transaction-pool-map' component={PoolMapp} />
             <Route path='/trace' component={Trace} />
-            <Route path='/Home' component={Home} />
-            <Route path='/Log-out' component={Logout} />
-            <Route path='/Log-in' component={Login} />
-            <Route path='/Create-User' component={CreateUser} />
+            <Route path='/home' component={Home} />
+            <Route path='/log-out' component={Logout} />
+            <Route path='/log-in' component={Login} />
+            <Route path='/create-user' component={CreateUser} />
+            <Route path='/mine-transactions' component={Mine} />
         </Switch>
     </Router>,
     document.getElementById('root')
