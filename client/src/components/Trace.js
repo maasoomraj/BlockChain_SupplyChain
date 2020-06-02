@@ -12,7 +12,7 @@ class Trace extends Component {
     traceProduct = () => {
         const { product } = this.state;
 
-        fetch('http://localhost:3001/api/trace', {
+        fetch('https://vast-thicket-16737.herokuapp.com/api/trace', {
             method: 'POST',
             headers: { 'Content-Type' : 'application/json' },
             body: JSON.stringify({product})

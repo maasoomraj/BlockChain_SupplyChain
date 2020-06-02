@@ -11,7 +11,7 @@ class Blocks extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/blocks')
+        fetch('https://vast-thicket-16737.herokuapp.com/api/blocks')
         .then(response => response.json())
         .then(json => this.setState({ chain: json.chain,isLoggedIn: json.isLoggedIn}));
     }

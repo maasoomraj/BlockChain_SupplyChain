@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 class CreateUser extends Component {
 
     componentDidMount() {
-        fetch('http://localhost:3001/createUser')
+        fetch('https://vast-thicket-16737.herokuapp.com/createUser')
         .then(response => response.json())
     }
 

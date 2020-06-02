@@ -30,7 +30,7 @@ class receiveTransaction extends Component {
             };
         // console.log(input);
 
-        fetch('http://localhost:3001/api/receive' , {
+        fetch('https://vast-thicket-16737.herokuapp.com/api/receive' , {
              method : 'POST',
              headers : { 'Content-Type' : 'application/json'},
              body : JSON.stringify({input})

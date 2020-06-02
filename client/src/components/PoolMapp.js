@@ -13,7 +13,7 @@ class PoolMap extends Component {
     }
 
     componentDidMount () {
-        fetch('http://localhost:3001/api/transactionPoolMap')
+        fetch('https://vast-thicket-16737.herokuapp.com/api/transactionPoolMap')
         .then(response => response.json())
         .then(json => this.setState({ transactionPool: json.transactionPool,isLoggedIn: json.isLoggedIn}));
         console.log("trans - " + this.state.isLoggedIn);

@@ -19,7 +19,7 @@ const REDIS_URL = isDevelopment ?
     'redis://127.0.0.1:6379' :
     'redis://h:p2e12ac66333126401be49042ceb7484d6af7d3d3f946bcc1545fa177b55328f3@ec2-34-201-238-150.compute-1.amazonaws.com:32019'
 const DEFAULT_PORT = 3001;
-const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
+const ROOT_NODE_ADDRESS = `https://vast-thicket-16737.herokuapp.com/`;
 
 const app = express();
 

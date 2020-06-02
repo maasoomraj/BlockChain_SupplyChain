@@ -30,7 +30,7 @@ class sendTransaction extends Component {
             };
         // console.log(input);
 
-        fetch('http://localhost:3001/api/send' , {
+        fetch('https://vast-thicket-16737.herokuapp.com/api/send' , {
              method : 'POST',
              headers : { 'Content-Type' : 'application/json'},
              body : JSON.stringify({input})

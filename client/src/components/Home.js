@@ -8,7 +8,7 @@ class Home extends Component {
     state = { walletInfo: {} };
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/wallet-info')
+        fetch('https://vast-thicket-16737.herokuapp.com/api/wallet-info')
         .then(response => response.json())
         .then(json => this.setState({walletInfo: json }));
     }
