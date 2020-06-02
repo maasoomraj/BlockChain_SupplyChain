@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl,Button } from 'react-bootstrap';
-import Navigation from './Navigation';
+import Navigation from './common/Navigation';
 
 class Trace extends Component {
     state = { product: '' , traceArray : [], isLoggedIn : true};
@@ -45,9 +45,11 @@ class Trace extends Component {
                 </div>
                 <div>
                 { traceArray.length>0 && 
-                <div>
-                    The Product is found at address: <br></br>
-                    {JSON.stringify(traceArray)} 
+                <div className='trace'>
+                    The Product is found at address: <br></br><br></br>
+                    <ul>
+                    {traceArray.map(trace => <li>{trace}</li>)}
+                    </ul>
                 </div>
     }
     </div>

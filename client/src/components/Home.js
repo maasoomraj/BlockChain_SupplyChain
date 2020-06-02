@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import logo from '../assets/logo.png';
-import Navigation from '../components/Navigation';
-import { Link, Redirect } from 'react-router-dom';
+import Navigation from './common/Navigation';
+import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 class Home extends Component {
@@ -25,15 +25,13 @@ class Home extends Component {
                 <br />
 
                 <div className='walletInfo '>
-                    <div>Address: {address}</div>
-                    <div>Balance: {balance}</div>
+                    <div>Your Address: {address}</div>
+                    <div>Your Balance: {balance}</div>
                 </div>
 
                 <div>
                 <Link to='/mine-transactions'>
-                    {/* <Redirect to='/blocks'> */}
                     <Button bsstyle="danger" bssize="small">Mine Transactions</Button>
-                    {/* </Redirect> */}
                 </Link>
                 
                 </div>

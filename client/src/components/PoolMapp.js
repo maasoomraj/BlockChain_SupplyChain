@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navigation from './Navigation';
+import Navigation from './common/Navigation';
 import { Redirect } from 'react-router-dom';
 
 class PoolMap extends Component {

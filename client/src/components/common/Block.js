@@ -13,13 +13,6 @@ class Block extends Component {
     get displayTransaction() {
         const { data } =  this.props.block;
 
-        // const stringifiedData = JSON.stringify(data);
-
-        // const dataDisplay = 
-        //     stringifiedData.length > 35 ?
-        //     stringifiedData.substring(0,35) :
-        //     stringifiedData;
-
         if (this.state.displayTransaction){
             return(
                 <div>
@@ -39,7 +32,6 @@ class Block extends Component {
 
         return (    
             <div>
-                {/* <div>Data : {dataDisplay}</div> */}
                 <div align='center'>
                 <Button className = 'button' onClick={this.toggleTransaction}>Show more </Button>
                 </div>

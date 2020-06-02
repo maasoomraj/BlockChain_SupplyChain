@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {FormGroup, FormControl , Button } from 'react-bootstrap';
-import Navigation from './Navigation';
+import Navigation from './common/Navigation';
 
 class receiveTransaction extends Component {
     state = {product:'', quantity:'', amount:'', from:''};

@@ -11,9 +11,9 @@ import receiveTransaction from './components/receiveTransaction';
 import PoolMapp from './components/PoolMapp';
 import Trace from './components/Trace';
 import Home from './components/Home';
-import Logout from './components/Logout';
-import Login from './components/Login';
-import CreateUser from './components/CreateUser';
+import Logout from './components/common/Logout';
+import Login from './components/common/Login';
+import CreateUser from './components/common/CreateUser';
 import Mine from './components/Mine';
 
 

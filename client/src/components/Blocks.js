@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Block from './Block';
-import Navigation from './Navigation';
+import Block from './common/Block';
+import Navigation from './common/Navigation';
 import { Redirect } from 'react-router-dom';
 
 class Blocks extends Component {
