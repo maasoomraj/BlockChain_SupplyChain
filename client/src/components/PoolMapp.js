@@ -19,12 +19,6 @@ class PoolMap extends Component {
         console.log("trans - " + this.state.isLoggedIn);
     }
 
-    // display = (transactionPool) => {
-    //     for (let index = 0; index < transactionPool.length; index++) {
-    //         transactionPool[index].id    
-    //     }
-    // }
-
     render() {
         const { transactionPool,isLoggedIn} = this.state;
         const transactions = Object.values(this.state.transactionPool);
@@ -38,7 +32,6 @@ class PoolMap extends Component {
                 <div>
                     <Navigation />
                     <div className='Block'>
-                        {/* {JSON.stringify(transactionPool)} */}
                         <br></br>
                         {transactions.map(transaction => {
                             return(

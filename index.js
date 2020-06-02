@@ -385,8 +385,8 @@ if(process.env.GENERATE_PEER_PORT === 'true')
     PEER_PORT = DEFAULT_PORT + Math.ceil(Math.random() * 1000);
 }
 
-const PORT = process.ENV.PORT || PEER_PORT || DEFAULT_PORT ;
-app.listen(`${PORT}` , () => {
+const PORT = process.env.PORT || PEER_PORT || DEFAULT_PORT ;
+app.listen(PORT , () => {
     console.log(`Listening at port ${PORT}`);
     // if(PORT !== DEFAULT_PORT){
     //     syncChains();

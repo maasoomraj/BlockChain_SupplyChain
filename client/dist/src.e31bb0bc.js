@@ -48385,13 +48385,6 @@ function (_Component) {
     _classCallCheck(this, PoolMap);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PoolMap).call(this, props));
-
-    _this.display = function (transactionPool) {
-      for (var index = 0; index < transactionPool.length; index++) {
-        transactionPool[index].id;
-      }
-    };
-
     _this.state = {
       transactionPool: {},
       isLoggedIn: true
@@ -48404,7 +48397,7 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      fetch('http://localhost:3001/api/transactionpoolmap').then(function (response) {
+      fetch('http://localhost:3001/api/transactionPoolMap').then(function (response) {
         return response.json();
       }).then(function (json) {
         return _this2.setState({
@@ -48412,6 +48405,7 @@ function (_Component) {
           isLoggedIn: json.isLoggedIn
         });
       });
+      console.log("trans - " + this.state.isLoggedIn);
     }
   }, {
     key: "render",
@@ -48419,8 +48413,7 @@ function (_Component) {
       var _this$state = this.state,
           transactionPool = _this$state.transactionPool,
           isLoggedIn = _this$state.isLoggedIn;
-      console.log(transactionPool);
-      var keys = Object.keys(transactionPool);
+      var transactions = Object.values(this.state.transactionPool);
 
       if (isLoggedIn === false) {
         return _react.default.createElement(_reactRouterDom.Redirect, {
@@ -48429,7 +48422,9 @@ function (_Component) {
       } else {
         return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("div", {
           className: "Block"
-        }, JSON.stringify(transactionPool)));
+        }, _react.default.createElement("br", null), transactions.map(function (transaction) {
+          return _react.default.createElement("div", null, _react.default.createElement("div", null, "Id - ", transaction.id), _react.default.createElement("div", null, "Product - ", transaction.input.product), _react.default.createElement("div", null, "Quantity - ", transaction.input.quantity));
+        })));
       }
     }
   }]);
@@ -49033,7 +49028,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33855" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43561" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
