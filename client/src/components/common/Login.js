@@ -4,7 +4,12 @@ import { Redirect } from 'react-router-dom';
 class Login extends Component {
 
     componentDidMount() {
-        fetch('http://localhost:3001/login')
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/login')
         .then(response => response.json())
     }
 

@@ -13,7 +13,12 @@ class PoolMap extends Component {
     }
 
     componentDidMount () {
-        fetch('http://localhost:3001/api/transactionPoolMap')
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/api/transactionPoolMap')
         .then(response => response.json())
         .then(json => this.setState({ transactionPool: json.transactionPool,isLoggedIn: json.isLoggedIn}));
         console.log("trans - " + this.state.isLoggedIn);

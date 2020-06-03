@@ -30,7 +30,12 @@ class sendTransaction extends Component {
             };
         // console.log(input);
 
-        fetch('http://localhost:3001/api/send' , {
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/api/send' , {
              method : 'POST',
              headers : { 'Content-Type' : 'application/json'},
              body : JSON.stringify({input})

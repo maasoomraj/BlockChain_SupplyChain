@@ -8,7 +8,12 @@ class Home extends Component {
     state = { walletInfo: {} };
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/wallet-info')
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/api/wallet-info')
         .then(response => response.json())
         .then(json => this.setState({walletInfo: json }));
     }

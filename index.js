@@ -13,6 +13,11 @@ const Peer = require('./app/peer');
 const got = require('got');
 const fs = require('fs');
 
+const isDevelopment = process.env.development === 'development';
+const REDIS_URL = isDevelopment ?
+    'redis://127.0.0.1:6379' :
+    'redis://h:p908b895c0c2e97ace7212471a2b36d4e6e6bc10fc2c3a3030ab43fcd40dafc22@ec2-52-23-127-211.compute-1.amazonaws.com:12729';
+
 const app = express();
 
 let isLoggedIn = false;
@@ -21,7 +26,7 @@ let blockchain,transactionPool,wallet,peer,pubsub,transactionMiner;
 blockchain = new Blockchain();
 transactionPool = new TransactionPool();
 peer = new Peer();
-pubsub = new PubSub({blockchain , transactionPool, peer});
+pubsub = new PubSub({blockchain , transactionPool, peer, redisUrl : REDIS_URL});
 
 //JASH CODE BELOW -
 app.use(express.static(path.join(__dirname,'client/dist')));
@@ -379,7 +384,7 @@ if(process.env.GENERATE_PEER_PORT === 'true')
     PEER_PORT = DEFAULT_PORT + Math.ceil(Math.random() * 1000);
 }
 
-const PORT = PEER_PORT || DEFAULT_PORT ;
+const PORT = process.env.PORT || PEER_PORT || DEFAULT_PORT ;
 app.listen(`${PORT}` , () => {
     console.log(`Listening at port ${PORT}`);
     // if(PORT !== DEFAULT_PORT){

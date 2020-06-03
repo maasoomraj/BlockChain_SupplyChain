@@ -4,7 +4,12 @@ import { Redirect } from 'react-router-dom';
 class Mine extends Component {
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/mine-transactions')
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/api/mine-transactions')
         .then(response => response.json())
     }
 
