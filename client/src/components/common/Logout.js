@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 class Logout extends Component {
 
     componentDidMount() {
-        fetch('https://vast-thicket-16737.herokuapp.com/logout')
+        fetch('http://localhost:3001/logout')
         .then(response => response.json())
     }
 

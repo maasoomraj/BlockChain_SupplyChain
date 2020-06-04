@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 class Login extends Component {
 
     componentDidMount() {
-        fetch('https://vast-thicket-16737.herokuapp.com/login')
+        fetch('http://localhost:3001/login')
         .then(response => response.json())
     }
 

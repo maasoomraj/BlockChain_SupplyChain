@@ -16,7 +16,7 @@ class ConductTransaction extends Component {
     conductTransaction = () => {
         const { recipient, amount} = this.state;
 
-        fetch('https://vast-thicket-16737.herokuapp.com/api/transact', {
+        fetch('http://localhost:3001/api/transact', {
             method: 'POST',
             headers: { 'Content-Type' : 'application/json' },
             body: JSON.stringify({recipient,amount })

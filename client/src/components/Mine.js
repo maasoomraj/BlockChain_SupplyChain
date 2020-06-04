@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 class Mine extends Component {
 
     componentDidMount() {
-        fetch('https://vast-thicket-16737.herokuapp.com/api/mine-transactions')
+        fetch('http://localhost:3001/api/mine-transactions')
         .then(response => response.json())
     }
 
