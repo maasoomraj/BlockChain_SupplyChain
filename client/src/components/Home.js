@@ -38,6 +38,11 @@ class Home extends Component {
                 <Link to='/mine-transactions'>
                     <Button bsstyle="danger" bssize="small">Mine Transactions</Button>
                 </Link>
+
+                <Button bsstyle="danger" bssize="small">
+                    <a href='/files/MyWallet.txt' target="_blank" download='MyWallet.txt'>Click to download</a>
+                </Button>
+                
                 
                 </div>
             </div>

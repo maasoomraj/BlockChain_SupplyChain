@@ -57,7 +57,7 @@ app.get('/createUser',(req,res) => {
         isLoggedIn = true;
 
         var details = JSON.stringify(wallet);
-        fs.writeFileSync(path.join(__dirname, '../', 'MyWallet.json'), details);
+        fs.writeFileSync(path.join(__dirname, '/client/src/components/files/', 'MyWallet.txt'), details);
 
     }
 
@@ -73,36 +73,41 @@ app.get('/logout',(req,res) => {
     }
 });
 
-app.get('/login',(req,res) => {
+app.post('/login',(req,res) => {
 
     if(isLoggedIn == true){
-        res.redirect('/Home');
+        res.json({
+            isLoggedIn : isLoggedIn
+        });
     }else{
-        let MyWallet;
-        fs.readFile(path.join(__dirname, '../', 'MyWallet.json'), (err, data) => {
-            if(err){
-                throw err;
-            }
 
-            if(PORT !== DEFAULT_PORT){
-                syncChains();
-                syncTransactionPool();
-                syncPeerList();
-            }
+        const {jsonObj} = req.body;
+        console.log(jsonObj.balance);
+        // let MyWallet;
 
-            MyWallet = JSON.parse(data);
-            wallet = MyWallet;
-            transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+        if(PORT !== DEFAULT_PORT){
+            syncChains();
+            syncTransactionPool();
+            syncPeerList();
+        }
 
-            wallet.balance = Wallet.calculateBalance({
-                chain : blockchain.chain,
-                address : wallet.publicKey
-            })
+        // MyWallet = JSON.parse(data);
+        wallet = JSON.parse(JSON.stringify(jsonObj));
+        transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
 
-            isLoggedIn = true;
+        wallet.balance = Wallet.calculateBalance({
+            chain : blockchain.chain,
+            address : wallet.publicKey
+        })
 
-            console.log("Login Successful !");
+        isLoggedIn = true;
 
+        var details = JSON.stringify(wallet);
+        fs.writeFileSync(path.join(__dirname, '/client/src/components/files/', 'MyWallet.txt'), details);
+
+        console.log("Login Successful !");
+        res.json({
+            isLoggedIn : isLoggedIn
         });
         
     }
