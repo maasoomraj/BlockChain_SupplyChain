@@ -16,7 +16,12 @@ class ConductTransaction extends Component {
     conductTransaction = () => {
         const { recipient, amount} = this.state;
 
-        fetch('http://localhost:3001/api/transact', {
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/api/transact', {
             method: 'POST',
             headers: { 'Content-Type' : 'application/json' },
             body: JSON.stringify({recipient,amount })

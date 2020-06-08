@@ -8,7 +8,12 @@ class Home extends Component {
     state = { walletInfo: {} };
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/wallet-info')
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/api/wallet-info')
         .then(response => response.json())
         .then(json => this.setState({walletInfo: json }));
     }
@@ -33,6 +38,11 @@ class Home extends Component {
                 <Link to='/mine-transactions'>
                     <Button bsstyle="danger" bssize="small">Mine Transactions</Button>
                 </Link>
+
+                <Button bsstyle="danger" bssize="small">
+                    <a href='/files/MyWallet.txt' target="_blank" download='MyWallet.txt'>Click to download</a>
+                </Button>
+                
                 
                 </div>
             </div>

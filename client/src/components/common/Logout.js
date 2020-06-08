@@ -4,7 +4,12 @@ import { Redirect } from 'react-router-dom';
 class Logout extends Component {
 
     componentDidMount() {
-        fetch('http://localhost:3001/logout')
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/logout')
         .then(response => response.json())
     }
 

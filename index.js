@@ -13,13 +13,10 @@ const Peer = require('./app/peer');
 const got = require('got');
 const fs = require('fs');
 
-const isDevelopment = process.env.ENV === 'development';
-
+const isDevelopment = process.env.development === 'development';
 const REDIS_URL = isDevelopment ?
     'redis://127.0.0.1:6379' :
-    'redis://h:p2e12ac66333126401be49042ceb7484d6af7d3d3f946bcc1545fa177b55328f3@ec2-34-201-238-150.compute-1.amazonaws.com:32019'
-const DEFAULT_PORT = 3001;
-const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
+    'redis://h:p908b895c0c2e97ace7212471a2b36d4e6e6bc10fc2c3a3030ab43fcd40dafc22@ec2-52-23-127-211.compute-1.amazonaws.com:12729';
 
 const app = express();
 
@@ -29,12 +26,14 @@ let blockchain,transactionPool,wallet,peer,pubsub,transactionMiner;
 blockchain = new Blockchain();
 transactionPool = new TransactionPool();
 peer = new Peer();
-pubsub = new PubSub({blockchain , transactionPool, peer, redisUrl: REDIS_URL });
+pubsub = new PubSub({blockchain , transactionPool, peer, redisUrl : REDIS_URL});
 
 //JASH CODE BELOW -
 app.use(express.static(path.join(__dirname,'client/dist')));
 //JASH CODE ABOVE -
 
+const DEFAULT_PORT = 3001;
+const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
 
 console.log("ROOT_NODE_ADDRESS - " + ROOT_NODE_ADDRESS);
 
@@ -58,7 +57,7 @@ app.get('/createUser',(req,res) => {
         isLoggedIn = true;
 
         var details = JSON.stringify(wallet);
-        fs.writeFileSync(path.join(__dirname, '../', 'MyWallet.json'), details);
+        fs.writeFileSync(path.join(__dirname, '/client/src/components/files/', 'MyWallet.txt'), details);
 
     }
 
@@ -74,36 +73,41 @@ app.get('/logout',(req,res) => {
     }
 });
 
-app.get('/login',(req,res) => {
+app.post('/login',(req,res) => {
 
     if(isLoggedIn == true){
-        res.redirect('/Home');
+        res.json({
+            isLoggedIn : isLoggedIn
+        });
     }else{
-        let MyWallet;
-        fs.readFile(path.join(__dirname, '../', 'MyWallet.json'), (err, data) => {
-            if(err){
-                throw err;
-            }
 
-            if(PORT !== DEFAULT_PORT){
-                syncChains();
-                syncTransactionPool();
-                syncPeerList();
-            }
+        const {jsonObj} = req.body;
+        console.log(jsonObj.balance);
+        // let MyWallet;
 
-            MyWallet = JSON.parse(data);
-            wallet = MyWallet;
-            transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
+        if(PORT !== DEFAULT_PORT){
+            syncChains();
+            syncTransactionPool();
+            syncPeerList();
+        }
 
-            wallet.balance = Wallet.calculateBalance({
-                chain : blockchain.chain,
-                address : wallet.publicKey
-            })
+        // MyWallet = JSON.parse(data);
+        wallet = JSON.parse(JSON.stringify(jsonObj));
+        transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
 
-            isLoggedIn = true;
+        wallet.balance = Wallet.calculateBalance({
+            chain : blockchain.chain,
+            address : wallet.publicKey
+        })
 
-            console.log("Login Successful !");
+        isLoggedIn = true;
 
+        var details = JSON.stringify(wallet);
+        fs.writeFileSync(path.join(__dirname, '/client/src/components/files/', 'MyWallet.txt'), details);
+
+        console.log("Login Successful !");
+        res.json({
+            isLoggedIn : isLoggedIn
         });
         
     }
@@ -386,7 +390,7 @@ if(process.env.GENERATE_PEER_PORT === 'true')
 }
 
 const PORT = process.env.PORT || PEER_PORT || DEFAULT_PORT ;
-app.listen(PORT , () => {
+app.listen(`${PORT}` , () => {
     console.log(`Listening at port ${PORT}`);
     // if(PORT !== DEFAULT_PORT){
     //     syncChains();

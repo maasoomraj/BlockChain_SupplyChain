@@ -4,7 +4,12 @@ import { Redirect } from 'react-router-dom';
 class CreateUser extends Component {
 
     componentDidMount() {
-        fetch('http://localhost:3001/createUser')
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/createUser')
         .then(response => response.json())
     }
 

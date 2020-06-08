@@ -11,7 +11,12 @@ class Blocks extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/blocks')
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/api/blocks')
         .then(response => response.json())
         .then(json => this.setState({ chain: json.chain,isLoggedIn: json.isLoggedIn}));
     }

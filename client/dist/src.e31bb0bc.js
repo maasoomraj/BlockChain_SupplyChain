@@ -47951,7 +47951,7 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      fetch('http://localhost:3001/api/blocks').then(function (response) {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/blocks').then(function (response) {
         return response.json();
       }).then(function (json) {
         return _this2.setState({
@@ -48088,7 +48088,7 @@ function (_Component) {
       var _this$state = _this.state,
           recipient = _this$state.recipient,
           amount = _this$state.amount;
-      fetch('http://localhost:3001/api/transact', {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/transact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -48323,7 +48323,7 @@ function (_Component) {
         to: _this.state.to
       }; // console.log(input);
 
-      fetch('http://localhost:3001/api/send', {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -48495,7 +48495,7 @@ function (_Component) {
         from: _this.state.from
       }; // console.log(input);
 
-      fetch('http://localhost:3001/api/receive', {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/receive', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -48645,7 +48645,7 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      fetch('http://localhost:3001/api/transactionPoolMap').then(function (response) {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/transactionPoolMap').then(function (response) {
         return response.json();
       }).then(function (json) {
         return _this2.setState({
@@ -48778,7 +48778,7 @@ function (_Component) {
       });
     }, _this.traceProduct = function () {
       var product = _this.state.product;
-      fetch('http://localhost:3001/api/trace', {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/trace', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -48930,7 +48930,7 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      fetch('http://localhost:3001/api/wallet-info').then(function (response) {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/wallet-info').then(function (response) {
         return response.json();
       }).then(function (json) {
         return _this2.setState({
@@ -48956,7 +48956,14 @@ function (_Component) {
       }, _react.default.createElement(_reactBootstrap.Button, {
         bsstyle: "danger",
         bssize: "small"
-      }, "Mine Transactions"))));
+      }, "Mine Transactions")), _react.default.createElement(_reactBootstrap.Button, {
+        bsstyle: "danger",
+        bssize: "small"
+      }, _react.default.createElement("a", {
+        href: "/files/MyWallet.txt",
+        target: "_blank",
+        download: "MyWallet.txt"
+      }, "Click to download"))));
     }
   }]);
 
@@ -49045,7 +49052,7 @@ function (_Component) {
   _createClass(Logout, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      fetch('http://localhost:3001/logout').then(function (response) {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/logout').then(function (response) {
         return response.json();
       });
     }
@@ -49063,7 +49070,9 @@ function (_Component) {
 
 var _default = Logout;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/common/Login.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"../../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
+
+},{}],"components/common/Login.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49074,6 +49083,8 @@ exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
+
+var _reactBootstrap = require("react-bootstrap");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -49127,6 +49138,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+var fs = require('fs');
+
 var Login =
 /*#__PURE__*/
 function (_Component) {
@@ -49134,25 +49147,77 @@ function (_Component) {
 
   var _super = _createSuper(Login);
 
-  function Login() {
+  function Login(props) {
+    var _this;
+
     _classCallCheck(this, Login);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+
+    _this.onChangeHandler = function (event) {
+      var files = event.target.files;
+
+      _this.setState({
+        selectedFile: files[0]
+      }, function () {
+        console.log(files[0]);
+      });
+    };
+
+    _this.onQ = function () {
+      console.log("SUCCESS");
+    };
+
+    _this.login = function () {
+      var reader = new FileReader();
+
+      reader.onload = function () {
+        var jsonObj = JSON.parse(reader.result);
+        console.log(JSON.stringify({
+          jsonObj: jsonObj
+        }));
+        fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            jsonObj: jsonObj
+          })
+        }).then(function (response) {
+          return response.json();
+        }).then(function (json) {
+          alert("Success.");
+        });
+
+        _this.setState({
+          success: true
+        });
+      };
+
+      reader.readAsText(_this.state.selectedFile);
+    };
+
+    _this.state = {
+      selectedFile: null,
+      content: '',
+      success: undefined
+    };
+    return _this;
   }
 
   _createClass(Login, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      fetch('http://localhost:3001/login').then(function (response) {
-        return response.json();
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Redirect, {
+      return _react.default.createElement("div", null, _react.default.createElement("input", {
+        type: "file",
+        name: "file",
+        onChange: this.onChangeHandler
+      }), _react.default.createElement(_reactBootstrap.Button, {
+        onClick: this.login
+      }, "LOGIN"), this.state.success ? _react.default.createElement(_reactRouterDom.Redirect, {
         to: "/Home"
-      }));
+      }) : _react.default.createElement("p", null));
     }
   }]);
 
@@ -49161,7 +49226,7 @@ function (_Component) {
 
 var _default = Login;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/common/CreateUser.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","fs":"../../node_modules/parcel-bundler/src/builtins/_empty.js"}],"components/common/CreateUser.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49241,7 +49306,7 @@ function (_Component) {
   _createClass(CreateUser, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      fetch('http://localhost:3001/createUser').then(function (response) {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/createUser').then(function (response) {
         return response.json();
       });
     }
@@ -49339,7 +49404,7 @@ function (_Component) {
   _createClass(Mine, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      fetch('http://localhost:3001/api/mine-transactions').then(function (response) {
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/mine-transactions').then(function (response) {
         return response.json();
       });
     }
@@ -49464,7 +49529,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34923" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43281" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
