@@ -47597,13 +47597,14 @@ var Transaction = function Transaction(_ref) {
       input = transaction.input,
       outputMap = transaction.outputMap;
   var recipients = Object.keys(outputMap);
-  return _react.default.createElement("div", null, _react.default.createElement("div", {
-    className: "Transaction"
-  }, _react.default.createElement("div", null, " ID : \"", id, "\" "), _react.default.createElement("div", null, "From : \"", input.address.substring(0, 50), "\" | Balance: ", input.amount, " "), recipients.map(function (recipient) {
+  var outputMapAray = recipients.map(function (recipient) {
     return _react.default.createElement("div", {
       key: recipient
-    }, "To: \"", recipient.substring(0, 50), "\" | Sent: ", outputMap[recipient]);
-  })));
+    }, "To: ", recipient.substring(0, 50), " | Sent: ", outputMap[recipient]);
+  });
+  return _react.default.createElement("div", null, _react.default.createElement("div", {
+    className: "Transaction"
+  }, input.address === "**authorised-sender-account**" ? _react.default.createElement("div", null, _react.default.createElement("div", null, " ID : ", id, " | PRODUCT SHIPMENT"), _react.default.createElement("div", null, "From : ", input.from.substring(0, 50), " | Product : ", input.product, " | Quantity : ", input.quantity, " "), _react.default.createElement("div", null, "To : ", input.to.substring(0, 50), " | Pending Amount : ", input.amount, " ")) : '', input.address === "**authorised-receiver-account**" ? _react.default.createElement("div", null, _react.default.createElement("div", null, " ID : ", id, " | RECEIVE PRODUCT SHIPMENT"), _react.default.createElement("div", null, "From : ", input.from.substring(0, 50), " | Product : ", input.product, " | Quantity : ", input.quantity, " "), _react.default.createElement("div", null, "To : ", input.to.substring(0, 50), " | Paid Amount : ", input.amount, " ")) : '', input.address === "**authorised-account**" ? _react.default.createElement("div", null, _react.default.createElement("div", null, " ID : ", id, " | MINE REWARD"), outputMapAray) : '', input.address[0] !== "*" ? _react.default.createElement("div", null, _react.default.createElement("div", null, " ID : ", id, " | MONEY TRANSFER"), outputMapAray) : ''));
 };
 
 var _default = Transaction;
@@ -49529,7 +49530,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43281" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38359" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
