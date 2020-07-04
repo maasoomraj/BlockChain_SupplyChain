@@ -49139,7 +49139,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var fs = require('fs');
+var fs = require("fs");
 
 var Login =
 /*#__PURE__*/
@@ -49177,10 +49177,10 @@ function (_Component) {
         console.log(JSON.stringify({
           jsonObj: jsonObj
         }));
-        fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/login', {
-          method: 'POST',
+        fetch(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/login", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             jsonObj: jsonObj
@@ -49201,7 +49201,7 @@ function (_Component) {
 
     _this.state = {
       selectedFile: null,
-      content: '',
+      content: "",
       success: undefined
     };
     return _this;
@@ -49210,10 +49210,13 @@ function (_Component) {
   _createClass(Login, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement("input", {
+      return _react.default.createElement("div", {
+        className: "login-container"
+      }, _react.default.createElement("input", {
         type: "file",
         name: "file",
-        onChange: this.onChangeHandler
+        onChange: this.onChangeHandler,
+        className: "choose-file"
       }), _react.default.createElement(_reactBootstrap.Button, {
         onClick: this.login
       }, "LOGIN"), this.state.success ? _react.default.createElement(_reactRouterDom.Redirect, {
@@ -49530,7 +49533,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38359" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38917" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
