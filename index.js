@@ -13,10 +13,12 @@ const Peer = require('./app/peer');
 const got = require('got');
 const fs = require('fs');
 
-const isDevelopment = process.env.development === 'development';
-const REDIS_URL = isDevelopment ?
+const isDevelopment = process.env.ENV === 'development';
+const REDIS_URL = isDevelopment ? 
     'redis://127.0.0.1:6379' :
-    'redis://h:p908b895c0c2e97ace7212471a2b36d4e6e6bc10fc2c3a3030ab43fcd40dafc22@ec2-52-23-127-211.compute-1.amazonaws.com:12729';
+    'redis://h:p2e12ac66333126401be49042ceb7484d6af7d3d3f946bcc1545fa177b55328f3@ec2-54-145-84-202.compute-1.amazonaws.com:26739';
+const DEFAULT_PORT = 3001;
+const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
 
 const app = express();
 
@@ -31,9 +33,6 @@ pubsub = new PubSub({blockchain , transactionPool, peer, redisUrl : REDIS_URL});
 //JASH CODE BELOW -
 app.use(express.static(path.join(__dirname,'client/dist')));
 //JASH CODE ABOVE -
-
-const DEFAULT_PORT = 3001;
-const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
 
 console.log("ROOT_NODE_ADDRESS - " + ROOT_NODE_ADDRESS);
 
