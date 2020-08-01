@@ -3,6 +3,7 @@ import logo from '../assets/logo.png';
 import Navigation from './common/Navigation';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import file from '../assets/MyWallet.json';
 
 class Home extends Component {
     state = { walletInfo: {} };
@@ -40,7 +41,7 @@ class Home extends Component {
                 </Link>
 
                 <Button bsstyle="danger" bssize="small">
-                    <a href='/src/assets/MyWallet.json' target="_blank" download>Click to download</a>
+                    <a href={file} target="_blank" download>Click to download</a>
                 </Button>
                 
                 
