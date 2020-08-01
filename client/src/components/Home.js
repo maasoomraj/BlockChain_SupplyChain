@@ -40,7 +40,7 @@ class Home extends Component {
                 </Link>
 
                 <Button bsstyle="danger" bssize="small">
-                    <a href='/components/files/MyWallet.txt' target="_blank" download='MyWallet.txt'>Click to download</a>
+                    <a href='/src/assets/MyWallet.json' target="_blank" download>Click to download</a>
                 </Button>
                 
                 
