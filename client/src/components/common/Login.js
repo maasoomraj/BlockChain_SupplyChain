@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Button, Row, Col } from "react-bootstrap";
 import file from '../../assets/MyWallet.txt';
+import avatar1 from '../../assets/avatar.webp';
+import avatar2 from '../../assets/avatar-2.webp';
 var fs = require("fs");
 
 class Login extends Component {
@@ -65,8 +67,8 @@ class Login extends Component {
         <Row className="login-container">
           <Col md="3" />
           <Col className="left-col" md="3">
-          <h1> LOGIN </h1>
-          <br />
+            <img src={avatar1} height="100px" />
+            <h1> LOGIN </h1>
             <input
             type="file"
             name="file"
@@ -77,9 +79,9 @@ class Login extends Component {
             {this.state.success ? <Redirect to="/Home"></Redirect> : <p></p>}
           </Col>
           <Col className="right-col" md="3">
+            <img src={avatar2} height="100px" />  
             <h1> CREATE USER </h1>
-            <br />
-          <p> Don't have an account?</p>
+            <p> Don't have an account?</p>
             <Button className="button">
             <a href={file} target="_blank" download="MyWallet.txt">Click to download</a>
             </Button>

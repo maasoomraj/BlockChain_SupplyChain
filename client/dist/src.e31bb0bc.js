@@ -49073,6 +49073,10 @@ var _default = Logout;
 exports.default = _default;
 },{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"assets/MyWallet.txt":[function(require,module,exports) {
 module.exports = "/MyWallet.a57d8919.txt";
+},{}],"assets/avatar.webp":[function(require,module,exports) {
+module.exports = "/avatar.af2f0ee1.webp";
+},{}],"assets/avatar-2.webp":[function(require,module,exports) {
+module.exports = "/avatar-2.64f272e9.webp";
 },{}],"../../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
 
 },{}],"components/common/Login.js":[function(require,module,exports) {
@@ -49090,6 +49094,10 @@ var _reactRouterDom = require("react-router-dom");
 var _reactBootstrap = require("react-bootstrap");
 
 var _MyWallet = _interopRequireDefault(require("../../assets/MyWallet.txt"));
+
+var _avatar = _interopRequireDefault(require("../../assets/avatar.webp"));
+
+var _avatar2 = _interopRequireDefault(require("../../assets/avatar-2.webp"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49223,7 +49231,10 @@ function (_Component) {
       }), _react.default.createElement(_reactBootstrap.Col, {
         className: "left-col",
         md: "3"
-      }, _react.default.createElement("h1", null, " LOGIN "), _react.default.createElement("br", null), _react.default.createElement("input", {
+      }, _react.default.createElement("img", {
+        src: _avatar.default,
+        height: "100px"
+      }), _react.default.createElement("h1", null, " LOGIN "), _react.default.createElement("input", {
         type: "file",
         name: "file",
         onChange: this.onChangeHandler,
@@ -49236,7 +49247,10 @@ function (_Component) {
       }) : _react.default.createElement("p", null)), _react.default.createElement(_reactBootstrap.Col, {
         className: "right-col",
         md: "3"
-      }, _react.default.createElement("h1", null, " CREATE USER "), _react.default.createElement("br", null), _react.default.createElement("p", null, " Don't have an account?"), _react.default.createElement(_reactBootstrap.Button, {
+      }, _react.default.createElement("img", {
+        src: _avatar2.default,
+        height: "100px"
+      }), _react.default.createElement("h1", null, " CREATE USER "), _react.default.createElement("p", null, " Don't have an account?"), _react.default.createElement(_reactBootstrap.Button, {
         className: "button"
       }, _react.default.createElement("a", {
         href: _MyWallet.default,
@@ -49253,7 +49267,7 @@ function (_Component) {
 
 var _default = Login;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../../assets/MyWallet.txt":"assets/MyWallet.txt","fs":"../../node_modules/parcel-bundler/src/builtins/_empty.js"}],"components/common/CreateUser.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../../assets/MyWallet.txt":"assets/MyWallet.txt","../../assets/avatar.webp":"assets/avatar.webp","../../assets/avatar-2.webp":"assets/avatar-2.webp","fs":"../../node_modules/parcel-bundler/src/builtins/_empty.js"}],"components/common/CreateUser.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49556,7 +49570,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38069" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37317" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
