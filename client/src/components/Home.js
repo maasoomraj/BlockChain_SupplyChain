@@ -3,7 +3,6 @@ import logo from '../assets/logo.png';
 import Navigation from './common/Navigation';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import file from '../assets/MyWallet.txt';
 
 class Home extends Component {
     state = { walletInfo: {} };
@@ -39,12 +38,6 @@ class Home extends Component {
                 <Link to='/mine-transactions'>
                     <Button bsstyle="danger" bssize="small">Mine Transactions</Button>
                 </Link>
-
-                <Button bsstyle="danger" bssize="small">
-                    <a href={file} target="_blank" download="MyWallet.txt">Click to download</a>
-                </Button>
-                
-                
                 </div>
             </div>
         );

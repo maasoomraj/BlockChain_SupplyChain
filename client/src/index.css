@@ -90,7 +90,12 @@ a:hover {
 }
 
 .home {
-  font-size: 35px;
+  font-size: 45px;
+}
+
+.bgimg {
+  width: 900px;
+  height: auto;
 }
 
 .trace {

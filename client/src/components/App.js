@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import img from '../assets/blockchain-supply-chain-management-system.jpg';
 
 class App extends Component {
     
@@ -9,11 +10,11 @@ class App extends Component {
                 <div className='navbar'>
                         <Link className ="heading">SUPPLY CHAIN MANAGEMENT</Link>
                         <Link to='/Log-in' >Login</Link>
-                        <Link to='/Create-User'>Create User</Link>
                 </div>
                 <div className="home">
                     WELCOME TO SUPPLYCHAIN MANAGEMENT
                 </div>
+                <img className='bgimg' src={img} />
             </div>
         )
     }

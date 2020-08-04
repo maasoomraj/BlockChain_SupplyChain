@@ -32350,7 +32350,9 @@ var _history = require("history");
 var _default = (0, _history.createBrowserHistory)();
 
 exports.default = _default;
-},{"history":"../../node_modules/history/esm/history.js"}],"components/App.js":[function(require,module,exports) {
+},{"history":"../../node_modules/history/esm/history.js"}],"assets/blockchain-supply-chain-management-system.jpg":[function(require,module,exports) {
+module.exports = "/blockchain-supply-chain-management-system.288cee9e.jpg";
+},{}],"components/App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32361,6 +32363,10 @@ exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
+
+var _blockchainSupplyChainManagementSystem = _interopRequireDefault(require("../assets/blockchain-supply-chain-management-system.jpg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -32436,11 +32442,12 @@ function (_Component) {
         className: "heading"
       }, "SUPPLY CHAIN MANAGEMENT"), _react.default.createElement(_reactRouterDom.Link, {
         to: "/Log-in"
-      }, "Login"), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/Create-User"
-      }, "Create User")), _react.default.createElement("div", {
+      }, "Login")), _react.default.createElement("div", {
         className: "home"
-      }, "WELCOME TO SUPPLYCHAIN MANAGEMENT"));
+      }, "WELCOME TO SUPPLYCHAIN MANAGEMENT"), _react.default.createElement("img", {
+        className: "bgimg",
+        src: _blockchainSupplyChainManagementSystem.default
+      }));
     }
   }]);
 
@@ -32450,7 +32457,7 @@ function (_Component) {
 ;
 var _default = App;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"../../node_modules/classnames/index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../assets/blockchain-supply-chain-management-system.jpg":"assets/blockchain-supply-chain-management-system.jpg"}],"../../node_modules/classnames/index.js":[function(require,module,exports) {
 var define;
 /*!
   Copyright (c) 2017 Jed Watson.
@@ -48957,14 +48964,7 @@ function (_Component) {
       }, _react.default.createElement(_reactBootstrap.Button, {
         bsstyle: "danger",
         bssize: "small"
-      }, "Mine Transactions")), _react.default.createElement(_reactBootstrap.Button, {
-        bsstyle: "danger",
-        bssize: "small"
-      }, _react.default.createElement("a", {
-        href: "/files/MyWallet.txt",
-        target: "_blank",
-        download: "MyWallet.txt"
-      }, "Click to download"))));
+      }, "Mine Transactions"))));
     }
   }]);
 
@@ -49071,7 +49071,9 @@ function (_Component) {
 
 var _default = Logout;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"../../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"assets/MyWallet.txt":[function(require,module,exports) {
+module.exports = "/MyWallet.a57d8919.txt";
+},{}],"../../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
 
 },{}],"components/common/Login.js":[function(require,module,exports) {
 "use strict";
@@ -49086,6 +49088,10 @@ var _react = _interopRequireWildcard(require("react"));
 var _reactRouterDom = require("react-router-dom");
 
 var _reactBootstrap = require("react-bootstrap");
+
+var _MyWallet = _interopRequireDefault(require("../../assets/MyWallet.txt"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -49221,7 +49227,14 @@ function (_Component) {
         onClick: this.login
       }, "LOGIN"), this.state.success ? _react.default.createElement(_reactRouterDom.Redirect, {
         to: "/Home"
-      }) : _react.default.createElement("p", null));
+      }) : _react.default.createElement("p", null), _react.default.createElement("br", null), _react.default.createElement("p", null, " Don't have an account?"), _react.default.createElement(_reactBootstrap.Button, {
+        bsstyle: "danger",
+        bssize: "small"
+      }, _react.default.createElement("a", {
+        href: _MyWallet.default,
+        target: "_blank",
+        download: "MyWallet.txt"
+      }, "Click to download")));
     }
   }]);
 
@@ -49230,7 +49243,7 @@ function (_Component) {
 
 var _default = Login;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","fs":"../../node_modules/parcel-bundler/src/builtins/_empty.js"}],"components/common/CreateUser.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../../assets/MyWallet.txt":"assets/MyWallet.txt","fs":"../../node_modules/parcel-bundler/src/builtins/_empty.js"}],"components/common/CreateUser.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49533,7 +49546,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45159" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46399" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

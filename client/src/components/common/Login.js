@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import file from '../../assets/MyWallet.txt';
 var fs = require("fs");
 
 class Login extends Component {
@@ -68,11 +69,14 @@ class Login extends Component {
           onChange={this.onChangeHandler}
           className="choose-file"
         />
-        {/* <Redirect to='/Home'></Redirect> */}
-        {/* <a onClick={this.onQ}>CONSOLE</a> */}
         <Button onClick={this.login}>LOGIN</Button>
 
         {this.state.success ? <Redirect to="/Home"></Redirect> : <p></p>}
+        <br />
+        <p> Don't have an account?</p>
+        <Button bsstyle="danger" bssize="small">
+          <a href={file} target="_blank" download="MyWallet.txt">Click to download</a>
+        </Button>
       </div>
     );
   }
