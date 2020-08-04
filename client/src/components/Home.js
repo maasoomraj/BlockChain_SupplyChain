@@ -26,7 +26,7 @@ class Home extends Component {
                 <Navigation />
                 <img className='logo' src = {logo}></img>
                 <br />
-                <div>Hey !!</div>
+                <div><h2>Hello Mr. User</h2></div>
                 <br />
 
                 <div className='walletInfo '>

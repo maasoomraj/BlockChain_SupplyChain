@@ -48957,7 +48957,7 @@ function (_Component) {
       }, _react.default.createElement(_Navigation.default, null), _react.default.createElement("img", {
         className: "logo",
         src: _logo.default
-      }), _react.default.createElement("br", null), _react.default.createElement("div", null, "Hey !!"), _react.default.createElement("br", null), _react.default.createElement("div", {
+      }), _react.default.createElement("br", null), _react.default.createElement("div", null, _react.default.createElement("h2", null, "Hello Mr. User")), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "walletInfo "
       }, _react.default.createElement("div", null, "Your Address: ", address), _react.default.createElement("div", null, "Your Balance: ", balance)), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/mine-transactions"
