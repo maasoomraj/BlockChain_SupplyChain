@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import file from '../../assets/MyWallet.txt';
 var fs = require("fs");
 
@@ -62,22 +62,30 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="login-container">
-        <input
-          type="file"
-          name="file"
-          onChange={this.onChangeHandler}
-          className="choose-file"
-        />
-        <Button onClick={this.login}>LOGIN</Button>
-
-        {this.state.success ? <Redirect to="/Home"></Redirect> : <p></p>}
-        <br />
-        <p> Don't have an account?</p>
-        <Button bsstyle="danger" bssize="small">
-          <a href={file} target="_blank" download="MyWallet.txt">Click to download</a>
-        </Button>
-      </div>
+        <Row className="login-container">
+          <Col md="3" />
+          <Col className="left-col" md="3">
+          <h1> LOGIN </h1>
+          <br />
+            <input
+            type="file"
+            name="file"
+            onChange={this.onChangeHandler}
+            className="choose-file"
+            />
+            <Button className="button"onClick={this.login}>Login</Button>
+            {this.state.success ? <Redirect to="/Home"></Redirect> : <p></p>}
+          </Col>
+          <Col className="right-col" md="3">
+            <h1> CREATE USER </h1>
+            <br />
+          <p> Don't have an account?</p>
+            <Button className="button">
+            <a href={file} target="_blank" download="MyWallet.txt">Click to download</a>
+            </Button>
+          </Col>
+          <Col md="3" />
+        </Row>
     );
   }
 }

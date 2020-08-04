@@ -46,17 +46,18 @@ body {
 
 a,
 a:hover {
-  color: #000000;
+  color: white;
 }
 
 .button {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
   display: block;
-  width: 115px;
-  height: 40px;
   background: #45a29e;
-  padding: 8px;
+  padding: 7px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 7px;
   color: white;
   font-weight: bold;
   font-size: medium;
@@ -104,8 +105,11 @@ a:hover {
 }
 
 .login-container {
-  padding-top: 20%;
-  vertical-align: middle;
+  padding-top: 15%;
+  margin: auto;
+  text-align: center;
+  float:center;
+  font-size: 18px;
 }
 
 .choose-file {

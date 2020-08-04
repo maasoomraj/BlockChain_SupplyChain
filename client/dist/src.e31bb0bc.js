@@ -49216,25 +49216,35 @@ function (_Component) {
   _createClass(Login, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", {
+      return _react.default.createElement(_reactBootstrap.Row, {
         className: "login-container"
-      }, _react.default.createElement("input", {
+      }, _react.default.createElement(_reactBootstrap.Col, {
+        md: "3"
+      }), _react.default.createElement(_reactBootstrap.Col, {
+        className: "left-col",
+        md: "3"
+      }, _react.default.createElement("h1", null, " LOGIN "), _react.default.createElement("br", null), _react.default.createElement("input", {
         type: "file",
         name: "file",
         onChange: this.onChangeHandler,
         className: "choose-file"
       }), _react.default.createElement(_reactBootstrap.Button, {
+        className: "button",
         onClick: this.login
-      }, "LOGIN"), this.state.success ? _react.default.createElement(_reactRouterDom.Redirect, {
+      }, "Login"), this.state.success ? _react.default.createElement(_reactRouterDom.Redirect, {
         to: "/Home"
-      }) : _react.default.createElement("p", null), _react.default.createElement("br", null), _react.default.createElement("p", null, " Don't have an account?"), _react.default.createElement(_reactBootstrap.Button, {
-        bsstyle: "danger",
-        bssize: "small"
+      }) : _react.default.createElement("p", null)), _react.default.createElement(_reactBootstrap.Col, {
+        className: "right-col",
+        md: "3"
+      }, _react.default.createElement("h1", null, " CREATE USER "), _react.default.createElement("br", null), _react.default.createElement("p", null, " Don't have an account?"), _react.default.createElement(_reactBootstrap.Button, {
+        className: "button"
       }, _react.default.createElement("a", {
         href: _MyWallet.default,
         target: "_blank",
         download: "MyWallet.txt"
-      }, "Click to download")));
+      }, "Click to download"))), _react.default.createElement(_reactBootstrap.Col, {
+        md: "3"
+      }));
     }
   }]);
 
@@ -49546,7 +49556,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46399" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38069" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
