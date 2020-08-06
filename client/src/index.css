@@ -87,6 +87,10 @@ a:hover {
   background-color: #4caf50;
 }
 
+.mar-b {
+  margin-bottom: 25px;
+}
+
 .heading {
   background-color: #1f2833;
 }
@@ -103,6 +107,10 @@ a:hover {
 .trace {
   padding: 5%;
   margin: 5%;
+}
+
+.trace-timeline {
+  color: black;
 }
 
 .login-container {
