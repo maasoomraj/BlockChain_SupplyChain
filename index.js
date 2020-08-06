@@ -1,5 +1,8 @@
 const bodyParser = require('body-parser');
 const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
 const PubSub = require('./app/pubsub');
 const Blockchain = require('./blockchain/index');
 const path = require('path');
@@ -12,6 +15,15 @@ const ip = require('ip');
 const Peer = require('./app/peer');
 const got = require('got');
 const fs = require('fs');
+
+// Routes
+const authRoute = require('./routes/auth');
+
+dotenv.config();
+mongoose.connect(
+    process.env.MONGO_DB,
+    { useNewUrlParser: true , useUnifiedTopology: true},
+    () => console.log("Connected to DB"));
 
 const isDevelopment = process.env.ENV === 'development';
 const REDIS_URL = isDevelopment ? 
@@ -37,6 +49,7 @@ app.use(express.static(path.join(__dirname,'client/dist')));
 console.log("ROOT_NODE_ADDRESS - " + ROOT_NODE_ADDRESS);
 
 app.use(bodyParser.json());
+app.use('/api/user', authRoute);
 
 app.get('/createUser',(req,res) => {
 
@@ -56,8 +69,9 @@ app.get('/createUser',(req,res) => {
         isLoggedIn = true;
 
         var details = JSON.stringify(wallet);
-        fs.writeFileSync(path.join(__dirname, '/client/src/components/files/', 'MyWallet.txt'), details);
+        // fs.writeFileSync(path.join(__dirname, '/client/src/assets/', 'MyWallet.txt'), details);
 
+        res.send({ wallet : details });
     }
 
 });
@@ -102,7 +116,7 @@ app.post('/login',(req,res) => {
         isLoggedIn = true;
 
         var details = JSON.stringify(wallet);
-        fs.writeFileSync(path.join(__dirname, '/client/src/components/files/', 'MyWallet.txt'), details);
+        // fs.writeFileSync(path.join(__dirname, '/client/src/components/files/', 'MyWallet.txt'), details);
 
         console.log("Login Successful !");
         res.json({

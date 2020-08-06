@@ -16,6 +16,9 @@ import Login from './components/common/Login';
 import CreateUser from './components/common/CreateUser';
 import Mine from './components/Mine';
 
+// Ascyn Await get or post requests
+import 'regenerator-runtime/runtime'
+
 
 render(
     <Router history={history}>
