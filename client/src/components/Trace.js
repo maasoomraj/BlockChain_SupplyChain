@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl,Button } from 'react-bootstrap';
 import Navigation from './common/Navigation';
+import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
 
 class Trace extends Component {
     state = { product: '' , traceArray : [], isLoggedIn : true, userArray : []};
@@ -85,10 +87,12 @@ class Trace extends Component {
                 <div>
                 { traceArray.length>0 && 
                 <div className='trace'>
-                    The Product is found at address: <br></br><br></br>
-                    <ul>
-                    {traceArray.map(trace => <li>{trace}</li>)}
-                    </ul>
+                    <h3 className='mar-b'> The Product is found at address:  </h3>
+                    <div className='trace-timeline'>
+                        <VerticalTimeline>
+                        {traceArray.map(trace => <VerticalTimelineElement>{trace}</VerticalTimelineElement>)}
+                        </VerticalTimeline>
+                    </div>
                 </div>
                 }
 
