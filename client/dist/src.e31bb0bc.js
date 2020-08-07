@@ -48712,6 +48712,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -48779,14 +48783,74 @@ function (_Component) {
     return _possibleConstructorReturn(_this, (_temp = _this = _super.call.apply(_super, [this].concat(args)), _this.state = {
       product: '',
       traceArray: [],
-      isLoggedIn: true
+      isLoggedIn: true,
+      userArray: []
     }, _this.updateProduct = function (event) {
       _this.setState({
         product: event.target.value
       });
-    }, _this.traceProduct = function () {
+    }, _this.userDB =
+    /*#__PURE__*/
+    function () {
+      var _ref = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(traceArray) {
+        var userArray, i;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                // console.log(traceArray);
+                userArray = [];
+                _context.t0 = regeneratorRuntime.keys(traceArray);
+
+              case 2:
+                if ((_context.t1 = _context.t0()).done) {
+                  _context.next = 9;
+                  break;
+                }
+
+                i = _context.t1.value;
+                console.log(traceArray[i]);
+                _context.next = 7;
+                return fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/user/getUser', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    address: traceArray[i]
+                  })
+                }).then(function (response) {
+                  return response.json();
+                }).then(function (json) {
+                  userArray.push(json);
+                  console.log(json);
+                });
+
+              case 7:
+                _context.next = 2;
+                break;
+
+              case 9:
+                _this.setState({
+                  userArray: userArray
+                });
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }(), _this.traceProduct = function () {
       var product = _this.state.product;
-      var traceArray;
+      var traceArray = [];
       fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/trace', {
         method: 'POST',
         headers: {
@@ -48798,29 +48862,14 @@ function (_Component) {
       }).then(function (response) {
         return response.json();
       }).then(function (json) {
-        traceArray = json.traceArray;
+        // traceArray = json.traceArray;
+        // console.log(json.traceArray);
+        _this.userDB(json.traceArray);
 
         _this.setState({
           traceArray: json.traceArray
         });
       });
-
-      for (var i in traceArray) {
-        console.log(traceArray[i]);
-        fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/user/getUser', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            address: traceArray[i]
-          })
-        }).then(function (response) {
-          return response.json();
-        }).then(function (json) {
-          console.log(json);
-        });
-      }
     }, _temp));
   }
 
@@ -48847,6 +48896,10 @@ function (_Component) {
         className: "trace"
       }, "The Product is found at address: ", _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement("ul", null, traceArray.map(function (trace) {
         return _react.default.createElement("li", null, trace);
+      }))), this.state.userArray.length && _react.default.createElement("div", {
+        className: "trace"
+      }, "The Product is found at address: ", _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement("ul", null, this.state.userArray.map(function (user) {
+        return _react.default.createElement("li", null, user.name, " | ", user.phone);
       })))));
     }
   }]);

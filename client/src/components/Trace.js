@@ -3,15 +3,41 @@ import { FormGroup, FormControl,Button } from 'react-bootstrap';
 import Navigation from './common/Navigation';
 
 class Trace extends Component {
-    state = { product: '' , traceArray : [], isLoggedIn : true};
+    state = { product: '' , traceArray : [], isLoggedIn : true, userArray : []};
 
     updateProduct = event =>{
         this.setState({ product : event.target.value});
     }
 
+    userDB = async (traceArray) => {
+        // console.log(traceArray);
+        let userArray = [];
+        for(let i in traceArray){
+            console.log(traceArray[i]);
+            await fetch(
+                window.location.protocol
+                + '//'
+                + window.location.hostname
+                + ":"
+                + window.location.port
+                + '/api/user/getUser', {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json' },
+                body: JSON.stringify({ address : traceArray[i]})
+            })
+                .then(response => response.json())
+                .then(json => {
+                    userArray.push(json);
+                    console.log(json);
+                });
+        }
+
+        this.setState({ userArray : userArray });
+    }
+
     traceProduct = () => {
         const { product } = this.state;
-        let traceArray;
+        let traceArray = [];
 
         fetch(window.location.protocol
             + '//'
@@ -25,28 +51,12 @@ class Trace extends Component {
         })
         .then(response => response.json())
         .then(json => {
-            traceArray = json.traceArray;
+            // traceArray = json.traceArray;
+            // console.log(json.traceArray);
+            this.userDB(json.traceArray);
             this.setState({ traceArray: json.traceArray})
         });
 
-        for(let i in traceArray){
-            console.log(traceArray[i]);
-            fetch(
-                window.location.protocol
-                + '//'
-                + window.location.hostname
-                + ":"
-                + window.location.port
-                + '/api/user/getUser', {
-                method: 'POST',
-                headers: { 'Content-Type' : 'application/json' },
-                body: JSON.stringify({ address : traceArray[i]})
-            })
-                .then(response => response.json())
-                .then(json => {
-                    console.log(json);
-                });
-        }
     }
 
     render() {
@@ -80,7 +90,16 @@ class Trace extends Component {
                     {traceArray.map(trace => <li>{trace}</li>)}
                     </ul>
                 </div>
-    }
+                }
+
+                {this.state.userArray.length &&
+                <div className='trace'>
+                    The Product is found at address: <br></br><br></br>
+                    <ul>
+                    {this.state.userArray.map(user => <li>{user.name} | {user.phone}</li>)}
+                    </ul>
+                </div>
+                }
     </div>
             </div>
         );
