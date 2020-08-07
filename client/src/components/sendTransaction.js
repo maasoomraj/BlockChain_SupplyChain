@@ -3,7 +3,7 @@ import {FormGroup, FormControl , Button } from 'react-bootstrap';
 import Navigation from './common/Navigation';
 
 class sendTransaction extends Component {
-    state = {product:'', quantity:'', amount:'', to:''};
+    state = {product:'', quantity:'', amount:'', to:'', userTo: {}, userLoaded : false, phoneError:false };
 
     updateProduct = event => {
         this.setState({product : event.target.value });
@@ -19,6 +19,38 @@ class sendTransaction extends Component {
 
     updateTo = event => {
         this.setState({to : event.target.value });
+        this.getAddress(event.target.value);
+    }
+
+    getAddress = (phone) => {
+        if(phone.length != 10){
+            this.setState({userTo : {}, userLoaded : false , phoneError: false});
+            return;
+        }
+
+        for(let i=0;i<10;i++){
+            if(!(phone[i]-'0' >=0 && phone[i]-'0' <= 9 )){
+                this.setState({userTo : {}, userLoaded : false , phoneError:true });
+              return;
+            }
+        }
+
+        fetch(window.location.protocol
+            + '//'
+            + window.location.hostname
+            + ":"
+            + window.location.port
+            + '/api/user/getUserByPhone' , {
+             method : 'POST',
+             headers : { 'Content-Type' : 'application/json'},
+             body : JSON.stringify({ phone : phone})
+        })
+        .then(response => response.json())
+        .then(json => {
+            console.log(json.user);
+            this.setState({userTo : json.user, userLoaded : true , phoneError:false });
+        })
+        .catch(err => this.setState({userTo : {}, userLoaded : false , phoneError:true }) );
     }
 
     conductSendTransaction = () => {
@@ -26,7 +58,7 @@ class sendTransaction extends Component {
             product : this.state.product,
             quantity : this.state.quantity,
             amount : this.state.amount,
-            to : this.state.to
+            to : this.state.userTo.address
             };
         // console.log(input);
 
@@ -46,7 +78,6 @@ class sendTransaction extends Component {
     }
 
     render(){
-        console.log('this.state', this.state);
         return(
             <div>
                 <Navigation />
@@ -81,13 +112,35 @@ class sendTransaction extends Component {
                     <FormGroup>
                         <FormControl 
                             input='text'
-                            placeholder='To'
+                            placeholder='Enter phone number whom you want to send'
                             value={this.state.to} 
                             onChange={this.updateTo}
                         /> 
                     </FormGroup>
+
+                    {this.state.userLoaded &&
+                    <div className="sendTo">
+                        <p className="sendToText">
+                            Name - {this.state.userTo.name} <br />
+                            Phone - {this.state.userTo.phone} <br />
+                            Address = {this.state.userTo.address.substring(0,20)}.... <br />
+                        </p>
+                    </div>
+                    }
+                    {this.state.phoneError &&
+                    <div className="sendTo">
+                        <p className="sendToText">
+                        Phone number is incorrect or doesnot match with any User. Please check the number !
+                        </p>
+                    </div>
+                    }
                     <div align='center'>
-                        <Button className = 'button' onClick={this.conductSendTransaction}>Send</Button>
+                        <Button 
+                        className = 'button' 
+                        onClick={this.conductSendTransaction} 
+                        disabled={!this.state.userLoaded}>
+                            Send
+                        </Button>
                     </div>
                 </div>
             </div>

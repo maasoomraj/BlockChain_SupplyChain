@@ -126,3 +126,18 @@ a:hover {
   margin-right: auto;
   margin-left: auto;
 }
+
+.sendTo {
+  background-color: #F8E588;
+  border-radius: 20px;
+  text-align: left;
+  padding-left: 40px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.sendToText {
+  font-size: 16px;
+  color: #000;
+  font-weight: 300;
+}

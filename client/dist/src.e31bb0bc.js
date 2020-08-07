@@ -48306,7 +48306,10 @@ function (_Component) {
       product: '',
       quantity: '',
       amount: '',
-      to: ''
+      to: '',
+      userTo: {},
+      userLoaded: false,
+      phoneError: false
     }, _this.updateProduct = function (event) {
       _this.setState({
         product: event.target.value
@@ -48323,12 +48326,62 @@ function (_Component) {
       _this.setState({
         to: event.target.value
       });
+
+      _this.getAddress(event.target.value);
+    }, _this.getAddress = function (phone) {
+      if (phone.length != 10) {
+        _this.setState({
+          userTo: {},
+          userLoaded: false,
+          phoneError: false
+        });
+
+        return;
+      }
+
+      for (var i = 0; i < 10; i++) {
+        if (!(phone[i] - '0' >= 0 && phone[i] - '0' <= 9)) {
+          _this.setState({
+            userTo: {},
+            userLoaded: false,
+            phoneError: true
+          });
+
+          return;
+        }
+      }
+
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/user/getUserByPhone', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          phone: phone
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        console.log(json.user);
+
+        _this.setState({
+          userTo: json.user,
+          userLoaded: true,
+          phoneError: false
+        });
+      }).catch(function (err) {
+        return _this.setState({
+          userTo: {},
+          userLoaded: false,
+          phoneError: true
+        });
+      });
     }, _this.conductSendTransaction = function () {
       var input = {
         product: _this.state.product,
         quantity: _this.state.quantity,
         amount: _this.state.amount,
-        to: _this.state.to
+        to: _this.state.userTo.address
       }; // console.log(input);
 
       fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/send', {
@@ -48350,7 +48403,6 @@ function (_Component) {
   _createClass(sendTransaction, [{
     key: "render",
     value: function render() {
-      console.log('this.state', this.state);
       return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("div", {
         className: "sendTransaction"
       }, _react.default.createElement("br", null), _react.default.createElement("h3", null, "Send Transaction -"), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
@@ -48370,14 +48422,23 @@ function (_Component) {
         onChange: this.updateAmount
       })), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
         input: "text",
-        placeholder: "To",
+        placeholder: "Enter phone number whom you want to send",
         value: this.state.to,
         onChange: this.updateTo
-      })), _react.default.createElement("div", {
+      })), this.state.userLoaded && _react.default.createElement("div", {
+        className: "sendTo"
+      }, _react.default.createElement("p", {
+        className: "sendToText"
+      }, "Name - ", this.state.userTo.name, " ", _react.default.createElement("br", null), "Phone - ", this.state.userTo.phone, " ", _react.default.createElement("br", null), "Address = ", this.state.userTo.address.substring(0, 20), ".... ", _react.default.createElement("br", null))), this.state.phoneError && _react.default.createElement("div", {
+        className: "sendTo"
+      }, _react.default.createElement("p", {
+        className: "sendToText"
+      }, "Phone number is incorrect or doesnot match with any User. Please check the number !")), _react.default.createElement("div", {
         align: "center"
       }, _react.default.createElement(_reactBootstrap.Button, {
         className: "button",
-        onClick: this.conductSendTransaction
+        onClick: this.conductSendTransaction,
+        disabled: !this.state.userLoaded
       }, "Send"))));
     }
   }]);
