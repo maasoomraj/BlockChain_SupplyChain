@@ -29,8 +29,8 @@ class Trace extends Component {
             })
                 .then(response => response.json())
                 .then(json => {
-                    userArray.push(json);
-                    console.log(json);
+                    userArray.push(json.user);
+                    console.log(json.user);
                 });
         }
 
@@ -85,7 +85,7 @@ class Trace extends Component {
                     </div>
                 </div>
                 <div>
-                { traceArray.length>0 && 
+                {/* { traceArray.length>0 && 
                 <div className='trace'>
                     <h3 className='mar-b'> The Product is found at address:  </h3>
                     <div className='trace-timeline'>
@@ -94,16 +94,34 @@ class Trace extends Component {
                         </VerticalTimeline>
                     </div>
                 </div>
+                } */}
+
+                { this.state.userArray.length>0 && 
+                <div className='trace'>
+                    <h3 className='mar-b'> The Product is found at address:  </h3>
+                    <div className='trace-timeline'>
+                        <VerticalTimeline>
+                            {this.state.userArray.map(user => 
+                                <VerticalTimelineElement>
+                                    Name - {user.name}
+                                    <br />
+                                    Phone - {user.phone}
+                                    <br />
+                                    Address - {user.address.substring(0,17)}...
+                                </VerticalTimelineElement>)}
+                        </VerticalTimeline>
+                    </div>
+                </div>
                 }
 
-                {this.state.userArray.length &&
+                {/* {this.state.userArray.length &&
                 <div className='trace'>
                     The Product is found at address: <br></br><br></br>
                     <ul>
                     {this.state.userArray.map(user => <li>{user.name} | {user.phone}</li>)}
                     </ul>
                 </div>
-                }
+                } */}
     </div>
             </div>
         );

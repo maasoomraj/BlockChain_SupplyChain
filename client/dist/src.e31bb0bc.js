@@ -49506,8 +49506,8 @@ function (_Component) {
                 }).then(function (response) {
                   return response.json();
                 }).then(function (json) {
-                  userArray.push(json);
-                  console.log(json);
+                  userArray.push(json.user);
+                  console.log(json.user);
                 });
 
               case 7:
@@ -49574,25 +49574,15 @@ function (_Component) {
         className: "button",
         bsstyle: "danger",
         onClick: this.traceProduct
-      }, "Trace"))), _react.default.createElement("div", null, traceArray.length > 0 && _react.default.createElement("div", {
+      }, "Trace"))), _react.default.createElement("div", null, this.state.userArray.length > 0 && _react.default.createElement("div", {
         className: "trace"
-<<<<<<< HEAD
-      }, "The Product is found at address: ", _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement("ul", null, traceArray.map(function (trace) {
-        return _react.default.createElement("li", null, trace);
-      }))), this.state.userArray.length && _react.default.createElement("div", {
-        className: "trace"
-      }, "The Product is found at address: ", _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement("ul", null, this.state.userArray.map(function (user) {
-        return _react.default.createElement("li", null, user.name, " | ", user.phone);
-      })))));
-=======
       }, _react.default.createElement("h3", {
         className: "mar-b"
       }, " The Product is found at address:  "), _react.default.createElement("div", {
         className: "trace-timeline"
-      }, _react.default.createElement(_reactVerticalTimelineComponent.VerticalTimeline, null, traceArray.map(function (trace) {
-        return _react.default.createElement(_reactVerticalTimelineComponent.VerticalTimelineElement, null, trace);
+      }, _react.default.createElement(_reactVerticalTimelineComponent.VerticalTimeline, null, this.state.userArray.map(function (user) {
+        return _react.default.createElement(_reactVerticalTimelineComponent.VerticalTimelineElement, null, "Name - ", user.name, _react.default.createElement("br", null), "Phone - ", user.phone, _react.default.createElement("br", null), "Address - ", user.address.substring(0, 17), "...");
       }))))));
->>>>>>> c4dcb0caa09dbc7642d37e584f9fc662b888ddc2
     }
   }]);
 
@@ -51257,11 +51247,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63301" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37793" + '/');
->>>>>>> c4dcb0caa09dbc7642d37e584f9fc662b888ddc2
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50142" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
