@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl,Button } from 'react-bootstrap';
+import { FormGroup, FormControl,Button} from 'react-bootstrap';
 import Navigation from './common/Navigation';
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
@@ -62,9 +62,11 @@ class Trace extends Component {
     }
 
     render() {
+        let modalShow = true;
         const {traceArray,isLoggedIn} = this.state;
         return(
             <div>
+
                 <Navigation />
                 <div className='ConductTransaction'>
                 <h3> Trace a Product </h3>
