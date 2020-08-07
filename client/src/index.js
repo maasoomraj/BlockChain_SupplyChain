@@ -19,7 +19,6 @@ import Mine from './components/Mine';
 // Ascyn Await get or post requests
 import 'regenerator-runtime/runtime'
 
-
 render(
     <Router history={history}>
         <Switch>

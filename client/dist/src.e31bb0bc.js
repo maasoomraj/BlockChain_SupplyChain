@@ -48840,7 +48840,10 @@ function (_Component) {
       product: '',
       quantity: '',
       amount: '',
-      from: ''
+      from: '',
+      userTo: {},
+      userLoaded: false,
+      phoneError: false
     }, _this.updateRProduct = function (event) {
       _this.setState({
         product: event.target.value
@@ -48857,12 +48860,62 @@ function (_Component) {
       _this.setState({
         from: event.target.value
       });
+
+      _this.getAddress(event.target.value);
+    }, _this.getAddress = function (phone) {
+      if (phone.length != 10) {
+        _this.setState({
+          userTo: {},
+          userLoaded: false,
+          phoneError: false
+        });
+
+        return;
+      }
+
+      for (var i = 0; i < 10; i++) {
+        if (!(phone[i] - '0' >= 0 && phone[i] - '0' <= 9)) {
+          _this.setState({
+            userTo: {},
+            userLoaded: false,
+            phoneError: true
+          });
+
+          return;
+        }
+      }
+
+      fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/user/getUserByPhone', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          phone: phone
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        console.log(json.user);
+
+        _this.setState({
+          userTo: json.user,
+          userLoaded: true,
+          phoneError: false
+        });
+      }).catch(function (err) {
+        return _this.setState({
+          userTo: {},
+          userLoaded: false,
+          phoneError: true
+        });
+      });
     }, _this.conductReceiveTransaction = function () {
       var input = {
         product: _this.state.product,
         quantity: _this.state.quantity,
         amount: _this.state.amount,
-        from: _this.state.from
+        from: _this.state.userTo.address
       }; // console.log(input);
 
       fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/receive', {
@@ -48884,7 +48937,6 @@ function (_Component) {
   _createClass(receiveTransaction, [{
     key: "render",
     value: function render() {
-      console.log('this.state', this.state);
       return _react.default.createElement("div", null, _react.default.createElement(_Navigation.default, null), _react.default.createElement("div", {
         className: "receiveTransaction"
       }, _react.default.createElement("br", null), _react.default.createElement("h3", null, "Receive Transaction -"), _react.default.createElement(_reactBootstrap.FormGroup, null, _react.default.createElement(_reactBootstrap.FormControl, {
@@ -48907,11 +48959,20 @@ function (_Component) {
         placeholder: "From",
         value: this.state.from,
         onChange: this.updateRFrom
-      })), _react.default.createElement("div", {
+      })), this.state.userLoaded && _react.default.createElement("div", {
+        className: "sendTo"
+      }, _react.default.createElement("p", {
+        className: "sendToText"
+      }, "Name - ", this.state.userTo.name, " ", _react.default.createElement("br", null), "Phone - ", this.state.userTo.phone, " ", _react.default.createElement("br", null), "Address = ", this.state.userTo.address.substring(0, 20), ".... ", _react.default.createElement("br", null))), this.state.phoneError && _react.default.createElement("div", {
+        className: "sendTo"
+      }, _react.default.createElement("p", {
+        className: "sendToText"
+      }, "Phone number is incorrect or doesnot match with any User. Please check the number !")), _react.default.createElement("div", {
         align: "center"
       }, _react.default.createElement(_reactBootstrap.Button, {
         className: "button",
-        onClick: this.conductReceiveTransaction
+        onClick: this.conductReceiveTransaction,
+        disabled: !this.state.userLoaded
       }, "Receive"))));
     }
   }]);
@@ -51610,7 +51671,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50142" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61459" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
