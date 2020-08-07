@@ -26,6 +26,7 @@ class PoolMap extends Component {
 
     render() {
         const { transactionPool,isLoggedIn} = this.state;
+        console.log(transactionPool);
         const transactions = Object.values(this.state.transactionPool);
         if (isLoggedIn===false) {
             return(

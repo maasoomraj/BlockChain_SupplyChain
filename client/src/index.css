@@ -141,3 +141,15 @@ a:hover {
   color: #000;
   font-weight: 300;
 }
+
+.homeTitle {
+  font-family: monospace;
+  font-size: 22px;
+  font-weight: bolder;
+}
+
+.walletInfoText {
+  font-size: 17px;
+  font-weight: 300;
+  font-family: monospace;
+}
