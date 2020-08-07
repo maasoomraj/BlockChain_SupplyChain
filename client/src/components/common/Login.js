@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Button, Row, Col } from "react-bootstrap";
 import file from '../../assets/MyWallet.txt';
 import avatar1 from '../../assets/avatar.webp';
 import avatar2 from '../../assets/avatar-2.webp';
+const localStorage = require('localStorage');
 var fs = require("fs");
 
 class Login extends Component {
@@ -57,10 +58,11 @@ class Login extends Component {
       )
         .then((response) => response.json())
         .then((json) => {
-          alert("Success.");
+          console.log(json);
+          // localStorage.setItem('address', JSON.parse(json.wallet).publicKey)
+          localStorage.setItem('user', JSON.stringify(json.wallet));
+          this.setState({ success: true });
         });
-
-      this.setState({ success: true });
     };
 
     reader.readAsText(this.state.selectedFile);
@@ -84,6 +86,8 @@ class Login extends Component {
       }
     }
 
+    let addressText;
+
     await fetch(
         window.location.protocol +
           "//" +
@@ -94,6 +98,9 @@ class Login extends Component {
         )
         .then((response) => response.json())
         .then((json) => {
+          // console.log(json.wallet);
+          console.log(JSON.parse(json.wallet).publicKey);
+          addressText = JSON.parse(json.wallet).publicKey;
           this.setState({ jsonText : json.wallet });
         });
 
@@ -110,7 +117,7 @@ class Login extends Component {
       body: JSON.stringify({
         name : this.state.name,
         phone : this.state.phone,
-        address : '123456789874345678'
+        address : addressText
       }),
     }
   )
@@ -128,6 +135,7 @@ class Login extends Component {
   }
 
   render() {
+
     return (
         <Row className="login-container">
           <Col md="3" />

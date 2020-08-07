@@ -42,6 +42,7 @@
     "got": "^10.7.0",
     "history": "^4.10.1",
     "ip": "^1.1.5",
+    "localStorage": "^1.0.4",
     "mongoose": "^5.9.17",
     "parcel-bundler": "^1.12.4",
     "react": "^16.13.1",

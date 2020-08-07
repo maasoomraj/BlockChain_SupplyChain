@@ -95,7 +95,9 @@ app.post('/login',(req,res) => {
     }else{
 
         const {jsonObj} = req.body;
-        console.log(jsonObj.balance);
+        // console.log(jsonObj.balance);
+
+        console.log(JSON.parse(jsonObj).publicKey);
         // let MyWallet;
 
         if(PORT !== DEFAULT_PORT){
@@ -105,7 +107,8 @@ app.post('/login',(req,res) => {
         }
 
         // MyWallet = JSON.parse(data);
-        wallet = JSON.parse(JSON.stringify(jsonObj));
+        // wallet = JSON.parse(JSON.stringify(jsonObj));
+        wallet = JSON.parse(jsonObj);
         transactionMiner = new TransactionMiner({blockchain,transactionPool, wallet, pubsub});
 
         wallet.balance = Wallet.calculateBalance({
@@ -119,8 +122,10 @@ app.post('/login',(req,res) => {
         // fs.writeFileSync(path.join(__dirname, '/client/src/components/files/', 'MyWallet.txt'), details);
 
         console.log("Login Successful !");
+        console.log(wallet.publicKey);
         res.json({
-            isLoggedIn : isLoggedIn
+            isLoggedIn : isLoggedIn,
+            wallet : wallet.publicKey
         });
         
     }

@@ -27,15 +27,15 @@ router.post('/register', async (req,res) => {
     }
 })
 
-// router.post('/getUser', async (req,res) => {
+router.post('/getUser', async (req,res) => {
 
-//     // Check if phone number already exists
-//     const userExists = await User.findOne({ address : req.body.address });
-//     if(!userExists){
-//         res.status(400).send('User doesnot exists');
-//     }
+    // Check if phone number already exists
+    const userExists = await User.findOne({ address : req.body.address });
+    if(!userExists){
+        res.status(400).send('User doesnot exists');
+    }
 
-//     res.send({ user : userExists });
-// })
+    res.send({ user : userExists });
+})
 
 module.exports = router;

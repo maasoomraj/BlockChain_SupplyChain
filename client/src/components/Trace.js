@@ -11,6 +11,7 @@ class Trace extends Component {
 
     traceProduct = () => {
         const { product } = this.state;
+        let traceArray;
 
         fetch(window.location.protocol
             + '//'
@@ -21,8 +22,31 @@ class Trace extends Component {
             method: 'POST',
             headers: { 'Content-Type' : 'application/json' },
             body: JSON.stringify({product})
-    }).then(response => response.json())
-        .then(json => this.setState({ traceArray: json.traceArray})); 
+        })
+        .then(response => response.json())
+        .then(json => {
+            traceArray = json.traceArray;
+            this.setState({ traceArray: json.traceArray})
+        });
+
+        for(let i in traceArray){
+            console.log(traceArray[i]);
+            fetch(
+                window.location.protocol
+                + '//'
+                + window.location.hostname
+                + ":"
+                + window.location.port
+                + '/api/user/getUser', {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json' },
+                body: JSON.stringify({ address : traceArray[i]})
+            })
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);
+                });
+        }
     }
 
     render() {

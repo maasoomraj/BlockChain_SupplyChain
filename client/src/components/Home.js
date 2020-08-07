@@ -3,6 +3,7 @@ import logo from '../assets/logo.png';
 import Navigation from './common/Navigation';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+const localStorage = require('localStorage');
 
 class Home extends Component {
     state = { walletInfo: {} };
@@ -15,10 +16,14 @@ class Home extends Component {
             + window.location.port
             + '/api/wallet-info')
         .then(response => response.json())
-        .then(json => this.setState({walletInfo: json }));
+        .then(json => this.setState({walletInfo: json }))
+        .catch((err) => alert(error));
     }
 
     render() {
+        // console.log(localStorage.getItem('address'));
+        // console.log(JSON.parse(localStorage.getItem('user')).publicKey);
+        // console.log(localStorage.getItem('user'));
         const {address,balance} = this.state.walletInfo;
 
         return (

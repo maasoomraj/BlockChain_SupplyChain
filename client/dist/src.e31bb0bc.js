@@ -48786,6 +48786,7 @@ function (_Component) {
       });
     }, _this.traceProduct = function () {
       var product = _this.state.product;
+      var traceArray;
       fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/trace', {
         method: 'POST',
         headers: {
@@ -48797,10 +48798,29 @@ function (_Component) {
       }).then(function (response) {
         return response.json();
       }).then(function (json) {
-        return _this.setState({
+        traceArray = json.traceArray;
+
+        _this.setState({
           traceArray: json.traceArray
         });
       });
+
+      for (var i in traceArray) {
+        console.log(traceArray[i]);
+        fetch(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/api/user/getUser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            address: traceArray[i]
+          })
+        }).then(function (response) {
+          return response.json();
+        }).then(function (json) {
+          console.log(json);
+        });
+      }
     }, _temp));
   }
 
@@ -48838,6 +48858,61 @@ var _default = Trace;
 exports.default = _default;
 },{"react":"../../node_modules/react/index.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","./common/Navigation":"components/common/Navigation.js"}],"assets/logo.png":[function(require,module,exports) {
 module.exports = "/logo.e9a9c890.png";
+},{}],"../../node_modules/localStorage/lib/localStorage.js":[function(require,module,exports) {
+var global = arguments[3];
+// http://www.rajdeepd.com/articles/chrome/localstrg/LocalStorageSample.htm
+// NOTE:
+// this varies from actual localStorage in some subtle ways
+// also, there is no persistence
+// TODO persist
+(function () {
+  "use strict";
+
+  var db;
+
+  function LocalStorage() {}
+
+  db = LocalStorage;
+
+  db.prototype.getItem = function (key) {
+    if (this.hasOwnProperty(key)) {
+      return String(this[key]);
+    }
+
+    return null;
+  };
+
+  db.prototype.setItem = function (key, val) {
+    this[key] = String(val);
+  };
+
+  db.prototype.removeItem = function (key) {
+    delete this[key];
+  };
+
+  db.prototype.clear = function () {
+    var self = this;
+    Object.keys(self).forEach(function (key) {
+      self[key] = undefined;
+      delete self[key];
+    });
+  };
+
+  db.prototype.key = function (i) {
+    i = i || 0;
+    return Object.keys(this)[i];
+  };
+
+  db.prototype.__defineGetter__('length', function () {
+    return Object.keys(this).length;
+  });
+
+  if (global.localStorage) {
+    module.exports = localStorage;
+  } else {
+    module.exports = new LocalStorage();
+  }
+})();
 },{}],"components/Home.js":[function(require,module,exports) {
 "use strict";
 
@@ -48910,6 +48985,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+var localStorage = require('localStorage');
+
 var Home =
 /*#__PURE__*/
 function (_Component) {
@@ -48944,11 +49021,16 @@ function (_Component) {
         return _this2.setState({
           walletInfo: json
         });
+      }).catch(function (err) {
+        return alert(error);
       });
     }
   }, {
     key: "render",
     value: function render() {
+      // console.log(localStorage.getItem('address'));
+      // console.log(JSON.parse(localStorage.getItem('user')).publicKey);
+      // console.log(localStorage.getItem('user'));
       var _this$state$walletInf = this.state.walletInfo,
           address = _this$state$walletInf.address,
           balance = _this$state$walletInf.balance;
@@ -48973,7 +49055,7 @@ function (_Component) {
 
 var _default = Home;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","../assets/logo.png":"assets/logo.png","./common/Navigation":"components/common/Navigation.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js"}],"components/common/Logout.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","../assets/logo.png":"assets/logo.png","./common/Navigation":"components/common/Navigation.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","localStorage":"../../node_modules/localStorage/lib/localStorage.js"}],"components/common/Logout.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49157,6 +49239,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+var localStorage = require('localStorage');
+
 var fs = require("fs");
 
 var Login =
@@ -49204,11 +49288,13 @@ function (_Component) {
         }).then(function (response) {
           return response.json();
         }).then(function (json) {
-          alert("Success.");
-        });
+          console.log(json); // localStorage.setItem('address', JSON.parse(json.wallet).publicKey)
 
-        _this.setState({
-          success: true
+          localStorage.setItem('user', JSON.stringify(json.wallet));
+
+          _this.setState({
+            success: true
+          });
         });
       };
 
@@ -49220,7 +49306,7 @@ function (_Component) {
     _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee() {
-      var i;
+      var i, addressText;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -49269,6 +49355,10 @@ function (_Component) {
               return fetch(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/createUser").then(function (response) {
                 return response.json();
               }).then(function (json) {
+                // console.log(json.wallet);
+                console.log(JSON.parse(json.wallet).publicKey);
+                addressText = JSON.parse(json.wallet).publicKey;
+
                 _this.setState({
                   jsonText: json.wallet
                 });
@@ -49284,7 +49374,7 @@ function (_Component) {
                 body: JSON.stringify({
                   name: _this.state.name,
                   phone: _this.state.phone,
-                  address: '123456789874345678'
+                  address: addressText
                 })
               }).then(function (response) {
                 return response.json();
@@ -49385,7 +49475,7 @@ function (_Component) {
 
 var _default = Login;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../../assets/MyWallet.txt":"assets/MyWallet.txt","../../assets/avatar.webp":"assets/avatar.webp","../../assets/avatar-2.webp":"assets/avatar-2.webp","fs":"../../node_modules/parcel-bundler/src/builtins/_empty.js"}],"components/common/CreateUser.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../../assets/MyWallet.txt":"assets/MyWallet.txt","../../assets/avatar.webp":"assets/avatar.webp","../../assets/avatar-2.webp":"assets/avatar-2.webp","localStorage":"../../node_modules/localStorage/lib/localStorage.js","fs":"../../node_modules/parcel-bundler/src/builtins/_empty.js"}],"components/common/CreateUser.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50422,7 +50512,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60481" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63301" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
