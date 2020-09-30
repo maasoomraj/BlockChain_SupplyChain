@@ -3,7 +3,7 @@ body {
   color: #fff;
   text-align: center;
   font-size: 30 px;
-  font-family: "Baloo 2", cursive;
+  font-family: 'Baloo 2', cursive;
   word-wrap: break-word;
   align-items: center;
 }
@@ -117,7 +117,7 @@ a:hover {
   padding-top: 15%;
   margin: auto;
   text-align: center;
-  float:center;
+  float: center;
   font-size: 18px;
 }
 
@@ -128,7 +128,7 @@ a:hover {
 }
 
 .sendTo {
-  background-color: #F8E588;
+  background-color: #f8e588;
   border-radius: 20px;
   text-align: left;
   padding-left: 40px;

@@ -1,72 +1,75 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl,Button } from 'react-bootstrap';
+import { FormGroup, FormControl, Button } from 'react-bootstrap';
 import Navigation from './common/Navigation';
 
 class ConductTransaction extends Component {
-    state = { recipient: '', amount: ''};
+  state = { recipient: '', amount: '' };
 
-    updateRecipient = event => {
-        this.setState({ recipient : event.target.value});
-    }
+  updateRecipient = (event) => {
+    this.setState({ recipient: event.target.value });
+  };
 
-    updateAmount = event => {
-        this.setState({ amount : Number(event.target.value) });
-    }
+  updateAmount = (event) => {
+    this.setState({ amount: Number(event.target.value) });
+  };
 
-    conductTransaction = () => {
-        const { recipient, amount} = this.state;
+  conductTransaction = () => {
+    const { recipient, amount } = this.state;
 
-        fetch(window.location.protocol
-            + '//'
-            + window.location.hostname
-            + ":"
-            + window.location.port
-            + '/api/transact', {
-            method: 'POST',
-            headers: { 'Content-Type' : 'application/json' },
-            body: JSON.stringify({recipient,amount })
-    }).then(response => response.json())
-        .then(json => {
-            alert(json.message || json.type);
-        });    
-        
-    }
+    fetch(
+      window.location.protocol +
+        '//' +
+        window.location.hostname +
+        ':' +
+        window.location.port +
+        '/api/transact',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ recipient, amount }),
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        alert(json.message || json.type);
+      });
+  };
 
-    render() {
-
-        return (
-            <div>
-                <Navigation />
-                <div className='ConductTransaction'>
-                    <h3> Conduct a Transaction </h3>
-                    <FormGroup>
-                        <FormControl 
-                            input = 'text'
-                            placeholder = 'Recipient Address'
-                            value={this.state.recipient}
-                            onChange={this.updateRecipient}    
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                    <FormControl 
-                            input = 'number'
-                            placeholder = 'Amount'
-                            value={this.state.amount}
-                            onChange={this.updateAmount}    
-                        />
-                    </FormGroup>
-                    <div align='center'>
-                        <Button className='button'
-                            bsstyle="danger"
-                            onClick={this.conductTransaction}
-                        >
-                            Submit
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-};
+  render() {
+    return (
+      <div>
+        <Navigation />
+        <div className="ConductTransaction">
+          <h3> Conduct a Transaction </h3>
+          <FormGroup>
+            <FormControl
+              input="text"
+              placeholder="Recipient Address"
+              value={this.state.recipient}
+              onChange={this.updateRecipient}
+            />
+          </FormGroup>
+          <FormGroup>
+            <FormControl
+              input="number"
+              placeholder="Amount"
+              value={this.state.amount}
+              onChange={this.updateAmount}
+            />
+          </FormGroup>
+          <div align="center">
+            <Button
+              className="button"
+              bsstyle="danger"
+              onClick={this.conductTransaction}
+            >
+              Submit
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 export default ConductTransaction;

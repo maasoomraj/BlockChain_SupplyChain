@@ -17,24 +17,24 @@ import CreateUser from './components/common/CreateUser';
 import Mine from './components/Mine';
 
 // Ascyn Await get or post requests
-import 'regenerator-runtime/runtime'
+import 'regenerator-runtime/runtime';
 
 render(
-    <Router history={history}>
-        <Switch>
-            <Route exact path='/' component={App} />
-            <Route path='/blocks' component={Blocks} />
-            <Route path='/conduct-transaction' component={ConductTransaction} />
-            <Route path='/send-transaction' component={sendTransaction} />
-            <Route path='/receive-transaction' component={receiveTransaction} />
-            <Route path='/transaction-pool-map' component={PoolMapp} />
-            <Route path='/trace' component={Trace} />
-            <Route path='/home' component={Home} />
-            <Route path='/log-out' component={Logout} />
-            <Route path='/log-in' component={Login} />
-            <Route path='/create-user' component={CreateUser} />
-            <Route path='/mine-transactions' component={Mine} />
-        </Switch>
-    </Router>,
-    document.getElementById('root')
+  <Router history={history}>
+    <Switch>
+      <Route exact path="/" component={App} />
+      <Route path="/blocks" component={Blocks} />
+      <Route path="/conduct-transaction" component={ConductTransaction} />
+      <Route path="/send-transaction" component={sendTransaction} />
+      <Route path="/receive-transaction" component={receiveTransaction} />
+      <Route path="/transaction-pool-map" component={PoolMapp} />
+      <Route path="/trace" component={Trace} />
+      <Route path="/home" component={Home} />
+      <Route path="/log-out" component={Logout} />
+      <Route path="/log-in" component={Login} />
+      <Route path="/create-user" component={CreateUser} />
+      <Route path="/mine-transactions" component={Mine} />
+    </Switch>
+  </Router>,
+  document.getElementById('root')
 );

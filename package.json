@@ -22,7 +22,8 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^25.5.4",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "prettier": "2.1.2"
   },
   "dependencies": {
     "@types/react": "^16.9.35",
